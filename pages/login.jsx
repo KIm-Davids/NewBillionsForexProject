@@ -1,6 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+// import { toast } from 'react-toastify';
+// import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -9,6 +12,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [referral, setReferral] = useState('');
   const [mounted, setMounted] = useState(false); // Track whether component is mounted on client
+  const router = useRouter();
 
   useEffect(() => {
     // Set mounted to true after the component has mounted
@@ -42,12 +46,16 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.text();
-        toast.success(isLoginMode ? 'Login successful!' : 'Sign up successful!');
+        // toast({
+        //   title: isLoginMode ? "Login successful!" : "Sign up successful!",
+        // });
+        router.push('/dashboard')
+        // router.push('/customer_dashboard');
       } else {
-        toast.error(`Error: ${response.statusText}`);
+        // toast({title: `Error: ${response.statusText}`});
       }
     } catch (error) {
-      toast.error('An error occurred during the login/signup process.');
+      // toast.error('An error occurred during the login/signup process.');
       console.error('Error:', error);
     }
   };

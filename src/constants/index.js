@@ -124,7 +124,8 @@ export const pricingOptions = [
       '0.8% daily profit',
       '$10 withdrawal minimum',
       '9%-12% profit in 15 days',
-      'And more...',
+      'Forex Payments - Weekdays',
+      'Crypto Payments - Weekends ',
     ],
   },
   {
@@ -134,7 +135,8 @@ export const pricingOptions = [
       '1% daily profit',
       '$50 withdrawal minimum',
       '25%-30% profit in 30 days',
-      'And much more...',
+      'Forex Payments - Weekdays',
+      'Crypto Payments - Weekends ',
     ],
   },
   {
@@ -144,16 +146,17 @@ export const pricingOptions = [
       '1.2% daily profit',
       '$100 withdrawal minimum',
       '40%-48% profit in 40 days',
-      'And much much more...',
+      'Forex Payments - Weekdays',
+      'Crypto Payments - Weekends ',
     ],
   },
 ];
 
 export const resourcesLinks = [
-    { href: "#", text: "Getting Started" },
-    { href: "#", text: "Community Forums" },
+  { href: '#', text: 'Getting Started' },
+  { href: '#', text: 'Community Forums' },
 ];
 
 export const platformLinks = [
-    { href: "#", text: "Features" },
+  { href: '#', text: 'Features' },
 ];
