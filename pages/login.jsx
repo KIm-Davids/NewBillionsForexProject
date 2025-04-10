@@ -49,7 +49,8 @@ const Login = () => {
         // toast({
         //   title: isLoginMode ? "Login successful!" : "Sign up successful!",
         // });
-        router.push('/dashboard');
+        // router.push('/dashboard');
+        router.push('/cutomerDashboard')
         // router.push('/customerDashboard');
       } else {
         // toast({title: `Error: ${response.statusText}`});
