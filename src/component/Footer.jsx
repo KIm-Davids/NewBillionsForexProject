@@ -1,6 +1,5 @@
 'use client';
 
-
 import { FaTelegram, FaInstagram } from 'react-icons/fa';
 import { resourcesLinks, platformLinks } from '../constants';
 
@@ -28,21 +27,21 @@ const Footer = () => (
         </ul>
       </div>
       <div className="mt-8 flex gap-4">
-           <a
-            href="https://t.me/+1_YhzCR3lhZlMzI8"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-neutral-300 hover:text-white text-4xl mt-[-30px]"
+        <a
+          href="https://t.me/+1_YhzCR3lhZlMzI8"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-neutral-300 hover:text-white text-4xl mt-[-30px]"
         >
-          <FaTelegram/>
+          <FaTelegram />
         </a>
         <a
-            href="https://www.instagram.com/billion_forex_team"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-neutral-300 hover:text-white text-4xl mt-[-30px]"
+          href="https://www.instagram.com/billion_forex_team"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-neutral-300 hover:text-white text-4xl mt-[-30px]"
         >
-          <FaInstagram/>
+          <FaInstagram />
         </a>
       </div>
     </div>

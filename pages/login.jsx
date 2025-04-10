@@ -27,7 +27,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      // {<ToastContainer />}
+    // {<ToastContainer />}
 
     const endpoint = isLoginMode ? '/login' : '/signup';
     const payload = isLoginMode
@@ -49,8 +49,8 @@ const Login = () => {
         // toast({
         //   title: isLoginMode ? "Login successful!" : "Sign up successful!",
         // });
-        router.push('/dashboard')
-        // router.push('/customer_dashboard');
+        router.push('/dashboard');
+        // router.push('/customerDashboard');
       } else {
         // toast({title: `Error: ${response.statusText}`});
       }

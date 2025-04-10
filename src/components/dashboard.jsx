@@ -1,26 +1,25 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { BellRing, ChevronDown, LogOut, Moon, Search, Settings, Sun, User } from "lucide-react"
-import { useTheme } from "./theme-provider"
+import { useState } from 'react';
+import { BellRing, ChevronDown, LogOut, Moon, Search, Settings, Sun, User } from 'lucide-react';
+import { useTheme } from './theme-provider';
 
-import { Button } from "../components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
-import { Input } from "../components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
-import { UserList } from "./user-list"
-import { UserStats } from "./user-stats"
-import { RecentActivities } from "./recent-activities"
+import { Button } from './ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { Input } from './ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { UserList } from './user-list';
+import { UserStats } from './user-stats';
+import { RecentActivities } from './recent-activities';
 
-
-export function Dashboard() {
-  const { theme, setTheme } = useTheme()
-  const [searchQuery, setSearchQuery] = useState("")
+export const Dashboard = () => {
+  const { theme, setTheme } = useTheme();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
-  }
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -47,7 +46,7 @@ export function Dashboard() {
               <span className="sr-only">Notifications</span>
             </Button>
             <Button variant="ghost" size="icon" onClick={toggleTheme}>
-              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               <span className="sr-only">Toggle theme</span>
             </Button>
             <DropdownMenu>
@@ -132,5 +131,5 @@ export function Dashboard() {
         </Tabs>
       </main>
     </div>
-  )
-}
+  );
+};
