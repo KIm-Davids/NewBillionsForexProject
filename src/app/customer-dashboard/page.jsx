@@ -1,6 +1,6 @@
   "use client"
 
-  import { useState } from "react"
+  import {useEffect, useState} from "react"
   import {
     ArrowLeftRight,
     Bell,
@@ -37,15 +37,23 @@
   import { Separator } from "../ui/separator"
 
   export default function Dashboard() {
-    const { toast } = useToast()
+    const {toast} = useToast()
     const [walletVisible, setWalletVisible] = useState(false)
     const [depositAmount, setDepositAmount] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [depositName, setDepositName] = useState("");
+    const [depositWallet, setDepositWallet] = useState("");
+    const [depositDescription, setDepositDescription] = useState("");
+
     const [withdrawAmount, setWithdrawAmount] = useState("");
     const [withdrawName, setWithdrawName] = useState("");
     const [withdrawWallet, setWithdrawWallet] = useState("");
     const [withdrawDescription, setWithdrawDescription] = useState("");
+    const [availableBalance, setAvailableBalance] = useState(2000);
+    const [balance, setBalance] = useState(null);
+    const [lastUpdated, setLastUpdated] = useState("");
+    const [packageType, setPackageType] = useState("");
 
 
 
@@ -64,10 +72,39 @@
       setWalletVisible(!walletVisible)
     }
 
-    return (
-      <div className="flex min-h-screen flex-col md:flex-row">
-        {/* Sidebar */}
-        {/* <div className="w-full md:w-64 bg-card border-r">
+    const BalanceCard = () => {
+
+      useEffect(() => {
+        const fetchBalance = async () => {
+          try {
+            const res = await fetch("http://localhost:8080/balance", {
+              method: "GET",
+              credentials: "include",
+              headers: {
+                  'Content-Type':'application/json',
+              },
+            });
+            
+            if(!res.ok){
+              throw new Error('Failed to fetch balance')
+            }
+            
+            const data = await res.json();
+            setBalance(data.balance); // assuming { balance: 2450.5, updatedAt: "2025-04-09T10:30:00Z" }
+            setLastUpdated(new Date(data.updatedAt).toLocaleDateString());
+          } catch (err) {
+            console.error("Failed to fetch balance", err);
+          }
+        };
+
+        fetchBalance();
+      }, []);
+}
+
+      return (
+          <div className="flex min-h-screen flex-col md:flex-row">
+            {/* Sidebar */}
+            {/* <div className="w-full md:w-64 bg-card border-r">
           <div className="flex h-14 items-center border-b px-4">
             <h2 className="text-lg font-semibold">Finance Portal</h2>
           </div>
@@ -143,284 +180,372 @@
           </div>
         </div> */}
 
-        {/* Main Content */}
-        <div className="flex-1 p-4 md:p-6">
-          <div className="flex items-center justify-between mb-6">
-            {/*//add usersname here*/}
-            <h1 className="text-3xl font-bold">Welcome !</h1>
-            <div className="flex items-center gap-2">
-              {/*<ThemeToggle />*/}
-              {/*<Button variant="outline" size="icon">*/}
-              {/*  <Bell size={16} />*/}
-              {/*</Button>*/}
+            {/* Main Content */}
+            <div className="flex-1 p-4 md:p-6">
+              <div className="flex items-center justify-between mb-6">
+                {/*//add usersname here*/}
+                <h1 className="text-3xl font-bold">Welcome !</h1>
+                <div className="flex items-center gap-2">
+                  {/*<ThemeToggle />*/}
+                  {/*<Button variant="outline" size="icon">*/}
+                  {/*  <Bell size={16} />*/}
+                  {/*</Button>*/}
+                </div>
+              </div>
+
+              {/* Balance and Package Info */}
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-6">
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardDescription>Current Balance</CardDescription>
+                    <CardTitle className="text-3xl">
+                      {balance !== null ? `$${balance.toLocaleString()}` : "Loading..."}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-xs text-muted-foreground"> Last updated: {lastUpdated || "Fetching..."}</div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardDescription>Next Withdrawal</CardDescription>
+                    <CardTitle>April 15, 2025</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Badge go o
+                           variant="outline"
+                           className="bg-green-50 text-green-700 hover:bg-green-50 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-950"
+                    >
+                      Available in 6 days
+                    </Badge>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardDescription>Current Package</CardDescription>
+                    <CardTitle>Premium Plan</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Badge>Active</Badge>
+                    <p className="text-xs text-muted-foreground mt-1">Renews on May 10, 2025</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Wallet and Referral */}
+              <div className="grid gap-4 md:grid-cols-2 mb-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Wallet Address</CardTitle>
+                    <CardDescription>Your cryptocurrency wallet</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                      <code className="text-xs md:text-sm font-mono truncate">
+                        {walletVisible ? walletAddress : maskedWallet}
+                      </code>
+                      <div className="flex gap-1 ml-auto">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={toggleWalletVisibility}
+                            title={walletVisible ? "Hide wallet address" : "Show wallet address"}
+                        >
+                          {walletVisible ? <EyeOff size={14}/> : <Eye size={14}/>}
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => copyToClipboard(walletAddress, "Wallet address copied to clipboard")}
+                            title="Copy wallet address"
+                        >
+                          <Copy size={14}/>
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Referral Code</CardTitle>
+                    <CardDescription>Share with friends to earn rewards</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                      {/*//Generated referral code should be added here*/}
+                      <code className="text-sm font-mono">JOHN25</code>
+                      <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => copyToClipboard("JOHN25", "Referral code copied to clipboard")}
+                      >
+                        <Copy size={14}/>
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">You've referred 3 users so far</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Deposit and Withdraw */}
+              <Tabs defaultValue="deposit" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 mb-4 ">
+                  <TabsTrigger
+                      className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
+                      value="deposit">Deposit</TabsTrigger>
+
+                  <TabsTrigger
+                      className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
+                      value="withdraw">Withdraw</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="deposit">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Deposit Funds</CardTitle>
+                      <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {/* Amount */}
+                      <div className="space-y-2">
+                        <Label htmlFor="deposit-amount">Amount</Label>
+                        <div className="relative w-72">
+                          <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+                          <Input
+                              id="deposit-amount"
+                              placeholder="0.00"
+                              className="pl-9"
+                              value={depositAmount}
+                              onChange={(e) => setDepositAmount(e.target.value)}
+                          />
+                        </div>
+
+                      </div>
+
+                      {/* Name */}
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Your Name</Label>
+                        <div className="relative w-72">
+
+                          <Input
+                              id="name"
+                              placeholder="Your full name"
+                              value={name}
+                              onChange={(e) => setDepositName(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Wallet Address */}
+                      <div className="space-y-2">
+                        <Label htmlFor="wallet-address">Your Wallet Address</Label>
+                        <div className="relative w-72">
+                          <Input
+                              id="wallet-address"
+                              placeholder="Enter wallet address"
+                              value={walletAddress}
+                              onChange={(e) => setDepositWallet(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <div className="space-y-2">
+                        <Label htmlFor="withdraw-description">Select Package</Label>
+                        <div className="relative w-72">
+                          <select
+                              id="withdraw-description"
+                              value={withdrawDescription}
+                              onChange={(e) => setPackageType(e.target.value)}
+                              className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="">-- Choose a package --</option>
+                            <option value="Test package">Test package</option>
+                            <option value="Pro package">Pro package</option>
+                            <option value="Premium package">Premium package</option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </CardContent>
+                    <CardFooter>
+                      <Button
+                          className="w-full border border-green-500 hover:bg-white/10"
+                    //       onClick={async () => {
+                    //         const amount = parseFloat(withdrawAmount)
+                    //
+                    //         if (isNaN(amount) || amount <= 0) {
+                    //           toast({title: "Invalid amount", description: "Please enter a valid number"})
+                    //           return
+                    //         }
+                    //       const response = await fetch("http://localhost:8080/withdraw", {
+                    //         method: "POST",
+                    //         credentials: 'include',
+                    //         headers: {
+                    //         "Content-Type": "application/json",
+                    //       },
+                    //         body: JSON.stringify({
+                    //         name,
+                    //         wallet: withdrawWallet,
+                    //         amount,
+                    //         description: withdrawDescription,
+                    //       }),
+                    //       })
+                    //
+                    //   const data = await response.json()
+                    //
+                    //   if (response.ok) {
+                    //   setAvailableBalance(prev => prev - amount)  // Deduct from UI balance
+                    //   toast({title: "Success!", description: "Withdraw request submitted"})
+                    // } else {
+                    //   toast({title: "Error", description: data.error || "Something went wrong"})
+                    // }
+                    //   }}
+                    //
+
+                      >Invest Funds</Button>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+
+                <TabsContent value="withdraw">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Withdraw Funds</CardTitle>
+                      <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {/* Amount */}
+                      <div className="space-y-2">
+                        <Label htmlFor="withdraw-amount">Amount</Label>
+                        <div className="relative w-72">
+                          <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+                          <Input
+                              id="withdraw-amount"
+                              placeholder="0.00"
+                              className="pl-9"
+                              value={withdrawAmount}
+                              onChange={(e) => setWithdrawAmount(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Name */}
+                      <div className="space-y-2">
+                        <Label htmlFor="withdraw-name">Your Name</Label>
+                        <div className="relative w-72">
+                          <Input
+                              id="withdraw-name"
+                              placeholder="Your full name"
+                              value={withdrawName}
+                              onChange={(e) => setWithdrawName(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Wallet Address */}
+                      <div className="space-y-2">
+                        <Label htmlFor="withdraw-wallet">Your Wallet Address</Label>
+                        <div className="relative w-72">
+                          <Input
+                              id="withdraw-wallet"
+                              placeholder="Enter wallet address"
+                              value={withdrawWallet}
+                              onChange={(e) => setWithdrawWallet(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <div className="space-y-2">
+                        <Label htmlFor="withdraw-description">Description</Label>
+                        <div className="relative w-72">
+                          <Input
+                              id="withdraw-description"
+                              placeholder="Description or note (optional)"
+                              value={withdrawDescription}
+                              onChange={(e) => setWithdrawDescription(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Withdraw Method */}
+                      {/*<div className="space-y-2">*/}
+                      {/*  <Label htmlFor="withdraw-method">Withdraw To</Label>*/}
+                      {/*  <div className="flex items-center gap-2 p-2 border rounded-md">*/}
+                      {/*    <ArrowLeftRight size={16} />*/}
+                      {/*    <span className="text-sm">Bank Account (****6789)</span>*/}
+                      {/*    <ChevronDown size={16} className="ml-auto" />*/}
+                      {/*  </div>*/}
+                      {/*</div>*/}
+
+                      <Separator/>
+
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Available for withdrawal:</span>
+                        <span className="font-medium">
+                            {balance !== null ? `$${balance.toLocaleString()}` : "Loading..."}
+                        </span>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button
+                          className="w-full border-red-500 border hover:bg-white/10"
+                          onClick={async () => {
+                            console.log('Withdraw button clicked');
+                            const amount = parseFloat(withdrawAmount)
+
+                            if (isNaN(amount) || amount <= 0) {
+                              toast({title: "Invalid amount", description: "Please enter a valid number"})
+                              return
+                            }
+
+                            if (amount > availableBalance) {
+                              toast({
+                                title: "Insufficient balance",
+                                description: "You don't have enough balance for this withdrawal",
+                              })
+                              return
+                            }
+
+                            const response = await fetch("http://localhost:8080/withdraw", {
+                              method: "POST",
+                              credentials: 'include',
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                senderName: withdrawName,
+                                senderAddress: withdrawWallet,
+                                transactionType: 'withdraw',
+                                status : 'pending',
+                                amount,
+                                description: withdrawDescription,
+                              }),
+                            })
+
+                            const data = await response.json()
+
+                            if (response.ok) {
+                              setAvailableBalance(prev => prev - amount)  // Deduct from UI balance
+                              toast({title: "Success!", description: "Withdraw request submitted"})
+                            } else {
+                              toast({title: "Error", description: data.error || "Something went wrong"})
+                            }
+                          }}
+
+
+                      >Withdraw Funds</Button>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+              </Tabs>
             </div>
           </div>
-
-          {/* Balance and Package Info */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-6">
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Current Balance</CardDescription>
-                <CardTitle className="text-3xl">$2,450.50</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-muted-foreground">Last updated: April 9, 2025</div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Next Withdrawal</CardDescription>
-                <CardTitle>April 15, 2025</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Badge go o
-                  variant="outline"
-                  className="bg-green-50 text-green-700 hover:bg-green-50 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-950"
-                >
-                  Available in 6 days
-                </Badge>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Current Package</CardDescription>
-                <CardTitle>Premium Plan</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Badge>Active</Badge>
-                <p className="text-xs text-muted-foreground mt-1">Renews on May 10, 2025</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Wallet and Referral */}
-          <div className="grid gap-4 md:grid-cols-2 mb-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Wallet Address</CardTitle>
-                <CardDescription>Your cryptocurrency wallet</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                  <code className="text-xs md:text-sm font-mono truncate">
-                    {walletVisible ? walletAddress : maskedWallet}
-                  </code>
-                  <div className="flex gap-1 ml-auto">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={toggleWalletVisibility}
-                      title={walletVisible ? "Hide wallet address" : "Show wallet address"}
-                    >
-                      {walletVisible ? <EyeOff size={14} /> : <Eye size={14} />}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => copyToClipboard(walletAddress, "Wallet address copied to clipboard")}
-                      title="Copy wallet address"
-                    >
-                      <Copy size={14} />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Referral Code</CardTitle>
-                <CardDescription>Share with friends to earn rewards</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                  {/*//Generated referral code should be added here*/}
-                  <code className="text-sm font-mono">JOHN25</code>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => copyToClipboard("JOHN25", "Referral code copied to clipboard")}
-                  >
-                    <Copy size={14} />
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">You've referred 3 users so far</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Deposit and Withdraw */}
-          <Tabs defaultValue="deposit" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-4 ">
-              <TabsTrigger className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition" value="deposit">Deposit</TabsTrigger>
-
-              <TabsTrigger className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition" value="withdraw">Withdraw</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="deposit">
-    <Card>
-      <CardHeader>
-        <CardTitle>Deposit Funds</CardTitle>
-        <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Amount */}
-        <div className="space-y-2">
-          <Label htmlFor="deposit-amount">Amount</Label>
-          <div className="relative w-72">
-            <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
-            <Input
-                id="deposit-amount"
-                placeholder="0.00"
-                className="pl-9"
-                value={depositAmount}
-                onChange={(e) => setDepositAmount(e.target.value)}
-            />
-          </div>
-
-        </div>
-
-        {/* Name */}
-        <div className="space-y-2">
-          <Label htmlFor="name">Your Name</Label>
-          <div className="relative w-72">
-
-            <Input
-                id="name"
-                placeholder="Your full name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* Wallet Address */}
-        <div className="space-y-2">
-          <Label htmlFor="wallet-address">Your Wallet Address</Label>
-          <div className="relative w-72">
-            <Input
-                id="wallet-address"
-                placeholder="Enter wallet address"
-                value={walletAddress}
-                onChange={(e) => setWalletAddress(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* Description */}
-        <div className="space-y-2">
-          <Label htmlFor="withdraw-description">Select Package</Label>
-          <div className="relative w-72">
-            <select
-                id="withdraw-description"
-                value={withdrawDescription}
-                onChange={(e) => setWithdrawDescription(e.target.value)}
-                className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">-- Choose a package --</option>
-              <option value="Test package">Test package</option>
-              <option value="Pro package">Pro package</option>
-              <option value="Premium package">Premium package</option>
-            </select>
-          </div>
-        </div>
-
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full border border-green-500 hover:bg-white/10">Invest Funds</Button>
-      </CardFooter>
-    </Card>
-            </TabsContent>
-
-
-            <TabsContent value="withdraw">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Withdraw Funds</CardTitle>
-                  <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {/* Amount */}
-                  <div className="space-y-2">
-                    <Label htmlFor="withdraw-amount">Amount</Label>
-                    <div className="relative w-72">
-                      <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
-                      <Input
-                          id="withdraw-amount"
-              placeholder="0.00"
-              className="pl-9"
-              value={withdrawAmount}
-              onChange={(e) => setWithdrawAmount(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* Name */}
-        <div className="space-y-2">
-          <Label htmlFor="withdraw-name">Your Name</Label>
-          <div className="relative w-72">
-          <Input
-            id="withdraw-name"
-            placeholder="Your full name"
-            value={withdrawName}
-            onChange={(e) => setWithdrawName(e.target.value)}
-          />
-          </div>
-        </div>
-
-        {/* Wallet Address */}
-        <div className="space-y-2">
-          <Label htmlFor="withdraw-wallet">Your Wallet Address</Label>
-          <div className="relative w-72">
-          <Input
-            id="withdraw-wallet"
-            placeholder="Enter wallet address"
-            value={withdrawWallet}
-            onChange={(e) => setWithdrawWallet(e.target.value)}
-          />
-          </div>
-        </div>
-
-        {/* Description */}
-        <div className="space-y-2">
-          <Label htmlFor="withdraw-description">Description</Label>
-          <div className="relative w-72">
-          <Input
-            id="withdraw-description"
-            placeholder="Description or note (optional)"
-            value={withdrawDescription}
-            onChange={(e) => setWithdrawDescription(e.target.value)}
-          />
-          </div>
-        </div>
-
-        {/* Withdraw Method */}
-        {/*<div className="space-y-2">*/}
-        {/*  <Label htmlFor="withdraw-method">Withdraw To</Label>*/}
-        {/*  <div className="flex items-center gap-2 p-2 border rounded-md">*/}
-        {/*    <ArrowLeftRight size={16} />*/}
-        {/*    <span className="text-sm">Bank Account (****6789)</span>*/}
-        {/*    <ChevronDown size={16} className="ml-auto" />*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-
-        <Separator />
-
-        <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Available for withdrawal:</span>
-          <span className="font-medium">$2,450.50</span>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full border-red-500 border hover:bg-white/10">Withdraw Funds</Button>
-      </CardFooter>
-    </Card>
-  </TabsContent>
-
-          </Tabs>
-        </div>
-      </div>
-    )
+      )
   }
