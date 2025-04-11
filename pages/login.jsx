@@ -50,8 +50,7 @@ const Login = () => {
         //   title: isLoginMode ? "Login successful!" : "Sign up successful!",
         // });
         // router.push('/dashboard');
-        router.push('/cutomerDashboard')
-        // router.push('/customerDashboard');
+        router.push('/customerDashboard');
       } else {
         // toast({title: `Error: ${response.statusText}`});
       }

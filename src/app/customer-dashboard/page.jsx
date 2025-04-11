@@ -146,12 +146,13 @@
         {/* Main Content */}
         <div className="flex-1 p-4 md:p-6">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold">Dashboard</h1>
+            {/*//add usersname here*/}
+            <h1 className="text-3xl font-bold">Welcome !</h1>
             <div className="flex items-center gap-2">
-              <ThemeToggle />
-              <Button variant="outline" size="icon">
-                <Bell size={16} />
-              </Button>
+              {/*<ThemeToggle />*/}
+              {/*<Button variant="outline" size="icon">*/}
+              {/*  <Bell size={16} />*/}
+              {/*</Button>*/}
             </div>
           </div>
 
@@ -235,6 +236,7 @@
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                  {/*//Generated referral code should be added here*/}
                   <code className="text-sm font-mono">JOHN25</code>
                   <Button
                     variant="ghost"
@@ -251,96 +253,102 @@
 
           {/* Deposit and Withdraw */}
           <Tabs defaultValue="deposit" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-4">
-              <TabsTrigger value="deposit">Deposit</TabsTrigger>
-              <TabsTrigger value="withdraw">Withdraw</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 mb-4 ">
+              <TabsTrigger className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition" value="deposit">Deposit</TabsTrigger>
+
+              <TabsTrigger className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition" value="withdraw">Withdraw</TabsTrigger>
             </TabsList>
 
             <TabsContent value="deposit">
     <Card>
       <CardHeader>
         <CardTitle>Deposit Funds</CardTitle>
-        <CardDescription>Add money to your account</CardDescription>
+        <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Amount */}
         <div className="space-y-2">
           <Label htmlFor="deposit-amount">Amount</Label>
           <div className="relative w-72">
-            <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            id="deposit-amount"
-            placeholder="0.00"
-            className="pl-9"
-            value={depositAmount}
-            onChange={(e) => setDepositAmount(e.target.value)}
-          />
-      </div>
+            <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+            <Input
+                id="deposit-amount"
+                placeholder="0.00"
+                className="pl-9"
+                value={depositAmount}
+                onChange={(e) => setDepositAmount(e.target.value)}
+            />
+          </div>
 
         </div>
 
         {/* Name */}
         <div className="space-y-2">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="name">Your Name</Label>
           <div className="relative w-72">
 
-          <Input
-            id="name"
-            placeholder="Your full name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+            <Input
+                id="name"
+                placeholder="Your full name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+          </div>
         </div>
 
         {/* Wallet Address */}
         <div className="space-y-2">
-          <Label htmlFor="wallet-address">Wallet Address</Label>
+          <Label htmlFor="wallet-address">Your Wallet Address</Label>
           <div className="relative w-72">
-          <Input
-            id="wallet-address"
-            placeholder="Enter wallet address"
-            value={walletAddress}
-            onChange={(e) => setWalletAddress(e.target.value)}
-          />
+            <Input
+                id="wallet-address"
+                placeholder="Enter wallet address"
+                value={walletAddress}
+                onChange={(e) => setWalletAddress(e.target.value)}
+            />
           </div>
         </div>
 
         {/* Description */}
         <div className="space-y-2">
-          <Label htmlFor="description">Description</Label>
+          <Label htmlFor="withdraw-description">Select Package</Label>
           <div className="relative w-72">
-          <Input
-            id="description"
-            placeholder="Description or note (optional)"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
+            <select
+                id="withdraw-description"
+                value={withdrawDescription}
+                onChange={(e) => setWithdrawDescription(e.target.value)}
+                className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">-- Choose a package --</option>
+              <option value="Test package">Test package</option>
+              <option value="Pro package">Pro package</option>
+              <option value="Premium package">Premium package</option>
+            </select>
+          </div>
         </div>
 
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Deposit Funds</Button>
+        <Button className="w-full border border-green-500 hover:bg-white/10">Invest Funds</Button>
       </CardFooter>
     </Card>
-  </TabsContent>
+            </TabsContent>
 
 
-  <TabsContent value="withdraw">
-    <Card>
-      <CardHeader>
-        <CardTitle>Withdraw Funds</CardTitle>
-        <CardDescription>Transfer money to your bank account</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Amount */}
-        <div className="space-y-2">
-          <Label htmlFor="withdraw-amount">Amount</Label>
-          <div className="relative w-72">
-            <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="withdraw-amount"
+            <TabsContent value="withdraw">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Withdraw Funds</CardTitle>
+                  <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Amount */}
+                  <div className="space-y-2">
+                    <Label htmlFor="withdraw-amount">Amount</Label>
+                    <div className="relative w-72">
+                      <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+                      <Input
+                          id="withdraw-amount"
               placeholder="0.00"
               className="pl-9"
               value={withdrawAmount}
@@ -351,7 +359,7 @@
 
         {/* Name */}
         <div className="space-y-2">
-          <Label htmlFor="withdraw-name">Name</Label>
+          <Label htmlFor="withdraw-name">Your Name</Label>
           <div className="relative w-72">
           <Input
             id="withdraw-name"
@@ -364,7 +372,7 @@
 
         {/* Wallet Address */}
         <div className="space-y-2">
-          <Label htmlFor="withdraw-wallet">Wallet Address</Label>
+          <Label htmlFor="withdraw-wallet">Your Wallet Address</Label>
           <div className="relative w-72">
           <Input
             id="withdraw-wallet"
@@ -389,14 +397,14 @@
         </div>
 
         {/* Withdraw Method */}
-        <div className="space-y-2">
-          <Label htmlFor="withdraw-method">Withdraw To</Label>
-          <div className="flex items-center gap-2 p-2 border rounded-md">
-            <ArrowLeftRight size={16} />
-            <span className="text-sm">Bank Account (****6789)</span>
-            <ChevronDown size={16} className="ml-auto" />
-          </div>
-        </div>
+        {/*<div className="space-y-2">*/}
+        {/*  <Label htmlFor="withdraw-method">Withdraw To</Label>*/}
+        {/*  <div className="flex items-center gap-2 p-2 border rounded-md">*/}
+        {/*    <ArrowLeftRight size={16} />*/}
+        {/*    <span className="text-sm">Bank Account (****6789)</span>*/}
+        {/*    <ChevronDown size={16} className="ml-auto" />*/}
+        {/*  </div>*/}
+        {/*</div>*/}
 
         <Separator />
 
@@ -406,7 +414,7 @@
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Withdraw Funds</Button>
+        <Button className="w-full border-red-500 border hover:bg-white/10">Withdraw Funds</Button>
       </CardFooter>
     </Card>
   </TabsContent>

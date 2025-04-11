@@ -12,7 +12,7 @@ const activities = [
       email: 'john.doe@example.com',
       avatar: '/placeholder.svg?height=40&width=40',
     },
-    action: 'Login',
+    action: '1000',
     timestamp: '2 minutes ago',
     icon: LogIn,
   },
@@ -67,7 +67,7 @@ export const RecentActivities = () => (
     <TableHeader>
       <TableRow>
         <TableHead>User</TableHead>
-        <TableHead>Action</TableHead>
+        <TableHead>Amount</TableHead>
         <TableHead>Time</TableHead>
       </TableRow>
     </TableHeader>
@@ -88,8 +88,8 @@ export const RecentActivities = () => (
           </TableCell>
           <TableCell>
             <div className="flex items-center gap-2">
-              <activity.icon className="h-4 w-4 text-muted-foreground" />
-              <span>{activity.action}</span>
+              {/*<activity.icon className="h-4 w-4 text-muted-foreground" />*/}
+              <span>$</span>
             </div>
           </TableCell>
           <TableCell>

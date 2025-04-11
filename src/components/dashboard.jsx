@@ -56,14 +56,14 @@ export const Dashboard = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  Settings
-                </DropdownMenuItem>
+                {/*<DropdownMenuItem>*/}
+                {/*  <User className="mr-2 h-4 w-4" />*/}
+                {/*  Profile*/}
+                {/*</DropdownMenuItem>*/}
+                {/*<DropdownMenuItem>*/}
+                {/*  <Settings className="mr-2 h-4 w-4" />*/}
+                {/*  Settings*/}
+                {/*</DropdownMenuItem>*/}
                 <DropdownMenuItem>
                   <LogOut className="mr-2 h-4 w-4" />
                   Logout
@@ -79,21 +79,21 @@ export const Dashboard = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
           <div className="flex items-center gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  Last 7 days <ChevronDown className="ml-2 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>Last 24 hours</DropdownMenuItem>
-                <DropdownMenuItem>Last 7 days</DropdownMenuItem>
-                <DropdownMenuItem>Last 30 days</DropdownMenuItem>
-                <DropdownMenuItem>Last 3 months</DropdownMenuItem>
-                <DropdownMenuItem>Last year</DropdownMenuItem>
-                <DropdownMenuItem>All time</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/*<DropdownMenu>*/}
+            {/*  <DropdownMenuTrigger asChild>*/}
+            {/*    <Button variant="outline" size="sm">*/}
+            {/*      Last 7 days <ChevronDown className="ml-2 h-4 w-4" />*/}
+            {/*    </Button>*/}
+            {/*  </DropdownMenuTrigger>*/}
+            {/*  <DropdownMenuContent align="end">*/}
+            {/*    <DropdownMenuItem>Last 24 hours</DropdownMenuItem>*/}
+            {/*    <DropdownMenuItem>Last 7 days</DropdownMenuItem>*/}
+            {/*    <DropdownMenuItem>Last 30 days</DropdownMenuItem>*/}
+            {/*    <DropdownMenuItem>Last 3 months</DropdownMenuItem>*/}
+            {/*    <DropdownMenuItem>Last year</DropdownMenuItem>*/}
+            {/*    <DropdownMenuItem>All time</DropdownMenuItem>*/}
+            {/*  </DropdownMenuContent>*/}
+            {/*</DropdownMenu>*/}
           </div>
         </div>
 
@@ -104,13 +104,13 @@ export const Dashboard = () => {
         <Tabs defaultValue="users">
           <TabsList className="bg-secondary">
             <TabsTrigger value="users">Users</TabsTrigger>
-            <TabsTrigger value="activities">Recent Activities</TabsTrigger>
+            <TabsTrigger value="activities">Transaction Requests</TabsTrigger>
           </TabsList>
           <TabsContent value="users" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>User Management</CardTitle>
-                <CardDescription>View and manage all registered users in the system.</CardDescription>
+                <CardDescription>View all user activities here</CardDescription>
               </CardHeader>
               <CardContent>
                 <UserList searchQuery={searchQuery} />
@@ -120,8 +120,17 @@ export const Dashboard = () => {
           <TabsContent value="activities" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Recent Activities</CardTitle>
-                <CardDescription>Monitor recent user activities and logins.</CardDescription>
+                <CardTitle>Recent Deposits</CardTitle>
+                <CardDescription>Monitor recent user deposits that need to be settled</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RecentActivities />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Withdrawal</CardTitle>
+                <CardDescription>Monitor recent user withdrawals that need to be settled</CardDescription>
               </CardHeader>
               <CardContent>
                 <RecentActivities />
@@ -129,6 +138,9 @@ export const Dashboard = () => {
             </Card>
           </TabsContent>
         </Tabs>
+
+
+
       </main>
     </div>
   );

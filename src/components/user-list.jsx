@@ -18,7 +18,7 @@ const users = [
     packages: 'Test',
     email: 'john.doe@example.com',
     amount: '2000.00',
-    status: 'Online',
+    status: 'Active',
     lastActive: 'Just now',
     registeredDate: 'Jan 12, 2023',
   },
@@ -29,7 +29,7 @@ const users = [
     packages: 'Pro',
     email: 'jane.smith@example.com',
     amount: '100,000.000',
-    status: 'Online',
+    status: 'Active',
     lastActive: '5 minutes ago',
     registeredDate: 'Mar 5, 2023',
   },
@@ -40,7 +40,7 @@ const users = [
     packages: 'Pro',
     email: 'robert.johnson@example.com',
     amount: '200.00',
-    status: 'Offline',
+    status: 'Inactive',
     lastActive: '2 hours ago',
     registeredDate: 'Apr 18, 2023',
   },
@@ -51,7 +51,7 @@ const users = [
     packages: 'Premium',
     email: 'emily.davis@example.com',
     amount: '30,000.00',
-    status: 'Offline',
+    status: 'Inactive',
     lastActive: '1 day ago',
     registeredDate: 'Jun 22, 2023',
   },
@@ -62,7 +62,7 @@ const users = [
     packages: 'Test',
     email: 'michael.wilson@example.com',
     amount: '50,000',
-    status: 'Online',
+    status: 'Active',
     lastActive: 'Just now',
     registeredDate: 'Aug 3, 2023',
   },
@@ -73,7 +73,7 @@ const users = [
     packages: 'Pro',
     email: 'sarah.brown@example.com',
     amount: '300.00',
-    status: 'Offline',
+    status: 'Inactive',
     lastActive: '3 days ago',
     registeredDate: 'Oct 15, 2023',
   },
@@ -84,7 +84,7 @@ const users = [
     packages: 'Premium',
     email: 'david.miller@example.com',
     amount: '100.00',
-    status: 'Online',
+    status: 'Active',
     lastActive: '30 minutes ago',
     registeredDate: 'Nov 7, 2023',
   },
@@ -109,6 +109,7 @@ export const UserList = ({ searchQuery }) => {
   const handleSuspendUser = (userId) => {
     if (suspendedUsers.includes(userId)) {
       setSuspendedUsers(suspendedUsers.filter((id) => id !== userId));
+      //Send values to the backend
     } else {
       setSuspendedUsers([...suspendedUsers, userId]);
     }
@@ -124,7 +125,7 @@ export const UserList = ({ searchQuery }) => {
             <TableHead>Deposit</TableHead>
             <TableHead>Withdraw due date</TableHead>
             <TableHead>Package</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead>Package Status</TableHead>
             <TableHead>Investment Date</TableHead>
             <TableHead>Registration Date</TableHead>
             <TableHead className="text-right">Actions</TableHead>
@@ -139,8 +140,8 @@ export const UserList = ({ searchQuery }) => {
               <TableCell>{user.withdrawDueDate}</TableCell>
               <TableCell>{user.packages}</TableCell>
               <TableCell>
-                <Badge variant={user.status === 'Online' ? 'success' : 'secondary'}>
-                  {user.status === 'Online' ? <Check className="mr-1 h-3 w-3" /> : <Ban className="mr-1 h-3 w-3" />}
+                <Badge variant={user.status === 'Active' ? 'success' : 'secondary'}>
+                  {user.status === 'Active' ? <Check className="mr-1 h-3 w-3" /> : <Ban className="mr-1 h-3 w-3" />}
                   {user.status}
                 </Badge>
               </TableCell>
@@ -178,50 +179,58 @@ export const UserList = ({ searchQuery }) => {
             <DialogDescription>Detailed information about the selected user.</DialogDescription>
           </DialogHeader>
           {selectedUser && (
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-sm font-medium">Name:</span>
-                <span className="col-span-3">{selectedUser.name}</span>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-sm font-medium">Email:</span>
-                <span className="col-span-3">{selectedUser.email}</span>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-sm font-medium">Amount:</span>
-                <span className="col-span-3">{selectedUser.amount}</span>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-sm font-medium">Withdraw due Date:</span>
-                <span className="col-span-3">{selectedUser.withdrawDueDate}</span>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-sm font-medium">Withdraw due Date:</span>
-                <span className="col-span-3">
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Name:</span>
+                  <span className="col-span-3">{selectedUser.name}</span>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Email:</span>
+                  <span className="col-span-3">{selectedUser.email}</span>
+                </div>
+                //Total deposit amount here
+
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Total Amount Deposited:</span>
+                  <span className="col-span-3">{selectedUser.amount}</span>
+                </div>
+
+                //Total withdraw amount here
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Total Amount Withdraw:</span>
+                  <span className="col-span-3">{selectedUser.amount}</span>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Withdraw due Date:</span>
+                  <span className="col-span-3">{selectedUser.withdrawDueDate}</span>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Withdraw due Date:</span>
+                  <span className="col-span-3">
                   <Badge variant={selectedUser.status === 'Online' ? 'success' : 'secondary'}>
                     {selectedUser.status}
                   </Badge>
                 </span>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-sm font-medium">Last Active:</span>
-                <span className="col-span-3">{selectedUser.lastActive}</span>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-sm font-medium">Registered:</span>
-                <span className="col-span-3">{selectedUser.registeredDate}</span>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <span className="text-sm font-medium">Status:</span>
-                <span className="col-span-3">
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Last Active:</span>
+                  <span className="col-span-3">{selectedUser.lastActive}</span>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Registered:</span>
+                  <span className="col-span-3">{selectedUser.registeredDate}</span>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <span className="text-sm font-medium">Status:</span>
+                  <span className="col-span-3">
                   {suspendedUsers.includes(selectedUser.id) ? (
-                    <Badge variant="destructive">Suspended</Badge>
+                      <Badge variant="destructive">Suspended</Badge>
                   ) : (
-                    <Badge variant="success">Active</Badge>
+                      <Badge variant="success">Active</Badge>
                   )}
                 </span>
+                </div>
               </div>
-            </div>
           )}
         </DialogContent>
       </Dialog>
