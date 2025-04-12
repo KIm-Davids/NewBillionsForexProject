@@ -3,11 +3,11 @@ name: Deploy Next.js to Hostinger
 on:
   push:
     branches:
-      - main
+      - main  # Triggers when you push to the 'main' branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Uses GitHub-hosted Ubuntu runner
 
     steps:
       - name: Checkout code
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Adjust this based on your Next.js version
+          node-version: '16.x'  # Set Node.js version to 16.x or later
 
       - name: Install dependencies
         run: npm install
@@ -34,5 +34,5 @@ jobs:
           ftp-username: ${{ secrets.FTP_USERNAME }}
           ftp-password: ${{ secrets.FTP_PASSWORD }}
           ftp-port: ${{ secrets.FTP_PORT }}
-          local-dir: ./out  # Path to your exported Next.js build
-          remote-dir: /public_html  # Adjust based on where you want to deploy the files
+          local-dir: ./out  # Folder containing static export files
+          remote-dir: /public_html  # Where to upload on your Hostinger server
