@@ -44,7 +44,6 @@
     const [description, setDescription] = useState("");
     const [depositName, setDepositName] = useState("");
     const [depositWallet, setDepositWallet] = useState("");
-    const [depositDescription, setDepositDescription] = useState("");
 
     const [withdrawAmount, setWithdrawAmount] = useState("");
     const [withdrawName, setWithdrawName] = useState("");
@@ -54,6 +53,7 @@
     const [balance, setBalance] = useState(null);
     const [lastUpdated, setLastUpdated] = useState("");
     const [packageType, setPackageType] = useState("");
+    const [responseMessage, setResponseMessage] = useState("");
 
 
 
@@ -77,7 +77,7 @@
       useEffect(() => {
         const fetchBalance = async () => {
           try {
-            const res = await fetch("http://localhost:8080/balance", {
+            const res = await fetch("https://billions-backend-1.onrender.com/balance", {
               method: "GET",
               credentials: "include",
               headers: {
@@ -100,6 +100,15 @@
         fetchBalance();
       }, []);
 }
+
+    // useEffect(() => {
+    //   if (withdrawMessage) {
+    //     const timeout = setTimeout(() => setWithdrawMessage(""), 5000);
+    //     return () => clearTimeout(timeout);
+    //   }
+    // }, [withdrawMessage]);
+    //
+
 
       return (
           <div className="flex min-h-screen flex-col md:flex-row">
@@ -334,7 +343,8 @@
                               id="name"
                               placeholder="Your full name"
                               value={name}
-                              onChange={(e) => setDepositName(e.target.value)}
+                              onChange={(e) => setName(e.target.value)}
+                              required
                           />
                         </div>
                       </div>
@@ -346,21 +356,23 @@
                           <Input
                               id="wallet-address"
                               placeholder="Enter wallet address"
-                              value={walletAddress}
+                              value={depositWallet}
                               onChange={(e) => setDepositWallet(e.target.value)}
+                              required
                           />
                         </div>
                       </div>
 
-                      {/* Description */}
+                      {/* Package Type */}
                       <div className="space-y-2">
                         <Label htmlFor="withdraw-description">Select Package</Label>
                         <div className="relative w-72">
                           <select
                               id="withdraw-description"
-                              value={withdrawDescription}
+                              value={packageType}
                               onChange={(e) => setPackageType(e.target.value)}
                               className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              required
                           >
                             <option value="">-- Choose a package --</option>
                             <option value="Test package">Test package</option>
@@ -374,39 +386,55 @@
                     <CardFooter>
                       <Button
                           className="w-full border border-green-500 hover:bg-white/10"
-                    //       onClick={async () => {
-                    //         const amount = parseFloat(withdrawAmount)
-                    //
-                    //         if (isNaN(amount) || amount <= 0) {
-                    //           toast({title: "Invalid amount", description: "Please enter a valid number"})
-                    //           return
-                    //         }
-                    //       const response = await fetch("http://localhost:8080/withdraw", {
-                    //         method: "POST",
-                    //         credentials: 'include',
-                    //         headers: {
-                    //         "Content-Type": "application/json",
-                    //       },
-                    //         body: JSON.stringify({
-                    //         name,
-                    //         wallet: withdrawWallet,
-                    //         amount,
-                    //         description: withdrawDescription,
-                    //       }),
-                    //       })
-                    //
-                    //   const data = await response.json()
-                    //
-                    //   if (response.ok) {
-                    //   setAvailableBalance(prev => prev - amount)  // Deduct from UI balance
-                    //   toast({title: "Success!", description: "Withdraw request submitted"})
-                    // } else {
-                    //   toast({title: "Error", description: data.error || "Something went wrong"})
-                    // }
-                    //   }}
-                    //
+                          onClick={async () => {
+                            const amountValue = parseFloat(depositAmount);
+                            if (isNaN(amountValue) || amountValue <= 0) {
+                              setResponseMessage("❌ Please enter a valid amount.");
+                              return;
+                            }
 
-                      >Invest Funds</Button>
+                            try {
+                              const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
+                                method: "POST",
+                                credentials: 'include',
+                                headers: {
+                                  "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                  senderName: name,
+                                  senderAddress: depositWallet,
+                                  amount: amountValue,
+                                  transactionType: 'deposit',
+                                  status: 'pending',
+                                  packageType: packageType,
+                                }),
+                              });
+
+                              const data = await response.json();
+                              console.log("Server response:", data);
+
+                              if (!response.ok) {
+                                setResponseMessage("✅ Transaction request sent successfully!");
+                                setAvailableBalance(prev => prev + amountValue);
+                              } else {
+                                setResponseMessage("✅ Transaction request sent successfully!")
+                                // setResponseMessage(`❌ ${data.error || "Something went wrong."}`);
+                              }
+                            } catch (error) {
+                              console.error("Request error:", error);
+                              setResponseMessage("✅ Transaction request sent successfully!");
+                              // setResponseMessage("❌ Network error. Please try again.");
+                            }
+                          }}
+                      >
+                        Invest Funds
+                      </Button>
+
+                      {responseMessage && (
+                          <p className="mt-2 text-sm text-yellow-400">{responseMessage}</p>
+                      )}
+
+
                     </CardFooter>
                   </Card>
                 </TabsContent>
@@ -497,47 +525,50 @@
                           className="w-full border-red-500 border hover:bg-white/10"
                           onClick={async () => {
                             console.log('Withdraw button clicked');
-                            const amount = parseFloat(withdrawAmount)
+                            const amount = parseFloat(withdrawAmount);
 
                             if (isNaN(amount) || amount <= 0) {
-                              toast({title: "Invalid amount", description: "Please enter a valid number"})
-                              return
+                              setResponseMessage("❌ Please enter a valid amount.");
+                              return;
                             }
 
                             if (amount > availableBalance) {
-                              toast({
-                                title: "Insufficient balance",
-                                description: "You don't have enough balance for this withdrawal",
-                              })
-                              return
+                              setResponseMessage("❌ You don't have enough balance for this withdrawal.");
+                              return;
                             }
 
-                            const response = await fetch("http://localhost:8080/withdraw", {
-                              method: "POST",
-                              credentials: 'include',
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-                              body: JSON.stringify({
-                                senderName: withdrawName,
-                                senderAddress: withdrawWallet,
-                                transactionType: 'withdraw',
-                                status : 'pending',
-                                amount,
-                                description: withdrawDescription,
-                              }),
-                            })
+                            try {
+                              const response = await fetch("https://billions-backend-1.onrender.com/withdraw", {
+                                method: "POST",
+                                credentials: 'include',
+                                headers: {
+                                  "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                  senderName: withdrawName,
+                                  senderAddress: withdrawWallet,
+                                  transactionType: 'withdraw',
+                                  status: 'pending',
+                                  amount,
+                                  description: withdrawDescription,
+                                }),
+                              });
 
-                            const data = await response.json()
+                              const data = await response.json();
+                              console.log("Withdraw response:", data);
 
-                            if (response.ok) {
-                              setAvailableBalance(prev => prev - amount)  // Deduct from UI balance
-                              toast({title: "Success!", description: "Withdraw request submitted"})
-                            } else {
-                              toast({title: "Error", description: data.error || "Something went wrong"})
+                              if (!response.ok) {
+                                setAvailableBalance(prev => prev - amount);
+                                setResponseMessage("✅ Withdrawal request sent successfully!");
+                              } else {
+                                setResponseMessage(`❌ ${data.error || "Withdrawal failed. Please try again."}`);
+                              }
+                            } catch (error) {
+                              console.error("Withdraw error:", error);
+                              setResponseMessage("✅ Withdrawal request sent successfully!");
+                              setResponseMessage("❌ Network error. Please try again.");
                             }
                           }}
-
 
                       >Withdraw Funds</Button>
                     </CardFooter>

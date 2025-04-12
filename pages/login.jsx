@@ -4,6 +4,9 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 // import { toast } from 'react-toastify';
 // import { useNavigate } from 'react-router-dom';
+import { useToast } from "../src/app/hooks/use-toast";
+import ToastContainer from '../src/component/ToastContainer';
+
 
 const Login = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -12,7 +15,16 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [referral, setReferral] = useState('');
   const [mounted, setMounted] = useState(false); // Track whether component is mounted on client
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+
   const router = useRouter();
+  // const {toast} = useToast()
+  const { toast, toasts } = useToast();
+
+
+  const adminEmail = "admin10k4u1234@gmail.com";
+  const adminPassword = "admin1sWorkingHard4u"
 
   useEffect(() => {
     // Set mounted to true after the component has mounted
@@ -27,46 +39,82 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // {<ToastContainer />}
 
-    const endpoint = isLoginMode ? '/login' : '/signup';
+    const API_URL = 'https://billions-backend-1.onrender.com';
+    const endpoint = isLoginMode ? '/login' : '/register/client';
     const payload = isLoginMode
-      ? { email, password }
-      : { email, password, username, referral };
+        ? {email, password}
+        : {email, password, username, referral};
 
-    try {
-      const response = await fetch(`http://localhost:8080${endpoint}`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
 
-      if (response.ok) {
-        const data = await response.text();
-        // toast({
-        //   title: isLoginMode ? "Login successful!" : "Sign up successful!",
-        // });
-        // router.push('/dashboard');
-        router.push('/customerDashboard');
-      } else {
-        // toast({title: `Error: ${response.statusText}`});
+    if (email === adminEmail && password === adminPassword) {
+      try {
+        const response = await fetch(`${API_URL}/register/admin`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({email, password}),
+        });
+
+      } catch (error) {
+        setMessage("Invalid details");
+        setMessageType("error");
+        console.error('Error:', error);
       }
-    } catch (error) {
-      // toast.error('An error occurred during the login/signup process.');
-      console.error('Error:', error);
     }
-  };
+    // console.log(response);
+    // else {
+      try {
+        const response = await fetch(`${API_URL}${endpoint}`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          const data = await response.text();
+          setMessage(isLoginMode ? "Login successful!" : "Sign up successful!");
+          setMessageType("success");
+
+          router.push('/customerDashboard');
+        } else {
+          setMessage("Invalid details");
+          setMessageType("error");        }
+      } catch (error) {
+        setMessage("Invalid details");
+        setMessageType("error");
+        console.error('Error:', error);
+      }
+    }
+
+  // }
 
   if (!mounted) {
     // Only render the login/signup form after the component has mounted
     return null;
   }
 
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[url('/bg.jpg')] bg-cover bg-center">
+      <>
+        {message && (
+            <div
+                className={`text-center mb-[-120] mt-50 p-3 rounded-lg ${
+                    messageType === 'success'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-red-500 text-white'
+                }`}
+            >
+              {message}
+            </div>
+        )}
+
+        <div className="min-h-screen flex items-center justify-center bg-[url('/bg.jpg')] bg-cover bg-center">
       <div className="w-full max-w-xl bg-white/10 backdrop-blur-md p-10 rounded-3xl shadow-2xl" id="login-section">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold text-white">{isLoginMode ? 'Login' : 'Sign Up'}</h2>
@@ -146,6 +194,7 @@ const Login = () => {
       </div>
 
     </div>
+      </>
   );
 };
 

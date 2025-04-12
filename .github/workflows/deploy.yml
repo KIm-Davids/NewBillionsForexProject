@@ -24,9 +24,6 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Export the static site
-        run: npm run export
-
       - name: Upload files via FTP to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
@@ -34,5 +31,5 @@ jobs:
           ftp-username: ${{ secrets.FTP_USERNAME }}
           ftp-password: ${{ secrets.FTP_PASSWORD }}
           ftp-port: ${{ secrets.FTP_PORT }}
-          local-dir: ./out  # Folder containing static export files
-          remote-dir: /public_html  # Where to upload on your Hostinger server
+          local-dir: ./
+          remote-dir: /public_html  # Adjust this to where your app needs to go

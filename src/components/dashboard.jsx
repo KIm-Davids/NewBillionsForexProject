@@ -33,22 +33,22 @@ export const Dashboard = () => {
           <div className="ml-auto flex items-center gap-2">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search users..."
-                className="w-[200px] md:w-[300px] pl-8"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+              {/*<Input*/}
+              {/*  type="search"*/}
+              {/*  placeholder="Search users..."*/}
+              {/*  className="w-[200px] md:w-[300px] pl-8"*/}
+              {/*  value={searchQuery}*/}
+              {/*  onChange={(e) => setSearchQuery(e.target.value)}*/}
+              {/*/>*/}
             </div>
-            <Button variant="ghost" size="icon">
-              <BellRing className="h-5 w-5" />
-              <span className="sr-only">Notifications</span>
-            </Button>
-            <Button variant="ghost" size="icon" onClick={toggleTheme}>
-              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              <span className="sr-only">Toggle theme</span>
-            </Button>
+            {/*<Button variant="ghost" size="icon">*/}
+            {/*  /!*<BellRing className="h-5 w-5" />*!/*/}
+            {/*  <span className="sr-only">Notifications</span>*/}
+            {/*</Button>*/}
+            {/*<Button variant="ghost" size="icon" onClick={toggleTheme}>*/}
+            {/*  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}*/}
+            {/*  <span className="sr-only">Toggle theme</span>*/}
+            {/*</Button>*/}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">

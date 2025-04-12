@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Ban, Check, MoreHorizontal, UserCog } from 'lucide-react';
 
 import { Badge } from './ui/badge';
@@ -9,102 +9,82 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 
-// Mock user data
-const users = [
-  {
-    id: 1,
-    name: 'John Doe',
-    withdrawDueDate: '2023-12-01',
-    packages: 'Test',
-    email: 'john.doe@example.com',
-    amount: '2000.00',
-    status: 'Active',
-    lastActive: 'Just now',
-    registeredDate: 'Jan 12, 2023',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    withdrawDueDate: '2023-12-01',
-    packages: 'Pro',
-    email: 'jane.smith@example.com',
-    amount: '100,000.000',
-    status: 'Active',
-    lastActive: '5 minutes ago',
-    registeredDate: 'Mar 5, 2023',
-  },
-  {
-    id: 3,
-    name: 'Robert Johnson',
-    withdrawDueDate: '2023-12-01',
-    packages: 'Pro',
-    email: 'robert.johnson@example.com',
-    amount: '200.00',
-    status: 'Inactive',
-    lastActive: '2 hours ago',
-    registeredDate: 'Apr 18, 2023',
-  },
-  {
-    id: 4,
-    name: 'Emily Davis',
-    withdrawDueDate: '2023-12-01',
-    packages: 'Premium',
-    email: 'emily.davis@example.com',
-    amount: '30,000.00',
-    status: 'Inactive',
-    lastActive: '1 day ago',
-    registeredDate: 'Jun 22, 2023',
-  },
-  {
-    id: 5,
-    name: 'Michael Wilson',
-    withdrawDueDate: '2023-12-01',
-    packages: 'Test',
-    email: 'michael.wilson@example.com',
-    amount: '50,000',
-    status: 'Active',
-    lastActive: 'Just now',
-    registeredDate: 'Aug 3, 2023',
-  },
-  {
-    id: 6,
-    name: 'Sarah Brown',
-    withdrawDueDate: '2023-12-01',
-    packages: 'Pro',
-    email: 'sarah.brown@example.com',
-    amount: '300.00',
-    status: 'Inactive',
-    lastActive: '3 days ago',
-    registeredDate: 'Oct 15, 2023',
-  },
-  {
-    id: 7,
-    name: 'David Miller',
-    withdrawDueDate: '2023-12-01',
-    packages: 'Premium',
-    email: 'david.miller@example.com',
-    amount: '100.00',
-    status: 'Active',
-    lastActive: '30 minutes ago',
-    registeredDate: 'Nov 7, 2023',
-  },
-];
+// Get user data
+
+
+
 
 export const UserList = ({ searchQuery }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [suspendedUsers, setSuspendedUsers] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [transaction, setTransaction] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const filteredUsers = users.filter(
-    (user) => user.name.toLowerCase().includes(searchQuery.toLowerCase())
-      || user.email.toLowerCase().includes(searchQuery.toLowerCase())
-      || user.role.toLowerCase().includes(searchQuery.toLowerCase()),
+    (users) => users.username.toLowerCase().includes(searchQuery.toLowerCase())
+      || users.email.toLowerCase().includes(searchQuery.toLowerCase())
+      || users.role.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const handleViewDetails = (user) => {
-    setSelectedUser(user);
+  const API_URL = 'https://billions-backend-1.onrender.com';
+
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch(`https://billions-backend-1.onrender.com/get/users`, {
+          credentials: 'include',
+        }); // 👈 Replace with your actual endpoint
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data = await res.json();
+        setUsers(data);
+        console.log(data);
+      } catch (err) {
+        console.error('Error fetching users:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchTransaction = async () => {
+      try {
+        const res = await fetch(`https://billions-backend-1.onrender.com/get/transaction`, {
+          credentials: 'include',
+        }); // 👈 Replace with your actual endpoint
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data = await res.json();
+        console.log(data.transactions);
+        setTransaction(data.transactions);
+      } catch (err) {
+        console.error('Error fetching transaction:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTransaction();
+  }, []);
+
+
+
+
+  const handleViewDetails = (users, transaction) => {
+    setSelectedUser(users);
+    setTransaction(transaction);
     setIsDialogOpen(true);
   };
+
+  // const handleTransactionViewDetails = (transaction) => {
+  //   setSelectedUser(transaction);
+  //   setIsDialogOpen(true);
+  // };
 
   const handleSuspendUser = (userId) => {
     if (suspendedUsers.includes(userId)) {
@@ -120,55 +100,62 @@ export const UserList = ({ searchQuery }) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
+            <TableHead>UserName</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Deposit</TableHead>
             <TableHead>Withdraw due date</TableHead>
-            <TableHead>Package</TableHead>
+            <TableHead>package type</TableHead>
             <TableHead>Package Status</TableHead>
-            <TableHead>Investment Date</TableHead>
+            <TableHead>Transaction Type</TableHead>
             <TableHead>Registration Date</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredUsers.map((user) => (
-            <TableRow key={user.id} className={suspendedUsers.includes(user.id) ? 'opacity-50' : ''}>
-              <TableCell className="font-medium">{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.amount}</TableCell>
-              <TableCell>{user.withdrawDueDate}</TableCell>
-              <TableCell>{user.packages}</TableCell>
-              <TableCell>
-                <Badge variant={user.status === 'Active' ? 'success' : 'secondary'}>
-                  {user.status === 'Active' ? <Check className="mr-1 h-3 w-3" /> : <Ban className="mr-1 h-3 w-3" />}
-                  {user.status}
-                </Badge>
-              </TableCell>
-              <TableCell>{user.lastActive}</TableCell>
-              <TableCell>{user.registeredDate}</TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                      <span className="sr-only">Actions</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleViewDetails(user)}>
-                      <UserCog className="mr-2 h-4 w-4" />
-                      View Details
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleSuspendUser(user.id)}>
-                      <Ban className="mr-2 h-4 w-4" />
-                      {suspendedUsers.includes(user.id) ? 'Unsuspend User' : 'Suspend User'}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
+          {filteredUsers.map((users) => {
+            const userTransaction = transaction?.find?.(tx => tx.userId === users.id);
+
+            return (
+                <TableRow key={users.id} className={suspendedUsers.includes(users.id) ? 'opacity-50' : ''}>
+                  <TableCell className="font-medium">{users.username}</TableCell>
+                  <TableCell>{users.email}</TableCell>
+                  <TableCell>{userTransaction?.amount ?? '—'}</TableCell>
+                  <TableCell>{userTransaction.withdrawDueDate ?? '—'}</TableCell>
+                  <TableCell>{userTransaction?.packageType ?? '—'}</TableCell>
+                  <TableCell>
+                    <Badge variant={userTransaction?.status === 'Pending' ? 'success' : 'secondary'}>
+                      {userTransaction?.status === 'Pending' ? <Check className="mr-1 h-3 w-3" /> : <Ban className="mr-1 h-3 w-3" />}
+                      {userTransaction?.status ?? '—'}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{userTransaction?.transactionType ?? '—'}</TableCell>
+                  <TableCell>
+                    {users.CreatedAt ? new Date(users.CreatedAt).toLocaleDateString() : '—'}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Actions</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => handleViewDetails(users, userTransaction)}>
+                          <UserCog className="mr-2 h-4 w-4" />
+                          View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleSuspendUser(users.id)}>
+                          <Ban className="mr-2 h-4 w-4" />
+                          {suspendedUsers.includes(users.id) ? 'Unsuspend User' : 'Suspend User'}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+            )
+          })}
+
         </TableBody>
       </Table>
 
@@ -188,14 +175,14 @@ export const UserList = ({ searchQuery }) => {
                   <span className="text-sm font-medium">Email:</span>
                   <span className="col-span-3">{selectedUser.email}</span>
                 </div>
-                //Total deposit amount here
+                {/*//Total deposit amount here*/}
 
                 <div className="grid grid-cols-4 items-center gap-4">
                   <span className="text-sm font-medium">Total Amount Deposited:</span>
                   <span className="col-span-3">{selectedUser.amount}</span>
                 </div>
 
-                //Total withdraw amount here
+                {/*//Total withdraw amount here*/}
                 <div className="grid grid-cols-4 items-center gap-4">
                   <span className="text-sm font-medium">Total Amount Withdraw:</span>
                   <span className="col-span-3">{selectedUser.amount}</span>
