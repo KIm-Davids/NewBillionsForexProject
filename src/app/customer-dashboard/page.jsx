@@ -254,12 +254,11 @@
               </div>
 
               {/* Wallet and Referral */}
-              {/* Wallet and Referral */}
               <div className="grid gap-4 md:grid-cols-2 mb-6">
                 <Card>
                   <CardHeader>
                     <CardTitle>Wallet Addresses</CardTitle>
-                    <CardDescription>Your cryptocurrency wallets</CardDescription>
+                    <CardDescription>YOU CAN SEND TO ANY OF THESE WALLETS</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-4">
