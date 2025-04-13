@@ -57,9 +57,7 @@ const Login = () => {
           },
           body: JSON.stringify(payload),
         });
-        if (response.ok) {
           router.push('/dashboard');
-        }
 
       } catch (error) {
         setMessage("Invalid details");
