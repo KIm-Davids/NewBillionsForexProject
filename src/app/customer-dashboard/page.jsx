@@ -373,28 +373,28 @@
                 </Card>
 
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Referral Code</CardTitle>
-                    <CardDescription>SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                      {/*//Generated referral code should be added here*/}
-                      <code className="text-sm font-mono">{referralCode}</code>
-                      <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() =>
-                              copyToClipboard(referralCode, "Referral code copied to clipboard")
-                          }
-                      >
-                        <Copy size={14}/>
-                      </Button>
-                    </div>
-                    <p className="text-xl text-muted-foreground mt-2">You've referred 0 users so far</p>
-                  </CardContent>
-                </Card>
+                {/*<Card>*/}
+                {/*  <CardHeader>*/}
+                {/*    <CardTitle>Referral Code</CardTitle>*/}
+                {/*    <CardDescription>SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED</CardDescription>*/}
+                {/*  </CardHeader>*/}
+                {/*  <CardContent>*/}
+                {/*    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">*/}
+                {/*      /!*//Generated referral code should be added here*!/*/}
+                {/*      <code className="text-sm font-mono">{referralCode}</code>*/}
+                {/*      <Button*/}
+                {/*          variant="ghost"*/}
+                {/*          size="icon"*/}
+                {/*          onClick={() =>*/}
+                {/*              copyToClipboard(referralCode, "Referral code copied to clipboard")*/}
+                {/*          }*/}
+                {/*      >*/}
+                {/*        <Copy size={14}/>*/}
+                {/*      </Button>*/}
+                {/*    </div>*/}
+                {/*    <p className="text-xl text-muted-foreground mt-2">You've referred 0 users so far</p>*/}
+                {/*  </CardContent>*/}
+                {/*</Card>*/}
               </div>
 
 
