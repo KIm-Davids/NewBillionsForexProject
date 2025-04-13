@@ -18,6 +18,7 @@
     Users,
   } from "lucide-react"
   import { useToast } from "../hooks/use-toast"
+  import dynamic from 'next/dynamic';
   import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
   import { Button } from "../ui/button"
   import {
@@ -76,14 +77,6 @@
     const isAmountValid = expectedAmount !== null && parseFloat(depositAmount) === expectedAmount;
 
 
-
-      const packageAmounts = {
-          "Test package": 100,
-          "Pro package": 500,
-          "Premium package": 1000,
-      };
-
-
       useEffect(() => {
           setIsClient(true);
       }, []);
@@ -95,6 +88,23 @@
               </div>
           );
       }
+
+      const Dashboard = dynamic(() => import('../src/app/customer-dashboard/page'), {
+          ssr: false,
+      });
+
+      export default function DashboardPage() {
+          return <Dashboard />;
+      }
+
+
+
+      const packageAmounts = {
+          "Test package": 100,
+          "Pro package": 500,
+          "Premium package": 1000,
+      };
+
 
       const generateReferralCode = (length = 8) => {
           const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
