@@ -43,7 +43,7 @@
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [depositName, setDepositName] = useState("");
-    const [depositWallet, setDepositWallet] = useState("");
+    const [hash, setHash] = useState("");
 
     const [withdrawAmount, setWithdrawAmount] = useState("");
     const [withdrawName, setWithdrawName] = useState("");
@@ -382,13 +382,13 @@
 
                           {/* Wallet Address */}
                           <div className="space-y-2">
-                              <Label htmlFor="wallet-address">Your Wallet Address</Label>
+                              <Label htmlFor="wallet-address">Please provide the transaction hash</Label>
                               <div className="relative w-72">
                                   <Input
-                                      id="wallet-address"
-                                      placeholder="Enter wallet address"
-                                      value={depositWallet}
-                                      onChange={(e) => setDepositWallet(e.target.value)}
+                                      id="hash-address"
+                                      placeholder="e.g f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e"
+                                      value={hash}
+                                      onChange={(e) => setHash(e.target.value)}
                                       required
                                   />
                               </div>
@@ -413,24 +413,24 @@
                               </div>
                           </div>
 
-                          <div className="space-y-2">
-                              <Label htmlFor="withdraw-description">Select Wallet Type</Label>
-                              <div className="relative w-72">
-                                  <select
-                                      id="wallet-type"
-                                      value={walletType}
-                                      onChange={(e) => setWalletType(e.target.value)}
-                                      className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                      required
-                                  >
-                                      <option value="">-- Choose a wallet type --</option>
-                                      <option value="USDT TRC20">USDT TRC20</option>
-                                      <option value="USDT BEP20">USDT BEP20</option>
-                                      <option value="USDT ERC20">USDT ERC20</option>
-                                      <option value="USDC SOL">USDC SOL</option>
-                                  </select>
-                              </div>
-                          </div>
+                          {/*<div className="space-y-2">*/}
+                          {/*    <Label htmlFor="withdraw-description">Select Wallet Type</Label>*/}
+                          {/*    <div className="relative w-72">*/}
+                          {/*        <select*/}
+                          {/*            id="wallet-type"*/}
+                          {/*            value={walletType}*/}
+                          {/*            onChange={(e) => setWalletType(e.target.value)}*/}
+                          {/*            className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"*/}
+                          {/*            required*/}
+                          {/*        >*/}
+                          {/*            <option value="">-- Choose a wallet type --</option>*/}
+                          {/*            <option value="USDT TRC20">USDT TRC20</option>*/}
+                          {/*            <option value="USDT BEP20">USDT BEP20</option>*/}
+                          {/*            <option value="USDT ERC20">USDT ERC20</option>*/}
+                          {/*            <option value="USDC SOL">USDC SOL</option>*/}
+                          {/*        </select>*/}
+                          {/*    </div>*/}
+                          {/*</div>*/}
 
 
                       </CardContent>
