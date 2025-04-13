@@ -111,32 +111,7 @@
       }, []);
 }
 
-      const ReferralCard = () => {
-          const [referralCode, setReferralCode] = useState("");
-
-          // Function to generate a random alphanumeric code
-          const generateReferralCode = (length = 8) => {
-              const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-              let result = "";
-              for (let i = 0; i < length; i++) {
-                  result += characters.charAt(Math.floor(Math.random() * characters.length));
-              }
-              return result;
-          };
-
-          // Copy to clipboard function
-          const copyToClipboard = (text, message) => {
-              navigator.clipboard.writeText(text);
-              alert(message); // You can replace this with a toast
-          };
-
-          useEffect(() => {
-              const code = generateReferralCode();
-              setReferralCode(code);
-          }, []);
-
-
-          // useEffect(() => {
+    // useEffect(() => {
     //   if (withdrawMessage) {
     //     const timeout = setTimeout(() => setWithdrawMessage(""), 5000);
     //     return () => clearTimeout(timeout);
@@ -276,7 +251,7 @@
                     <p className="text-xs text-muted-foreground mt-1">Renews on May 10, 2025</p>
                   </CardContent>
                 </Card>
-
+              </div>
 
               {/* Wallet and Referral */}
               <div className="grid gap-4 md:grid-cols-2 mb-6">
@@ -332,42 +307,35 @@
                 </Card>
 
 
-
-                  {/* Referral Code Card */}
-                  <Card>
-                      <CardHeader>
-                          <CardTitle>Referral Code</CardTitle>
-                          <CardDescription>
-                              SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED
-                          </CardDescription>
-                      </CardHeader>
-
-                      <CardContent>
-                          <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                              <code className="text-sm font-mono">{referralCode}</code>
-                              <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  onClick={() => copyToClipboard(referralCode, "Referral code copied to clipboard")}
-                              >
-                                  <Copy size={14} />
-                              </Button>
-                          </div>
-                          <p className="text-xs text-muted-foreground mt-2">
-                              You've referred 3 users so far
-                          </p>
-                      </CardContent>
-                  </Card>
-
-              </div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Referral Code</CardTitle>
+                    <CardDescription>SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED</CardDescription>
+                  </CardHeader>
+                    <CardContent>
+                        <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                            <code className="text-sm font-mono">{referralCode}</code>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() =>
+                                    copyToClipboard(referralCode, "Referral code copied to clipboard")
+                                }
+                            >
+                                <Copy size={14}/>
+                            </Button>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-2">You've referred 0 users so far</p>
+                    </CardContent>
+                </Card>
               </div>
 
 
-              {/* Deposit and Withdraw */}
-              <Tabs defaultValue="deposit" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-4 ">
-                  <TabsTrigger
-                      className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
+                {/* Deposit and Withdraw */}
+                <Tabs defaultValue="deposit" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2 mb-4 ">
+                        <TabsTrigger
+                            className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
                       value="deposit">Deposit</TabsTrigger>
 
                   <TabsTrigger
