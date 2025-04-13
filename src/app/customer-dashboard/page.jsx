@@ -56,7 +56,7 @@
     const [packageType, setPackageType] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
     const [walletType, setWalletType] = useState("");
-    const [referralCode, setReferralCode] = useState("");
+    // const [referralCode, setReferralCode] = useState("");
     const [isClient, setIsClient] = useState(false);
 
 
