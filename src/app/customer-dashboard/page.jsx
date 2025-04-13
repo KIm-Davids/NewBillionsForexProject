@@ -312,30 +312,29 @@
                     <CardTitle>Referral Code</CardTitle>
                     <CardDescription>SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED</CardDescription>
                   </CardHeader>
-                    <CardContent>
-                        <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                            <code className="text-sm font-mono">{referralCode}</code>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() =>
-                                    copyToClipboard(referralCode, "Referral code copied to clipboard")
-                                }
-                            >
-                                <Copy size={14}/>
-                            </Button>
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-2">You've referred 0 users so far</p>
-                    </CardContent>
+                  <CardContent>
+                    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                      {/*//Generated referral code should be added here*/}
+                      <code className="text-sm font-mono">JOHN25</code>
+                      <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => copyToClipboard("JOHN25", "Referral code copied to clipboard")}
+                      >
+                        <Copy size={14}/>
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">You've referred 3 users so far</p>
+                  </CardContent>
                 </Card>
               </div>
 
 
-                {/* Deposit and Withdraw */}
-                <Tabs defaultValue="deposit" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 mb-4 ">
-                        <TabsTrigger
-                            className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
+              {/* Deposit and Withdraw */}
+              <Tabs defaultValue="deposit" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 mb-4 ">
+                  <TabsTrigger
+                      className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
                       value="deposit">Deposit</TabsTrigger>
 
                   <TabsTrigger
