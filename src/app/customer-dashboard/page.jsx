@@ -258,7 +258,9 @@
                 <Card>
                   <CardHeader>
                     <CardTitle>Wallet Addresses</CardTitle>
-                    <CardDescription>YOU CAN SEND TO ANY OF THESE WALLETS</CardDescription>
+                    <CardDescription>YOU CAN SEND TO ANY OF THESE WALLETS </CardDescription>
+                    <CardDescription>Please ensure to send a screenshot to the telegram group </CardDescription>
+                    <CardDescription>https://t.me/+pjIbHbkJGDcwYWE0</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-4">
