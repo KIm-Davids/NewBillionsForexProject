@@ -70,6 +70,16 @@
     const secondWalletName = "USDT BEP20"
     const thirdWalletName = "USDT ERC20"
     const fourthWalletName = "USDC SOL"
+    const expectedAmount = packageAmounts[packageType] || null;
+    const isAmountValid = expectedAmount !== null && parseFloat(depositAmount) === expectedAmount;
+
+
+
+      const packageAmounts = {
+          "Test package": 100,
+          "Pro package": 500,
+          "Premium package": 1000,
+      };
 
 
       const generateReferralCode = (length = 8) => {
@@ -351,7 +361,7 @@
                         <Copy size={14}/>
                       </Button>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">You've referred 0 users so far</p>
+                    <p className="text-xl text-muted-foreground mt-2">You've referred 0 users so far</p>
                   </CardContent>
                 </Card>
               </div>
@@ -376,6 +386,8 @@
                       <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
                     </CardHeader>
                       <CardContent className="space-y-4">
+
+
                           {/* Amount */}
                           <div className="space-y-2">
                               <Label htmlFor="deposit-amount">Amount</Label>
@@ -389,7 +401,11 @@
                                       onChange={(e) => setDepositAmount(e.target.value)}
                                   />
                               </div>
-
+                              {packageType && !isAmountValid && (
+                                  <p className="text-red-500 text-sm">
+                                      Amount must be exactly ${expectedAmount}
+                                  </p>
+                              )}
                           </div>
 
                           {/* Name */}
