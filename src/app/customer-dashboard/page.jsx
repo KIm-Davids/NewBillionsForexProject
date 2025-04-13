@@ -389,10 +389,11 @@
 
 
                           {/* Amount */}
+                          {/* Amount */}
                           <div className="space-y-2">
                               <Label htmlFor="deposit-amount">Amount</Label>
                               <div className="relative w-72">
-                                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+                                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                                   <Input
                                       id="deposit-amount"
                                       placeholder="0.00"
@@ -401,12 +402,15 @@
                                       onChange={(e) => setDepositAmount(e.target.value)}
                                   />
                               </div>
+
+                              {/* 🔴 Place the validation message HERE */}
                               {packageType && !isAmountValid && (
                                   <p className="text-red-500 text-sm">
                                       Amount must be exactly ${expectedAmount}
                                   </p>
                               )}
                           </div>
+
 
                           {/* Name */}
                           <div className="space-y-2">
