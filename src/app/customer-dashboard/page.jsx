@@ -93,10 +93,6 @@
           ssr: false,
       });
 
-      // export default function DashboardPage() {
-      //     return <Dashboard />;
-      // }
-
 
 
       const packageAmounts = {
