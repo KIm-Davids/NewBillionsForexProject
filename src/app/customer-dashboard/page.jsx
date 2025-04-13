@@ -73,8 +73,7 @@
     const secondWalletName = "USDT BEP20"
     const thirdWalletName = "USDT ERC20"
     const fourthWalletName = "USDC SOL"
-    const expectedAmount = packageAmounts[packageType] || null;
-    const isAmountValid = expectedAmount !== null && parseFloat(depositAmount) === expectedAmount;
+
 
 
       useEffect(() => {
@@ -100,6 +99,9 @@
           "Pro package": 500,
           "Premium package": 1000,
       };
+
+      const expectedAmount = packageAmounts[packageType] || null;
+      const isAmountValid = expectedAmount !== null && parseFloat(depositAmount) === expectedAmount;
 
 
       // const generateReferralCode = (length = 8) => {
