@@ -100,12 +100,6 @@
           alert(message); // You can replace this with a toast
       };
 
-      useEffect(() => {
-          const code = generateReferralCode();
-          setReferralCode(code);
-      }, []);
-
-
 
 
       const toggleWalletVisibility = () => {
