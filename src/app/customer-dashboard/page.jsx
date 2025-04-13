@@ -254,6 +254,7 @@
               </div>
 
               {/* Wallet and Referral */}
+              {/* Wallet and Referral */}
               <div className="grid gap-4 md:grid-cols-2 mb-6">
                 <Card>
                   <CardHeader>
@@ -303,10 +304,32 @@
                     </div>
                   </CardContent>
                 </Card>
+
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Referral Code</CardTitle>
+                    <CardDescription>Share with friends to earn rewards</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                      {/*//Generated referral code should be added here*/}
+                      <code className="text-sm font-mono">JOHN25</code>
+                      <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => copyToClipboard("JOHN25", "Referral code copied to clipboard")}
+                      >
+                        <Copy size={14}/>
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">You've referred 3 users so far</p>
+                  </CardContent>
+                </Card>
               </div>
 
 
-                {/* Deposit and Withdraw */}
+              {/* Deposit and Withdraw */}
               <Tabs defaultValue="deposit" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 mb-4 ">
                   <TabsTrigger
