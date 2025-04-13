@@ -56,6 +56,8 @@
     const [responseMessage, setResponseMessage] = useState("");
     const [walletType, setWalletType] = useState("");
     const [referralCode, setReferralCode] = useState("");
+    const [isClient, setIsClient] = useState(false);
+
 
 
 
@@ -81,6 +83,18 @@
           "Premium package": 1000,
       };
 
+
+      useEffect(() => {
+          setIsClient(true);
+      }, []);
+
+      if (!isClient) {
+          return (
+              <div className="flex justify-center items-center h-screen">
+                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+              </div>
+          );
+      }
 
       const generateReferralCode = (length = 8) => {
           const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
