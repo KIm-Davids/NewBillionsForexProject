@@ -70,15 +70,31 @@
     const fourthWalletName = "USDC SOL"
 
 
-    const copyToClipboard = (text, message) => {
-      navigator.clipboard.writeText(text)
-      toast({
-        title: "Copied!",
-        description: message,
-      })
-    }
+      // Function to generate a random alphanumeric code
+      const generateReferralCode = (length = 8) => {
+          const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+          let result = "";
+          for (let i = 0; i < length; i++) {
+              result += characters.charAt(Math.floor(Math.random() * characters.length));
+          }
+          return result;
+      };
 
-    const toggleWalletVisibility = () => {
+      // Copy to clipboard function
+      const copyToClipboard = (text, message) => {
+          navigator.clipboard.writeText(text);
+          alert(message); // You can replace this with a toast
+      };
+
+      useEffect(() => {
+          const code = generateReferralCode();
+          setReferralCode(code);
+      }, []);
+
+
+
+
+      const toggleWalletVisibility = () => {
       setWalletVisible(!walletVisible)
     }
 
@@ -110,6 +126,9 @@
         fetchBalance();
       }, []);
 }
+
+
+
 
     // useEffect(() => {
     //   if (withdrawMessage) {
@@ -315,16 +334,18 @@
                   <CardContent>
                     <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
                       {/*//Generated referral code should be added here*/}
-                      <code className="text-sm font-mono">JOHN25</code>
+                      <code className="text-sm font-mono">{referralCode}</code>
                       <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => copyToClipboard("JOHN25", "Referral code copied to clipboard")}
+                          onClick={() =>
+                              copyToClipboard(referralCode, "Referral code copied to clipboard")
+                          }
                       >
                         <Copy size={14}/>
                       </Button>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">You've referred 3 users so far</p>
+                    <p className="text-xs text-muted-foreground mt-2">You've referred 0 users so far</p>
                   </CardContent>
                 </Card>
               </div>

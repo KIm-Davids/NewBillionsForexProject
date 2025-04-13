@@ -28,7 +28,7 @@ const Footer = () => (
       </div>
       <div className="mt-8 flex gap-4">
         <a
-          href="https://t.me/+1_YhzCR3lhZlMzI8"
+          href="https://t.me/+3zkJ4kGqeLRjMjBk"
           target="_blank"
           rel="noopener noreferrer"
           className="text-neutral-300 hover:text-white text-4xl mt-[-30px]"

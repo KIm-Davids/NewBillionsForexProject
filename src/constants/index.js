@@ -154,7 +154,7 @@ export const pricingOptions = [
 
 export const resourcesLinks = [
   { href: '#', text: 'Getting Started' },
-  { href: 'https://t.me/+pjIbHbkJGDcwYWE0', text: 'Community Forums' },
+  { href: 'https://t.me/+3zkJ4kGqeLRjMjBk', text: 'Community Forums' },
 ];
 
 export const platformLinks = [
