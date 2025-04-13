@@ -89,13 +89,13 @@
           );
       }
 
-      // const Dashboard = dynamic(() => import('../src/app/customer-dashboard/page'), {
-      //     ssr: false,
-      // });
+      const Dashboard = dynamic(() => import('../src/app/customer-dashboard/page'), {
+          ssr: false,
+      });
 
-      export default function DashboardPage() {
-          return <Dashboard />;
-      }
+      // export default function DashboardPage() {
+      //     return <Dashboard />;
+      // }
 
 
 
