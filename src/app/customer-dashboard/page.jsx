@@ -93,23 +93,30 @@
 
       // Load from localStorage or generate once
       useEffect(() => {
-          const storedCode = localStorage.getItem("referralCode");
+          if (typeof window !== "undefined") {
+              const storedCode = localStorage.getItem("referralCode");
 
-          if (storedCode) {
-              setReferralCode(storedCode);
-          } else {
-              const newCode = generateReferralCode();
-              localStorage.setItem("referralCode", newCode);
-              setReferralCode(newCode);
+              if (storedCode) {
+                  setReferralCode(storedCode);
+              } else {
+                  const newCode = generateReferralCode();
+                  localStorage.setItem("referralCode", newCode);
+                  setReferralCode(newCode);
+              }
           }
       }, []);
 
+
       // Copy to clipboard function
       const copyToClipboard = (text, message) => {
-          navigator.clipboard.writeText(text);
-          alert(message); // You can replace this with a toast
+          if (typeof navigator !== "undefined" && navigator.clipboard) {
+              navigator.clipboard.writeText(text).then(() => {
+                  alert(message);
+              }).catch(err => {
+                  console.error("Failed to copy text: ", err);
+              });
+          }
       };
-
 
 
       const toggleWalletVisibility = () => {
@@ -483,12 +490,18 @@
                       </CardContent>
                       <CardFooter>
                           <Button
-                              disabled={!isAmountValid}
+                              disabled={!packageType || !isAmountValid}
                               className="w-full border border-green-500 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                               onClick={async () => {
                                   const amountValue = parseFloat(depositAmount);
-                                  if (isNaN(amountValue) || amountValue <= 0 || !isAmountValid) {
-                                      setResponseMessage(`❌ Please enter exactly $${expectedAmount} for the selected package.`);
+
+                                  if (!packageType) {
+                                      setResponseMessage("❌ Please select a package.");
+                                      return;
+                                  }
+
+                                  if (!isAmountValid) {
+                                      setResponseMessage(`❌ Amount must be exactly $${expectedAmount} for the selected package.`);
                                       return;
                                   }
 
