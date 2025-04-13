@@ -483,11 +483,12 @@
                       </CardContent>
                       <CardFooter>
                           <Button
-                              className="w-full border border-green-500 hover:bg-white/10"
+                              disabled={!isAmountValid}
+                              className="w-full border border-green-500 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                               onClick={async () => {
                                   const amountValue = parseFloat(depositAmount);
-                                  if (isNaN(amountValue) || amountValue <= 0) {
-                                      setResponseMessage("❌ Please enter a valid amount.");
+                                  if (isNaN(amountValue) || amountValue <= 0 || !isAmountValid) {
+                                      setResponseMessage(`❌ Please enter exactly $${expectedAmount} for the selected package.`);
                                       return;
                                   }
 
