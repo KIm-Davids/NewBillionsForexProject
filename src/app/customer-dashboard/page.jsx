@@ -55,9 +55,11 @@
     const [packageType, setPackageType] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
     const [walletType, setWalletType] = useState("");
+    const [referralCode, setReferralCode] = useState("");
 
 
-    const maskedWallet = "••••••••••••••••••••••••••••••••••••••••"
+
+      const maskedWallet = "••••••••••••••••••••••••••••••••••••••••"
 
     const firstWallet = "TAJ5SCiy5tr3QF89nVaBi78XJwhXbu1xMm"
     const secondWallet = "0xc9AcefB4adeFEf06Ec62fbB46F0644261ee8E722"
@@ -70,7 +72,6 @@
     const fourthWalletName = "USDC SOL"
 
 
-      // Function to generate a random alphanumeric code
       const generateReferralCode = (length = 8) => {
           const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
           let result = "";
@@ -79,6 +80,19 @@
           }
           return result;
       };
+
+      // Load from localStorage or generate once
+      useEffect(() => {
+          const storedCode = localStorage.getItem("referralCode");
+
+          if (storedCode) {
+              setReferralCode(storedCode);
+          } else {
+              const newCode = generateReferralCode();
+              localStorage.setItem("referralCode", newCode);
+              setReferralCode(newCode);
+          }
+      }, []);
 
       // Copy to clipboard function
       const copyToClipboard = (text, message) => {
@@ -278,8 +292,6 @@
                   <CardHeader>
                     <CardTitle>Wallet Addresses</CardTitle>
                     <CardDescription>YOU CAN SEND TO ANY OF THESE WALLETS </CardDescription>
-                    <CardDescription>Please ensure to send a screenshot to the telegram group </CardDescription>
-                    <CardDescription>https://t.me/+pjIbHbkJGDcwYWE0</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-4">
