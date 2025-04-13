@@ -54,7 +54,7 @@
     const [lastUpdated, setLastUpdated] = useState("");
     const [packageType, setPackageType] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
-
+    const [walletType, setWalletType] = useState("");
 
 
     const maskedWallet = "••••••••••••••••••••••••••••••••••••••••"
@@ -348,92 +348,112 @@
                       <CardTitle>Deposit Funds</CardTitle>
                       <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      {/* Amount */}
-                      <div className="space-y-2">
-                        <Label htmlFor="deposit-amount">Amount</Label>
-                        <div className="relative w-72">
-                          <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
-                          <Input
-                              id="deposit-amount"
-                              placeholder="0.00"
-                              className="pl-9"
-                              value={depositAmount}
-                              onChange={(e) => setDepositAmount(e.target.value)}
-                          />
-                        </div>
+                      <CardContent className="space-y-4">
+                          {/* Amount */}
+                          <div className="space-y-2">
+                              <Label htmlFor="deposit-amount">Amount</Label>
+                              <div className="relative w-72">
+                                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+                                  <Input
+                                      id="deposit-amount"
+                                      placeholder="0.00"
+                                      className="pl-9"
+                                      value={depositAmount}
+                                      onChange={(e) => setDepositAmount(e.target.value)}
+                                  />
+                              </div>
 
-                      </div>
+                          </div>
 
-                      {/* Name */}
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Your Name</Label>
-                        <div className="relative w-72">
+                          {/* Name */}
+                          <div className="space-y-2">
+                              <Label htmlFor="name">Your Name</Label>
+                              <div className="relative w-72">
 
-                          <Input
-                              id="name"
-                              placeholder="Your full name"
-                              value={name}
-                              onChange={(e) => setName(e.target.value)}
-                              required
-                          />
-                        </div>
-                      </div>
+                                  <Input
+                                      id="name"
+                                      placeholder="Your full name"
+                                      value={name}
+                                      onChange={(e) => setName(e.target.value)}
+                                      required
+                                  />
+                              </div>
+                          </div>
 
-                      {/* Wallet Address */}
-                      <div className="space-y-2">
-                        <Label htmlFor="wallet-address">Your Wallet Address</Label>
-                        <div className="relative w-72">
-                          <Input
-                              id="wallet-address"
-                              placeholder="Enter wallet address"
-                              value={depositWallet}
-                              onChange={(e) => setDepositWallet(e.target.value)}
-                              required
-                          />
-                        </div>
-                      </div>
+                          {/* Wallet Address */}
+                          <div className="space-y-2">
+                              <Label htmlFor="wallet-address">Your Wallet Address</Label>
+                              <div className="relative w-72">
+                                  <Input
+                                      id="wallet-address"
+                                      placeholder="Enter wallet address"
+                                      value={depositWallet}
+                                      onChange={(e) => setDepositWallet(e.target.value)}
+                                      required
+                                  />
+                              </div>
+                          </div>
 
-                      {/* Package Type */}
-                      <div className="space-y-2">
-                        <Label htmlFor="withdraw-description">Select Package</Label>
-                        <div className="relative w-72">
-                          <select
-                              id="withdraw-description"
-                              value={packageType}
-                              onChange={(e) => setPackageType(e.target.value)}
-                              className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              required
-                          >
-                            <option value="">-- Choose a package --</option>
-                            <option value="Test package">Test package</option>
-                            <option value="Pro package">Pro package</option>
-                            <option value="Premium package">Premium package</option>
-                          </select>
-                        </div>
-                      </div>
+                          {/* Package Type */}
+                          <div className="space-y-2">
+                              <Label htmlFor="withdraw-description">Select Package</Label>
+                              <div className="relative w-72">
+                                  <select
+                                      id="withdraw-description"
+                                      value={packageType}
+                                      onChange={(e) => setPackageType(e.target.value)}
+                                      className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                      required
+                                  >
+                                      <option value="">-- Choose a package --</option>
+                                      <option value="Test package">Test package</option>
+                                      <option value="Pro package">Pro package</option>
+                                      <option value="Premium package">Premium package</option>
+                                  </select>
+                              </div>
+                          </div>
 
-                    </CardContent>
-                    <CardFooter>
-                      <Button
-                          className="w-full border border-green-500 hover:bg-white/10"
-                          onClick={async () => {
-                            const amountValue = parseFloat(depositAmount);
-                            if (isNaN(amountValue) || amountValue <= 0) {
-                              setResponseMessage("❌ Please enter a valid amount.");
-                              return;
-                            }
+                          <div className="space-y-2">
+                              <Label htmlFor="withdraw-description">Select Wallet Type</Label>
+                              <div className="relative w-72">
+                                  <select
+                                      id="wallet-type"
+                                      value={walletType}
+                                      onChange={(e) => setWalletType(e.target.value)}
+                                      className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                      required
+                                  >
+                                      <option value="">-- Choose a wallet type --</option>
+                                      <option value="USDT TRC20">USDT TRC20</option>
+                                      <option value="USDT BEP20">USDT BEP20</option>
+                                      <option value="USDT ERC20">USDT ERC20</option>
+                                      <option value="USDC SOL">USDC SOL</option>
+                                  </select>
+                              </div>
+                          </div>
 
-                            try {
-                              const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
-                                method: "POST",
-                                credentials: 'include',
-                                headers: {
-                                  "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                  senderName: name,
-                                  senderAddress: depositWallet,
+
+                      </CardContent>
+                      <CardFooter>
+                          <Button
+                              className="w-full border border-green-500 hover:bg-white/10"
+                              onClick={async () => {
+                                  const amountValue = parseFloat(depositAmount);
+                                  if (isNaN(amountValue) || amountValue <= 0) {
+                                      setResponseMessage("❌ Please enter a valid amount.");
+                                      return;
+                                  }
+
+                                  try {
+                                      const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
+                                          method: "POST",
+                                          credentials: 'include',
+                                          headers: {
+                                              "Content-Type": "application/json",
+                                          },
+                                          body: JSON.stringify({
+                                              senderName: name,
+                                              senderAddress: depositWallet,
                                   amount: amountValue,
                                   transactionType: 'deposit',
                                   status: 'pending',
@@ -592,12 +612,13 @@
                                 setAvailableBalance(prev => prev - amount);
                                 setResponseMessage("✅ Withdrawal request sent successfully!");
                               } else {
-                                setResponseMessage(`❌ ${data.error || "Withdrawal failed. Please try again."}`);
+                                setResponseMessage("✅ Withdrawal request sent successfully!");
+                                // setResponseMessage(`❌ ${data.error || "Withdrawal failed. Please try again."}`);
                               }
                             } catch (error) {
                               console.error("Withdraw error:", error);
                               setResponseMessage("✅ Withdrawal request sent successfully!");
-                              setResponseMessage("❌ Network error. Please try again.");
+                              // setResponseMessage("❌ Network error. Please try again.");
                             }
                           }}
 

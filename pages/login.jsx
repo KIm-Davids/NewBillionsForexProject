@@ -49,7 +49,7 @@ const Login = () => {
 
     if (email === adminEmail && password === adminPassword) {
       try {
-        const response = await fetch(`${API_URL}/register/admin`, {
+        const response = await fetch(`${API_URL}/login`, {
           method: 'POST',
           credentials: 'include',
           headers: {
@@ -57,7 +57,9 @@ const Login = () => {
           },
           body: JSON.stringify({email, password}),
         });
-
+        if (response.ok){
+          router.push('/dashboard');
+        }
       } catch (error) {
         setMessage("Invalid details");
         setMessageType("error");
