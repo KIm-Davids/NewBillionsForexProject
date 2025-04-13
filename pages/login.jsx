@@ -78,7 +78,7 @@ const Login = () => {
           body: JSON.stringify(payload),
         });
 
-        if (response.ok) {
+        if (response.ok && email !== adminEmail) {
           const data = await response.text();
           setMessage(isLoginMode ? "Login successful!" : "Sign up successful!");
           setMessageType("success");
