@@ -55,11 +55,12 @@ const Login = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({email, password}),
+          body: JSON.stringify(payload),
         });
-        if (response.ok){
+        if (response.ok) {
           router.push('/dashboard');
         }
+
       } catch (error) {
         setMessage("Invalid details");
         setMessageType("error");
@@ -67,7 +68,7 @@ const Login = () => {
       }
     }
     // console.log(response);
-    else {
+    if (adminEmail !== email) {
       try {
         const response = await fetch(`${API_URL}${endpoint}`, {
           method: 'POST',
@@ -86,7 +87,8 @@ const Login = () => {
           router.push('/customerDashboard');
         } else {
           setMessage("Invalid details");
-          setMessageType("error");        }
+          setMessageType("error");
+        }
       } catch (error) {
         setMessage("Invalid details");
         setMessageType("error");
