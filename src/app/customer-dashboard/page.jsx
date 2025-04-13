@@ -106,29 +106,29 @@
       };
 
 
-      const generateReferralCode = (length = 8) => {
-          const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-          let result = "";
-          for (let i = 0; i < length; i++) {
-              result += characters.charAt(Math.floor(Math.random() * characters.length));
-          }
-          return result;
-      };
-
-      // Load from localStorage or generate once
-      useEffect(() => {
-          if (typeof window !== "undefined") {
-              const storedCode = localStorage.getItem("referralCode");
-
-              if (storedCode) {
-                  setReferralCode(storedCode);
-              } else {
-                  const newCode = generateReferralCode();
-                  localStorage.setItem("referralCode", newCode);
-                  setReferralCode(newCode);
-              }
-          }
-      }, []);
+      // const generateReferralCode = (length = 8) => {
+      //     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      //     let result = "";
+      //     for (let i = 0; i < length; i++) {
+      //         result += characters.charAt(Math.floor(Math.random() * characters.length));
+      //     }
+      //     return result;
+      // };
+      //
+      // // Load from localStorage or generate once
+      // useEffect(() => {
+      //     if (typeof window !== "undefined") {
+      //         const storedCode = localStorage.getItem("referralCode");
+      //
+      //         if (storedCode) {
+      //             setReferralCode(storedCode);
+      //         } else {
+      //             const newCode = generateReferralCode();
+      //             localStorage.setItem("referralCode", newCode);
+      //             setReferralCode(newCode);
+      //         }
+      //     }
+      // }, []);
 
 
       // Copy to clipboard function
