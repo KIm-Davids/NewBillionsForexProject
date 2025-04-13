@@ -376,7 +376,7 @@
                 {/*  </CardHeader>*/}
                 {/*  <CardContent>*/}
                 {/*    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">*/}
-                {/*      /!*//Generated referral code should be added here*!/*/}
+                      {/*//Generated referral code should be added here*/}
                 {/*      <code className="text-sm font-mono">{referralCode}</code>*/}
                 {/*      <Button*/}
                 {/*          variant="ghost"*/}
