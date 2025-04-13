@@ -276,7 +276,7 @@
                     <p className="text-xs text-muted-foreground mt-1">Renews on May 10, 2025</p>
                   </CardContent>
                 </Card>
-              </div>
+
 
               {/* Wallet and Referral */}
               <div className="grid gap-4 md:grid-cols-2 mb-6">
@@ -360,7 +360,7 @@
                   </Card>
 
               </div>
-
+              </div>
 
 
               {/* Deposit and Withdraw */}
