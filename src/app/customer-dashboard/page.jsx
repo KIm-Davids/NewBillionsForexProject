@@ -247,37 +247,41 @@
               <div className="grid gap-4 md:grid-cols-2 mb-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Wallet Address</CardTitle>
-                    <CardDescription>Your cryptocurrency wallet</CardDescription>
+                    <CardTitle>Wallet Addresses</CardTitle>
+                    <CardDescription>Your cryptocurrency wallets</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                      <code className="text-xs md:text-sm font-mono truncate">
-                        {walletVisible ? walletAddress : maskedWallet}
-                      </code>
-                      <div className="flex gap-1 ml-auto">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={toggleWalletVisibility}
-                            title={walletVisible ? "Hide wallet address" : "Show wallet address"}
-                        >
-                          {walletVisible ? <EyeOff size={14}/> : <Eye size={14}/>}
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => copyToClipboard(walletAddress, "Wallet address copied to clipboard")}
-                            title="Copy wallet address"
-                        >
-                          <Copy size={14}/>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    <div className="flex flex-wrap gap-4">
+                      {[
+                        {name: firstWalletName, address: firstWallet},
+                        {name: secondWalletName, address: secondWallet},
+                        {name: thirdWalletName, address: thirdWallet},
+                        {name: fourthWalletName, address: fourthWallet},
+                      ].map((wallet, index) => (
+                          <div key={index} className="flex flex-col items-start gap-1">
+            <span className="text-xs font-medium text-muted-foreground">
+              {wallet.name}
+            </span>
+                            <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                              <code className="text-xs md:text-sm font-mono truncate max-w-[160px]">
+                                {walletVisible ? wallet.address : maskedWallet}
+                              </code>
+                              <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() =>
+                                      copyToClipboard(wallet.address, `${wallet.name} address copied`)
+                                  }
+                                  title={`Copy ${wallet.name} address`}
+                              >
+                                <Copy size={14}/>
+                              </Button>
+                            </div>
+                          </div>
+                      ))}
 
-                <Card>
+
+                      <Card>
                   <CardHeader>
                     <CardTitle>Referral Code</CardTitle>
                     <CardDescription>Share with friends to earn rewards</CardDescription>
