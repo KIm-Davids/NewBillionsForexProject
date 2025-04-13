@@ -111,7 +111,32 @@
       }, []);
 }
 
-    // useEffect(() => {
+      const ReferralCard = () => {
+          const [referralCode, setReferralCode] = useState("");
+
+          // Function to generate a random alphanumeric code
+          const generateReferralCode = (length = 8) => {
+              const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+              let result = "";
+              for (let i = 0; i < length; i++) {
+                  result += characters.charAt(Math.floor(Math.random() * characters.length));
+              }
+              return result;
+          };
+
+          // Copy to clipboard function
+          const copyToClipboard = (text, message) => {
+              navigator.clipboard.writeText(text);
+              alert(message); // You can replace this with a toast
+          };
+
+          useEffect(() => {
+              const code = generateReferralCode();
+              setReferralCode(code);
+          }, []);
+
+
+          // useEffect(() => {
     //   if (withdrawMessage) {
     //     const timeout = setTimeout(() => setWithdrawMessage(""), 5000);
     //     return () => clearTimeout(timeout);
@@ -307,27 +332,35 @@
                 </Card>
 
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Referral Code</CardTitle>
-                    <CardDescription>Share with friends to earn rewards</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                      {/*//Generated referral code should be added here*/}
-                      <code className="text-sm font-mono">JOHN25</code>
-                      <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => copyToClipboard("JOHN25", "Referral code copied to clipboard")}
-                      >
-                        <Copy size={14}/>
-                      </Button>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-2">You've referred 3 users so far</p>
-                  </CardContent>
-                </Card>
+
+                  {/* Referral Code Card */}
+                  <Card>
+                      <CardHeader>
+                          <CardTitle>Referral Code</CardTitle>
+                          <CardDescription>
+                              SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED
+                          </CardDescription>
+                      </CardHeader>
+
+                      <CardContent>
+                          <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                              <code className="text-sm font-mono">{referralCode}</code>
+                              <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => copyToClipboard(referralCode, "Referral code copied to clipboard")}
+                              >
+                                  <Copy size={14} />
+                              </Button>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-2">
+                              You've referred 3 users so far
+                          </p>
+                      </CardContent>
+                  </Card>
+
               </div>
+
 
 
               {/* Deposit and Withdraw */}
