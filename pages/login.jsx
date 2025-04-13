@@ -67,7 +67,7 @@ const Login = () => {
       }
     }
     // console.log(response);
-    // else {
+    else {
       try {
         const response = await fetch(`${API_URL}${endpoint}`, {
           method: 'POST',
@@ -94,7 +94,7 @@ const Login = () => {
       }
     }
 
-  // }
+  }
 
   if (!mounted) {
     // Only render the login/signup form after the component has mounted

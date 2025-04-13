@@ -497,105 +497,124 @@
                       <CardTitle>Withdraw Funds</CardTitle>
                       <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      {/* Amount */}
-                      <div className="space-y-2">
-                        <Label htmlFor="withdraw-amount">Amount</Label>
-                        <div className="relative w-72">
-                          <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
-                          <Input
-                              id="withdraw-amount"
-                              placeholder="0.00"
-                              className="pl-9"
-                              value={withdrawAmount}
-                              onChange={(e) => setWithdrawAmount(e.target.value)}
-                          />
-                        </div>
-                      </div>
+                      <CardContent className="space-y-4">
+                          {/* Amount */}
+                          <div className="space-y-2">
+                              <Label htmlFor="withdraw-amount">Amount</Label>
+                              <div className="relative w-72">
+                                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+                                  <Input
+                                      id="withdraw-amount"
+                                      placeholder="0.00"
+                                      className="pl-9"
+                                      value={withdrawAmount}
+                                      onChange={(e) => setWithdrawAmount(e.target.value)}
+                                  />
+                              </div>
+                          </div>
 
-                      {/* Name */}
-                      <div className="space-y-2">
-                        <Label htmlFor="withdraw-name">Your Name</Label>
-                        <div className="relative w-72">
-                          <Input
-                              id="withdraw-name"
-                              placeholder="Your full name"
-                              value={withdrawName}
-                              onChange={(e) => setWithdrawName(e.target.value)}
-                          />
-                        </div>
-                      </div>
+                          {/* Name */}
+                          <div className="space-y-2">
+                              <Label htmlFor="withdraw-name">Your Name</Label>
+                              <div className="relative w-72">
+                                  <Input
+                                      id="withdraw-name"
+                                      placeholder="Your full name"
+                                      value={withdrawName}
+                                      onChange={(e) => setWithdrawName(e.target.value)}
+                                  />
+                              </div>
+                          </div>
 
-                      {/* Wallet Address */}
-                      <div className="space-y-2">
-                        <Label htmlFor="withdraw-wallet">Your Wallet Address</Label>
-                        <div className="relative w-72">
-                          <Input
-                              id="withdraw-wallet"
-                              placeholder="Enter wallet address"
-                              value={withdrawWallet}
-                              onChange={(e) => setWithdrawWallet(e.target.value)}
-                          />
-                        </div>
-                      </div>
+                          {/* Wallet Address */}
+                          <div className="space-y-2">
+                              <Label htmlFor="withdraw-wallet">Your Wallet Address</Label>
+                              <div className="relative w-72">
+                                  <Input
+                                      id="withdraw-wallet"
+                                      placeholder="Enter wallet address"
+                                      value={withdrawWallet}
+                                      onChange={(e) => setWithdrawWallet(e.target.value)}
+                                  />
+                              </div>
+                          </div>
 
-                      {/* Description */}
-                      <div className="space-y-2">
-                        <Label htmlFor="withdraw-description">Description</Label>
-                        <div className="relative w-72">
-                          <Input
-                              id="withdraw-description"
-                              placeholder="Description or note (optional)"
-                              value={withdrawDescription}
-                              onChange={(e) => setWithdrawDescription(e.target.value)}
-                          />
-                        </div>
-                      </div>
+                          <div className="space-y-2">
+                              <Label htmlFor="withdraw-description">Select Wallet Type</Label>
+                              <div className="relative w-72">
+                                  <select
+                                      id="wallet-type"
+                                      value={walletType}
+                                      onChange={(e) => setWalletType(e.target.value)}
+                                      className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                      required
+                                  >
+                                      <option value="">-- Choose a wallet type --</option>
+                                      <option value="USDT TRC20">USDT TRC20</option>
+                                      <option value="USDT BEP20">USDT BEP20</option>
+                                      <option value="USDT ERC20">USDT ERC20</option>
+                                      <option value="USDC SOL">USDC SOL</option>
+                                  </select>
+                              </div>
+                          </div>
 
-                      {/* Withdraw Method */}
-                      {/*<div className="space-y-2">*/}
-                      {/*  <Label htmlFor="withdraw-method">Withdraw To</Label>*/}
-                      {/*  <div className="flex items-center gap-2 p-2 border rounded-md">*/}
-                      {/*    <ArrowLeftRight size={16} />*/}
-                      {/*    <span className="text-sm">Bank Account (****6789)</span>*/}
-                      {/*    <ChevronDown size={16} className="ml-auto" />*/}
-                      {/*  </div>*/}
-                      {/*</div>*/}
+                          {/* Description */}
+                          <div className="space-y-2">
+                              <Label htmlFor="withdraw-description">Description</Label>
+                              <div className="relative w-72">
+                                  <Input
+                                      id="withdraw-description"
+                                      placeholder="Description or note (optional)"
+                                      value={withdrawDescription}
+                                      onChange={(e) => setWithdrawDescription(e.target.value)}
+                                  />
+                              </div>
+                          </div>
 
-                      <Separator/>
+                          {/* Withdraw Method */}
+                          {/*<div className="space-y-2">*/}
+                          {/*  <Label htmlFor="withdraw-method">Withdraw To</Label>*/}
+                          {/*  <div className="flex items-center gap-2 p-2 border rounded-md">*/}
+                          {/*    <ArrowLeftRight size={16} />*/}
+                          {/*    <span className="text-sm">Bank Account (****6789)</span>*/}
+                          {/*    <ChevronDown size={16} className="ml-auto" />*/}
+                          {/*  </div>*/}
+                          {/*</div>*/}
 
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Available for withdrawal:</span>
-                        <span className="font-medium">
+                          <Separator/>
+
+                          <div className="flex justify-between text-sm">
+                              <span className="text-muted-foreground">Available for withdrawal:</span>
+                              <span className="font-medium">
                             {balance !== null ? `$${balance.toLocaleString()}` : "Loading..."}
                         </span>
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button
-                          className="w-full border-red-500 border hover:bg-white/10"
-                          onClick={async () => {
-                            console.log('Withdraw button clicked');
-                            const amount = parseFloat(withdrawAmount);
+                          </div>
+                      </CardContent>
+                      <CardFooter>
+                          <Button
+                              className="w-full border-red-500 border hover:bg-white/10"
+                              onClick={async () => {
+                                  console.log('Withdraw button clicked');
+                                  const amount = parseFloat(withdrawAmount);
 
-                            if (isNaN(amount) || amount <= 0) {
-                              setResponseMessage("❌ Please enter a valid amount.");
-                              return;
-                            }
+                                  if (isNaN(amount) || amount <= 0) {
+                                      setResponseMessage("❌ Please enter a valid amount.");
+                                      return;
+                                  }
 
-                            if (amount > availableBalance) {
-                              setResponseMessage("❌ You don't have enough balance for this withdrawal.");
-                              return;
-                            }
+                                  if (amount > availableBalance) {
+                                      setResponseMessage("❌ You don't have enough balance for this withdrawal.");
+                                      return;
+                                  }
 
-                            try {
-                              const response = await fetch("https://billions-backend-1.onrender.com/withdraw", {
-                                method: "POST",
-                                credentials: 'include',
-                                headers: {
-                                  "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
+                                  try {
+                                      const response = await fetch("https://billions-backend-1.onrender.com/withdraw", {
+                                          method: "POST",
+                                          credentials: 'include',
+                                          headers: {
+                                              "Content-Type": "application/json",
+                                          },
+                                          body: JSON.stringify({
                                   senderName: withdrawName,
                                   senderAddress: withdrawWallet,
                                   transactionType: 'withdraw',
