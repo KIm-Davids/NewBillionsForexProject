@@ -57,8 +57,18 @@
 
 
 
-    const walletAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
     const maskedWallet = "••••••••••••••••••••••••••••••••••••••••"
+
+    const firstWallet = "TAJ5SCiy5tr3QF89nVaBi78XJwhXbu1xMm"
+    const secondWallet = "0xc9AcefB4adeFEf06Ec62fbB46F0644261ee8E722"
+    const thirdWallet = "0xc9AcefB4adeFEf06Ec62fbB46F0644261ee8E722"
+    const fourthWallet = "GDax5QyFX1o3sBbLuMRrF2HcXHZVb8AVQB7qBQjTQKe7"
+
+    const firstWalletName = "USDT TRC20"
+    const secondWalletName = "USDT BEP20"
+    const thirdWalletName = "USDT ERC20"
+    const fourthWalletName = "USDC SOL"
+
 
     const copyToClipboard = (text, message) => {
       navigator.clipboard.writeText(text)
@@ -280,30 +290,23 @@
                           </div>
                       ))}
 
-
-                      <Card>
-                  <CardHeader>
-                    <CardTitle>Referral Code</CardTitle>
-                    <CardDescription>Share with friends to earn rewards</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                      {/*//Generated referral code should be added here*/}
-                      <code className="text-sm font-mono">JOHN25</code>
+                      {/* Eye toggle button once for all */}
                       <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => copyToClipboard("JOHN25", "Referral code copied to clipboard")}
+                          onClick={toggleWalletVisibility}
+                          title={walletVisible ? "Hide wallet addresses" : "Show wallet addresses"}
+                          className="self-start"
                       >
-                        <Copy size={14}/>
+                        {walletVisible ? <EyeOff size={14}/> : <Eye size={14}/>}
                       </Button>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">You've referred 3 users so far</p>
                   </CardContent>
                 </Card>
               </div>
 
-              {/* Deposit and Withdraw */}
+
+                {/* Deposit and Withdraw */}
               <Tabs defaultValue="deposit" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 mb-4 ">
                   <TabsTrigger
