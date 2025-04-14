@@ -60,7 +60,6 @@ const Login = () => {
           },
           body: JSON.stringify(payload),
         });
-        console.log(payload)
           router.push('/dashboard');
 
       } catch (error) {
@@ -69,7 +68,7 @@ const Login = () => {
         console.error('Error:', error);
       }
     }
-    // console.log(response);
+  console.log(payload)
     if (adminEmail !== email) {
       try {
         const response = await fetch(`${API_URL}${endpoint}`, {
@@ -80,7 +79,6 @@ const Login = () => {
           },
           body: JSON.stringify(payload),
         });
-
         if (response.ok && email !== adminEmail) {
           const data = await response.text();
           setMessage(isLoginMode ? "Login successful!" : "Sign up successful!");
