@@ -28,21 +28,7 @@ const Login = () => {
   const adminEmail = "admin10k4u1234@gmail.com";
   const adminPassword = "admin1sWorkingHard4u"
 
-  const userContext = useUser();
-
-  if (!userContext) {
-    return (
-        <div className="flex items-center justify-center h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500 border-solid mx-auto mb-2" />
-            <p className="text-gray-600">Loading user data...</p>
-          </div>
-        </div>
-    );
-  }
-
-  const { setUserEmail } = userContext;
-
+  localStorage.setItem('userEmail', email);
 
 
   useEffect(() => {

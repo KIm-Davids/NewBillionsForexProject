@@ -304,14 +304,9 @@
                           <button
                               onClick={async () => {
 
-                                  const userContext = useUser();
+                                  const userEmail = localStorage.getItem('userEmail');
 
-                                  if (!userContext) {
-                                      return <div>Loading...</div>;
-                                  }
-                                  const { userEmail } = userContext;
-
-                                      try {
+                                  try {
                                           const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
                                               method: 'POST',
                                               // credentials: "include",
