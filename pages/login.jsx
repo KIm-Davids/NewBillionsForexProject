@@ -51,7 +51,7 @@ const Login = () => {
 
     if (email === adminEmail && password === adminPassword) {
       try {
-        const response = await fetch(`${API_URL}/register/admin`, {
+        const response = await fetch(`${API_URL}/loginn`, {
           method: 'POST',
           credentials: 'include',
           headers: {
