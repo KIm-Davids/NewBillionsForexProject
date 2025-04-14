@@ -154,11 +154,11 @@
       useEffect(() => {
         const fetchBalance = async () => {
           try {
-              const balanceResponse = await fetch("https://billions-backend-1.onrender.com/getUserInfo");
+              const balanceResponse = await fetch(`https://billions-backend-1.onrender.com/getUserInfo?email=${encodeURIComponent(email)}`);
               const balanceData = await balanceResponse.json();
 
               setBalance(balanceData.balance);
-              setFetchedPackage(balanceData.package);
+              setFetchedPackage(balanceData.packageType);
 
           } catch (err) {
             console.error("Failed to fetch balance", err);
