@@ -10,7 +10,7 @@ export const RecentActivities = () => {
 
   const fetchDeposits = async () => {
     try {
-      const res = await fetch('https://your-backend.com/admin/deposits');
+      const res = await fetch('https://billions-backend-1.onrender.com/fetchDeposits');
       const data = await res.json();
       setDeposits(data);
     } catch (error) {
@@ -20,7 +20,7 @@ export const RecentActivities = () => {
 
   const handleConfirm = async (depositId) => {
     try {
-      await fetch('https://your-backend.com/confirm-deposit', {
+      await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ deposit_id: depositId }),
