@@ -63,9 +63,9 @@
     const [packageType, setPackageType] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
     const [walletType, setWalletType] = useState("");
-    // const [referralCode, setReferralCode] = useState("");
     const [isClient, setIsClient] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [referralCode, setReferralCode] = useState('');
 
 
 
@@ -95,6 +95,13 @@
               </div>
           );
       }
+
+      useEffect(() => {
+          const code = typeof window !== 'undefined' ? localStorage.getItem('referralCode') : '';
+          if (code) {
+              setReferralCode(code);
+          }
+      }, []);
 
       // const Dashboard = dynamic(() => import('../src/app/customer-dashboard/page'), {
       //     ssr: false,
