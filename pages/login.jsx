@@ -79,7 +79,8 @@ const Login = () => {
           },
           body: JSON.stringify(payload),
         });
-
+        localStorage.setItem('userEmail', email); // Save email in localStorage
+        console.log('Email saved to localStorage:', email);
         if (response.ok && email !== adminEmail) {
           const data = await response.text();
           setMessage(isLoginMode ? "Login successful!" : "Sign up successful!");
@@ -87,8 +88,7 @@ const Login = () => {
 
           // Set email in localStorage after successful login or registration
           // if (typeof window !== 'undefined') {
-            localStorage.setItem('userEmail', email); // Save email in localStorage
-            console.log('Email saved to localStorage:', email);
+
           // }
           router.push('/customerDashboard');
         } else {
