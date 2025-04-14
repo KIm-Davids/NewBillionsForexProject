@@ -42,7 +42,6 @@
 
 
   export default function Dashboard() {
-    const {toast} = useToast()
     const [walletVisible, setWalletVisible] = useState(false)
     const [depositAmount, setDepositAmount] = useState("");
     const [email, setEmail] = useState("");
@@ -97,17 +96,6 @@
       }
 
 
-      // useEffect(() => {
-      //     const storedCode = typeof window !== 'undefined' ? localStorage.getItem('referralCode') : null;
-      //     setReferralCode(storedCode);
-      // }, []);
-
-      // const Dashboard = dynamic(() => import('../src/app/customer-dashboard/page'), {
-      //     ssr: false,
-      // });
-
-
-
       const packageAmounts = {
           "Test package": 100,
           "Pro package": 500,
@@ -116,31 +104,6 @@
 
       const expectedAmount = packageAmounts[packageType] || null;
       const isAmountValid = expectedAmount !== null && parseFloat(depositAmount) === expectedAmount;
-
-
-      // const generateReferralCode = (length = 8) => {
-      //     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      //     let result = "";
-      //     for (let i = 0; i < length; i++) {
-      //         result += characters.charAt(Math.floor(Math.random() * characters.length));
-      //     }
-      //     return result;
-      // };
-      //
-      // // Load from localStorage or generate once
-      // useEffect(() => {
-      //     if (typeof window !== "undefined") {
-      //         const storedCode = localStorage.getItem("referralCode");
-      //
-      //         if (storedCode) {
-      //             setReferralCode(storedCode);
-      //         } else {
-      //             const newCode = generateReferralCode();
-      //             localStorage.setItem("referralCode", newCode);
-      //             setReferralCode(newCode);
-      //         }
-      //     }
-      // }, []);
 
 
       // Copy to clipboard function
@@ -159,154 +122,29 @@
       setWalletVisible(!walletVisible)
     }
 
-//
 
-        // const fetchBalance = async () => {
-        //     try {
-        //         const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
-        //             method: 'POST',
-        //             credentials: "include",
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //             },
-        //             body: JSON.stringify({email: email}), // Send email in the body
-        //         });
-        //
-        //         const balanceData = await response.json();
-        //         console.log("User Info Response:", balanceData);
-        //
-        //         setBalance(balanceData.balance);
-        //         setFetchedPackage(balanceData.packageType);
-        //         setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
-        //     } catch (err) {
-        //         console.error("Failed to fetch balance", err);
-        //     } finally {
-        //         setLoading(false);
-        //     }
-        // };
-        //
-        // // Call fetchBalance when the component mounts or email changes
-        // useEffect(() => {
-        //     fetchBalance();
-        // }, [email]);
-
-      // useEffect(() => {
-      //     fetchBalance();
-      // }, [email]);
-
-
-
-    // useEffect(() => {
-    //   if (withdrawMessage) {
-    //     const timeout = setTimeout(() => setWithdrawMessage(""), 5000);
-    //     return () => clearTimeout(timeout);
-    //   }
-    // }, [withdrawMessage]);
-    //
-
-      // Util to generate referral code
       const generateReferralCode = () => {
           const prefix = 'USR';
           const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
           return `${prefix}-${randomPart}`;
       };
 
-      const ReferralCard = () => {
-          const [referralCode, setReferralCode] = useState('');
-
-          useEffect(() => {
-              // Only run on client
-              if (typeof window !== 'undefined') {
-                  let code = localStorage.getItem('referralCode');
-                  if (!code) {
-                      code = generateReferralCode();
-                      localStorage.setItem('referralCode', code);
-                  }
-                  setReferralCode(code);
+      useEffect(() => {
+          // Only run on client
+          if (typeof window !== 'undefined') {
+              let code = localStorage.getItem('referralCode');
+              if (!code) {
+                  code = generateReferralCode();
+                  localStorage.setItem('referralCode', code);
               }
-          }, []);
+              setReferralCode(code);
+          }
+      }, []);
 
 
 
-
-          return (
+      return (
           <div className="flex min-h-screen flex-col md:flex-row">
-            {/* Sidebar */}
-            {/* <div className="w-full md:w-64 bg-card border-r">
-          <div className="flex h-14 items-center border-b px-4">
-            <h2 className="text-lg font-semibold">Finance Portal</h2>
-          </div>
-          <div className="px-4 py-2">
-            <nav className="flex flex-col gap-1">
-              <Button variant="ghost" className="justify-start" asChild>
-                <a href="#" className="flex items-center gap-2">
-                  <Home size={16} />
-                  Dashboard
-                </a>
-              </Button>
-              <Button variant="ghost" className="justify-start" asChild>
-                <a href="/transactions" className="flex items-center gap-2">
-                  <DollarSign size={16} />
-                  Transactions
-                </a>
-              </Button>
-              <Button variant="ghost" className="justify-start" asChild>
-                <a href="/packages" className="flex items-center gap-2">
-                  <Package size={16} />
-                  Packages
-                </a>
-              </Button>
-              <Button variant="ghost" className="justify-start" asChild>
-                <a href="/referrals" className="flex items-center gap-2">
-                  <Users size={16} />
-                  Referrals
-                </a>
-              </Button>
-              <Button variant="ghost" className="justify-start" asChild>
-                <a href="/settings" className="flex items-center gap-2">
-                  <Settings size={16} />
-                  Settings
-                </a>
-              </Button>
-            </nav>
-          </div>
-          <div className="absolute bottom-4 left-4 right-4 md:fixed md:bottom-4 md:left-4 md:w-56">
-            <div className="flex items-center gap-2 p-2">
-              <Avatar>
-                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-              <div className="flex-1 overflow-hidden">
-                <p className="text-sm font-medium leading-none">John Doe</p>
-                <p className="text-xs text-muted-foreground truncate">john.doe@example.com</p>
-              </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <ChevronDown size={16} />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    Settings
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
-        </div> */}
 
             {/* Main Content */}
               <div className="flex-1 p-4 md:p-6">
