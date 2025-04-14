@@ -294,13 +294,13 @@
                                       try {
                                           const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
                                               method: 'POST',
-                                              credentials: "include",
+                                              // credentials: "include",
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({email: email}), // Send email in the body
+                                              body: JSON.stringify({email: "U@gmail.com"}), // Send email in the body
                                           });
-
+                                            console.log(email)
                                           const balanceData = await response.json();
                                           console.log("User Info Response:", balanceData);
 
