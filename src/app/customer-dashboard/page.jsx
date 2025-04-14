@@ -204,18 +204,27 @@
     // }, [withdrawMessage]);
     //
 
-      //
-      // const SomeComponent = () => {
-      //     const userContext = useUser();
-      //
-      //     if (!userContext) {
-      //         return <div>Loading...</div>;
-      //     }
-      //     const { userEmail } = userContext;
-      //
-      // }
+      const generateReferralCode = () => {
+          const prefix = 'USR';
+          const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
+          return `${prefix}-${randomPart}`;
+      };
 
-          return (
+      useEffect(() => {
+          // Only run on client
+          if (typeof window !== 'undefined') {
+              let code = localStorage.getItem('referralCode');
+              if (!code) {
+                  code = generateReferralCode();
+                  localStorage.setItem('referralCode', code);
+              }
+              setReferralCode(code);
+          }
+      }, []);
+
+
+
+      return (
           <div className="flex min-h-screen flex-col md:flex-row">
             {/* Sidebar */}
             {/* <div className="w-full md:w-64 bg-card border-r">
@@ -450,7 +459,6 @@
                         </CardHeader>
                         <CardContent>
                           <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                      //Generated referral code should be added here
                             <code className="text-sm font-mono">{referralCode}</code>
                             <Button
                                 variant="ghost"
