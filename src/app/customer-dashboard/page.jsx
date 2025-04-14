@@ -130,6 +130,20 @@
       };
 
 
+      useEffect(() => {
+          const existingCode = localStorage.getItem("referralCode");
+
+          if (!existingCode) {
+              const newCode = generateReferralCode();
+              localStorage.setItem("referralCode", newCode);
+              setReferralCode(newCode);
+          } else {
+              setReferralCode(existingCode);
+          }
+      }, []);
+
+
+
       return (
           <div className="flex min-h-screen flex-col md:flex-row">
 
@@ -150,17 +164,6 @@
                               onClick={async () => {
 
                                   try {
-                                      useEffect(() => {
-                                          const existingCode = localStorage.getItem("referralCode");
-
-                                          if (!existingCode) {
-                                              const newCode = generateReferralCode();
-                                              localStorage.setItem("referralCode", newCode);
-                                              setReferralCode(newCode);
-                                          } else {
-                                              setReferralCode(existingCode);
-                                          }
-                                      }, []);
 
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
