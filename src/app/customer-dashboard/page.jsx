@@ -46,18 +46,22 @@
     const [depositName, setDepositName] = useState("");
     const [hash, setHash] = useState("");
 
+    const [balance, setBalance] = useState(null);
+    const [fetchedPackage, setFetchedPackage] = useState("");
+
+
     const [withdrawAmount, setWithdrawAmount] = useState("");
     const [withdrawName, setWithdrawName] = useState("");
     const [withdrawWallet, setWithdrawWallet] = useState("");
     const [withdrawDescription, setWithdrawDescription] = useState("");
     const [availableBalance, setAvailableBalance] = useState(2000);
-    const [balance, setBalance] = useState(null);
     const [lastUpdated, setLastUpdated] = useState("");
     const [packageType, setPackageType] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
     const [walletType, setWalletType] = useState("");
     // const [referralCode, setReferralCode] = useState("");
     const [isClient, setIsClient] = useState(false);
+    const [loading, setLoading] = useState(true);
 
 
 
@@ -146,27 +150,20 @@
     }
 
     const BalanceCard = () => {
-
+//
       useEffect(() => {
         const fetchBalance = async () => {
           try {
-            const res = await fetch("https://billions-backend-1.onrender.com/balance", {
-              method: "GET",
-              credentials: "include",
-              headers: {
-                  'Content-Type':'application/json',
-              },
-            });
-            
-            if(!res.ok){
-              throw new Error('Failed to fetch balance')
-            }
-            
-            const data = await res.json();
-            setBalance(data.balance); // assuming { balance: 2450.5, updatedAt: "2025-04-09T10:30:00Z" }
-            setLastUpdated(new Date(data.updatedAt).toLocaleDateString());
+              const balanceResponse = await fetch("https://billions-backend-1.onrender.com/getUserInfo");
+              const balanceData = await balanceResponse.json();
+
+              setBalance(balanceData.balance);
+              setFetchedPackage(balanceData.package);
+
           } catch (err) {
             console.error("Failed to fetch balance", err);
+          } finally {
+              setLoading(false);
           }
         };
 
@@ -288,7 +285,7 @@
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-xs text-muted-foreground"> Last updated: {lastUpdated || "Fetching..."}</div>
+                    {/*<div className="text-xs text-muted-foreground"> Last updated: {lastUpdated || "Fetching..."}</div>*/}
                   </CardContent>
                 </Card>
 
@@ -310,7 +307,7 @@
                 <Card>
                   <CardHeader className="pb-2">
                     <CardDescription>Current Package</CardDescription>
-                    <CardTitle>Premium Plan</CardTitle>
+                      <CardTitle>{fetchedPackage ? fetchedPackage.name : "Loading..."}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <Badge>Active</Badge>
