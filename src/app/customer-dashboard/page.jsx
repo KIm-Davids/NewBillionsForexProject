@@ -150,15 +150,17 @@
                               onClick={async () => {
 
                                   try {
-                                      // Only run on client
-                                      if (typeof window !== 'undefined') {
-                                          let code = localStorage.getItem('referralCode');
-                                          if (!code) {
-                                              code = generateReferralCode();
-                                              localStorage.setItem('referralCode', code);
+                                      useEffect(() => {
+                                          const existingCode = localStorage.getItem("referralCode");
+
+                                          if (!existingCode) {
+                                              const newCode = generateReferralCode();
+                                              localStorage.setItem("referralCode", newCode);
+                                              setReferralCode(newCode);
+                                          } else {
+                                              setReferralCode(existingCode);
                                           }
-                                          setReferralCode(code);
-                                      }
+                                      }, []);
 
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
@@ -299,7 +301,11 @@
                         </CardHeader>
                         <CardContent>
                           <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                            <code className="text-sm font-mono">{referralCode}</code>
+                            <code className="text-sm font-mono">{referralCode ? (
+                                <code className="text-sm font-mono">{referralCode}</code>
+                            ) : (
+                                <span className="text-sm text-muted">Loading code...</span>
+                            )}</code>
                             <Button
                                 variant="ghost"
                                 size="icon"
