@@ -304,8 +304,6 @@
                           <button
                               onClick={async () => {
 
-                                  const userEmail = localStorage.getItem('userEmail');
-
                                   try {
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');

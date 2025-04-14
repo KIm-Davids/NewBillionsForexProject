@@ -60,6 +60,7 @@ const Login = () => {
           },
           body: JSON.stringify(payload),
         });
+        console.log(payload)
           router.push('/dashboard');
 
       } catch (error) {
