@@ -204,27 +204,32 @@
     // }, [withdrawMessage]);
     //
 
+      // Util to generate referral code
       const generateReferralCode = () => {
           const prefix = 'USR';
           const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
           return `${prefix}-${randomPart}`;
       };
 
-      useEffect(() => {
-          // Only run on client
-          if (typeof window !== 'undefined') {
-              let code = localStorage.getItem('referralCode');
-              if (!code) {
-                  code = generateReferralCode();
-                  localStorage.setItem('referralCode', code);
+      const ReferralCard = () => {
+          const [referralCode, setReferralCode] = useState('');
+
+          useEffect(() => {
+              // Only run on client
+              if (typeof window !== 'undefined') {
+                  let code = localStorage.getItem('referralCode');
+                  if (!code) {
+                      code = generateReferralCode();
+                      localStorage.setItem('referralCode', code);
+                  }
+                  setReferralCode(code);
               }
-              setReferralCode(code);
-          }
-      }, []);
+          }, []);
 
 
 
-      return (
+
+          return (
           <div className="flex min-h-screen flex-col md:flex-row">
             {/* Sidebar */}
             {/* <div className="w-full md:w-64 bg-card border-r">
