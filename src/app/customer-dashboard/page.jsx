@@ -315,7 +315,7 @@
                               }
 
                               }  // Trigger the fetchBalance function when clicked
-                              className="px-4 py-2 bg-grey-500 text-white rounded-full hover:bg-blue-600 flex items-center justify-center"
+                              className="px-4 py-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 flex items-center justify-center"
                           >
                               {/* Display the refresh icon */}
                               <FaSyncAlt className="text-white" size={20}/>

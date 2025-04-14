@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { useToast } from "../src/app/hooks/use-toast";
 import ToastContainer from '../src/component/ToastContainer';
+import { useUser } from '../context/UserContext';
+
 
 
 const Login = () => {
@@ -95,6 +97,16 @@ const Login = () => {
     }
 
   }
+
+
+    const {setUserEmail} = useUser();
+
+    const saveEmail = () => {
+      setUserEmail(email);  // Set the email
+      console.log("Already set user email", email)
+    };
+
+
 
   if (!mounted) {
     // Only render the login/signup form after the component has mounted
@@ -188,6 +200,7 @@ const Login = () => {
           )}
           <button
             type="submit"
+            onClick={saveEmail}
             className="w-full p-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-full text-lg font-medium hover:opacity-90 transition"
           >
             {isLoginMode ? 'Login' : 'Sign Up'}
