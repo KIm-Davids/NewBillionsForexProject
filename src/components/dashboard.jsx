@@ -52,9 +52,8 @@ export const Dashboard = () => {
                 {/*  Settings*/}
                 {/*</DropdownMenuItem>*/}
                 <DropdownMenuItem>
-                {/*  <LogOut className="mr-2 h-4 w-4" />*/}
-                {/*  Logout*/}
-                {/*</DropdownMenuItem>*/}
+                  <LogOut className="mr-2 h-4 w-4" />
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
