@@ -9,10 +9,10 @@ export const useUser = () => useContext(UserContext);
 // Provider component that wraps the app and provides the global state
 export const UserProvider = ({ children }) => {
     console.log("✅ UserProvider is wrapping children!");
-    const [email, setEmail] = useState('');  // Email state
+    const [userEmail, setUserEmail] = useState('');  // Email state
 
     return (
-        <UserContext.Provider value={{ email, setEmail }}>
+        <UserContext.Provider value={{ userEmail, setUserEmail }}>
             {children}
         </UserContext.Provider>
     );
