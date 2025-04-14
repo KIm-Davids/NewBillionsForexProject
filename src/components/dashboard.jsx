@@ -52,11 +52,12 @@ export const Dashboard = () => {
             {/*</Button>*/}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                {/*<ButtonclassName="rounded-full">*/}
-                  <FaSyncAlt className="text-white" size={20}/>
-                {/*</Button>*/}
+
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <FaSyncAlt className="text-white" size={20}/>
+                </Button>
                 {/*<DropdownMenuItem>*/}
                 {/*  <User className="mr-2 h-4 w-4" />*/}
                 {/*  Profile*/}
