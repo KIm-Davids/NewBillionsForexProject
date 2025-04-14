@@ -593,7 +593,11 @@
                                   <div className="flex justify-between text-sm">
                                       <span className="text-muted-foreground">Available for withdrawal:</span>
                                       <span className="font-medium">
-                            {balance !== null ? `$${balance.toString()}` : "Loading..."}
+                                          {balanceData && balanceData.lastUpdated
+                                              ? balance !== null
+                                                  ? `$${balance.toString()}`
+                                                  : "Loading..."
+                                              : "Not available"}
                         </span>
                                   </div>
                               </CardContent>
