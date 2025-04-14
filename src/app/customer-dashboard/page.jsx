@@ -282,16 +282,17 @@
                           {/*  <Bell size={16} />*/}
                           {/*</Button>*/}
                       </div>
-                  </div>
 
-                  <div className="mt-4">
-                      <button
-                          onClick={BalanceCard}  // Trigger the fetchBalance function when clicked
-                          className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center justify-center"
-                      >
-                          {/* Display the refresh icon */}
-                          <FaSyncAlt className="animate-spin text-white" size={20}/>
-                      </button>
+                      <div className="mt-4">
+                          <button
+                              onClick={BalanceCard}  // Trigger the fetchBalance function when clicked
+                              className="px-4 py-2 bg-grey-500 text-white rounded-full hover:bg-blue-600 flex items-center justify-center"
+                          >
+                              {/* Display the refresh icon */}
+                              <FaSyncAlt className="text-white" size={20}/>
+                          </button>
+                      </div>
+
                   </div>
 
 
