@@ -150,15 +150,15 @@
                               onClick={async () => {
 
                                   try {
-                                          // const existingCode = localStorage.getItem("referralCode");
-                                          //
-                                          // if (!existingCode) {
-                                          //     const newCode = generateReferralCode();
-                                          //     localStorage.setItem("referralCode", newCode);
-                                          //     setReferralCode(newCode);
-                                          // } else {
-                                          //     setReferralCode(existingCode);
-                                          // }
+                                          const existingCode = localStorage.getItem("referralCode");
+
+                                          if (!existingCode) {
+                                              const newCode = generateReferralCode();
+                                              localStorage.setItem("referralCode", newCode);
+                                              setReferralCode(newCode);
+                                          } else {
+                                              setReferralCode(existingCode);
+                                          }
 
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
@@ -177,7 +177,7 @@
                                           setBalance(balanceData.balance);
                                           setFetchedPackage(balanceData.packageType);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
-                                          setReferralCode(balanceData.referralCode)
+                                          // setReferralCode(balanceData.referralCode)
                                       }
 
                                       } catch (err) {
