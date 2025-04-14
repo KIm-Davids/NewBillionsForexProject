@@ -106,21 +106,6 @@ const Login = () => {
 
   }
 
-
-    // const {setUserEmail} = useUser();
-    //
-    // const saveEmail = () => {
-    //   setUserEmail(email);  // Set the email
-    //   console.log("Already set user email", email)
-    // };
-
-  //
-  // if (typeof window !== 'undefined') {
-  //   localStorage.setItem('userEmail', email);
-  //   console.log(email)
-  // }
-
-
   if (!mounted) {
     // Only render the login/signup form after the component has mounted
     return null;
@@ -213,7 +198,6 @@ const Login = () => {
           )}
           <button
             type="submit"
-            // onClick={saveEmail}
             className="w-full p-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-full text-lg font-medium hover:opacity-90 transition"
           >
             {isLoginMode ? 'Login' : 'Sign Up'}
