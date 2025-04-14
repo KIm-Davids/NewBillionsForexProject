@@ -543,7 +543,7 @@
                               const data = await response.json();
                               console.log("Server response:", data);
 
-                              if (!response.ok) {
+                              if (response.ok) {
                                 setResponseMessage("✅ Transaction request sent successfully!");
                                 setAvailableBalance(prev => prev + amountValue);
                               } else {
@@ -706,17 +706,17 @@
                               const data = await response.json();
                               console.log("Withdraw response:", data);
 
-                              if (!response.ok) {
+                              if (response.ok) {
                                 setAvailableBalance(prev => prev - amount);
                                 setResponseMessage("✅ Withdrawal request sent successfully!");
                               } else {
-                                setResponseMessage("✅ Withdrawal request sent successfully!");
-                                // setResponseMessage(`❌ ${data.error || "Withdrawal failed. Please try again."}`);
+                                // setResponseMessage("✅ Withdrawal request sent successfully!");
+                                setResponseMessage(`❌ ${data.error || "Withdrawal failed. Please try again."}`);
                               }
                             } catch (error) {
                               console.error("Withdraw error:", error);
-                              setResponseMessage("✅ Withdrawal request sent successfully!");
-                              // setResponseMessage("❌ Network error. Please try again.");
+                              // setResponseMessage("✅ Withdrawal request sent successfully!");
+                              setResponseMessage("❌ Network error. Please try again.");
                             }
                           }}
 
