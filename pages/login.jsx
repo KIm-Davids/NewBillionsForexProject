@@ -28,6 +28,23 @@ const Login = () => {
   const adminEmail = "admin10k4u1234@gmail.com";
   const adminPassword = "admin1sWorkingHard4u"
 
+  const userContext = useUser();
+
+  if (!userContext) {
+    return (
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500 border-solid mx-auto mb-2" />
+            <p className="text-gray-600">Loading user data...</p>
+          </div>
+        </div>
+    );
+  }
+
+  const { setUserEmail } = userContext;
+
+
+
   useEffect(() => {
     // Set mounted to true after the component has mounted
     setMounted(true);
@@ -84,6 +101,7 @@ const Login = () => {
           setMessage(isLoginMode ? "Login successful!" : "Sign up successful!");
           setMessageType("success");
 
+          setUserEmail(email);
           router.push('/customerDashboard');
         } else {
           setMessage("Invalid details");
@@ -99,7 +117,7 @@ const Login = () => {
   }
 
 
-    const {setUserEmail} = useUser();
+    // const {setUserEmail} = useUser();
 
     const saveEmail = () => {
       setUserEmail(email);  // Set the email
