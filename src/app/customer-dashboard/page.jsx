@@ -205,7 +205,7 @@
           if (!userContext) {
               return <div>Loading...</div>;
           }
-
+      }
           const { userEmail } = userContext;
 
           return (
