@@ -38,7 +38,7 @@ export const Dashboard = () => {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button>
+                <Button className="mr-4">
                   <FaSyncAlt className="text-white" size={20}/>
                 </Button>
               </DropdownMenuTrigger>
