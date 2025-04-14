@@ -28,8 +28,9 @@ const Login = () => {
   const adminEmail = "admin10k4u1234@gmail.com";
   const adminPassword = "admin1sWorkingHard4u"
 
-  localStorage.setItem('userEmail', email);
-
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('userEmail', email);
+  }
 
   useEffect(() => {
     // Set mounted to true after the component has mounted

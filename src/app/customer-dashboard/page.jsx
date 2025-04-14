@@ -307,6 +307,8 @@
                                   const userEmail = localStorage.getItem('userEmail');
 
                                   try {
+                                      if (typeof window !== 'undefined') {
+                                          const userEmail = localStorage.getItem('userEmail');
                                           const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
                                               method: 'POST',
                                               // credentials: "include",
@@ -315,18 +317,24 @@
                                               },
                                               body: JSON.stringify({email: userEmail}), // Send email in the body
                                           });
-                                            console.log(email)
+                                          console.log(email)
                                           const balanceData = await response.json();
                                           console.log("User Info Response:", balanceData);
 
                                           setBalance(balanceData.balance);
                                           setFetchedPackage(balanceData.packageType);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
-                                      } catch (err) {
+                                      }
+                                  catch
+                                      (err)
+                                      {
                                           console.error("Failed to fetch balance", err);
-                                      } finally {
+                                      }
+                                  finally
+                                      {
                                           setLoading(false);
                                       }
+                                  }
                               }
 
                               }  // Trigger the fetchBalance function when clicked
