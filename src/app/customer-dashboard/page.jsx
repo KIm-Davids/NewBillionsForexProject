@@ -217,7 +217,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Next Withdrawal</CardDescription>
-                              <CardTitle>{packageType || "No Package bought yet !!!"}</CardTitle>
+                              <CardTitle>April 15, 2025</CardTitle>
                           </CardHeader>
                           <CardContent>
                               <Badge go o
@@ -232,7 +232,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Current Package</CardDescription>
-                              <CardTitle>{fetchedPackage ? fetchedPackage.name : "Loading..."}</CardTitle>
+                              <CardTitle>{fetchedPackage ? fetchedPackage.name : "No Package bought yet !"}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               <Badge>Active</Badge>
