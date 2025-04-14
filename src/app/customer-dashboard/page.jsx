@@ -41,7 +41,7 @@
     const {toast} = useToast()
     const [walletVisible, setWalletVisible] = useState(false)
     const [depositAmount, setDepositAmount] = useState("");
-    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [description, setDescription] = useState("");
     const [depositName, setDepositName] = useState("");
     const [hash, setHash] = useState("");
@@ -443,14 +443,14 @@
 
                           {/* Name */}
                           <div className="space-y-2">
-                              <Label htmlFor="name">Your Name</Label>
+                              <Label htmlFor="name">Your Email</Label>
                               <div className="relative w-72">
 
                                   <Input
-                                      id="name"
-                                      placeholder="Your full name"
-                                      value={name}
-                                      onChange={(e) => setName(e.target.value)}
+                                      id="email"
+                                      placeholder="Your email"
+                                      value={email}
+                                      onChange={(e) => setEmail(e.target.value)}
                                       required
                                   />
                               </div>
@@ -535,7 +535,7 @@
                                               "Content-Type": "application/json",
                                           },
                                           body: JSON.stringify({
-                                              senderName: name,
+                                              email: email,
                                               amount: amountValue,
                                               hash: hash,
                                               status: 'pending',
@@ -597,13 +597,13 @@
 
                           {/* Name */}
                           <div className="space-y-2">
-                              <Label htmlFor="withdraw-name">Your Name</Label>
+                              <Label htmlFor="withdraw-name">Your Email</Label>
                               <div className="relative w-72">
                                   <Input
                                       id="withdraw-name"
-                                      placeholder="Your full name"
-                                      value={withdrawName}
-                                      onChange={(e) => setWithdrawName(e.target.value)}
+                                      placeholder="Your email"
+                                      value={email}
+                                      onChange={(e) => setEmail(e.target.value)}
                                   />
                               </div>
                           </div>
@@ -697,7 +697,7 @@
                                               "Content-Type": "application/json",
                                           },
                                           body: JSON.stringify({
-                                              senderName: withdrawName,
+                                              email: email,
                                               senderAddress: withdrawWallet,
                                               walletType: walletType,
                                               status: 'pending',
