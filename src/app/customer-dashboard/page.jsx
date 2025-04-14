@@ -156,9 +156,10 @@
                                               const newCode = generateReferralCode();
                                               localStorage.setItem("referralCode", newCode);
                                               setReferralCode(newCode);
-                                          } else {
-                                              setReferralCode(existingCode);
                                           }
+                                          // else {
+                                          //     setReferralCode(existingCode);
+                                          // }
 
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
@@ -216,7 +217,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Next Withdrawal</CardDescription>
-                              <CardTitle>April 15, 2025</CardTitle>
+                              <CardTitle>{packageType || "No Package bought yet !!!"}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               <Badge go o
