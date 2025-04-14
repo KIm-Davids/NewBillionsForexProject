@@ -31,18 +31,25 @@ export const RecentActivities = () => {
     }
   };
 
-  const handleReject = async (depositId) => {
-    try {
-      await fetch('https://your-backend.com/reject-deposit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ deposit_id: depositId }),
-      });
-      fetchDeposits();
-    } catch (error) {
-      console.error('Error rejecting deposit:', error);
-    }
-  };
+  // const handleReject = async (depositId) => {
+  //   try {
+  //     await fetch('https://your-backend.com/reject-deposit', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ deposit_id: depositId }),
+  //     });
+  //     fetchDeposits();
+  //   } catch (error) {
+  //     console.error('Error rejecting deposit:', error);
+  //   }
+  // };
+
+  // if (Array.isArray(deposits)) {
+  //   deposits.map(...);
+  // } else {
+  //   console.error("Expected an array but received:", deposits);
+  // }
+
 
   useEffect(() => {
     fetchDeposits();
