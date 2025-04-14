@@ -150,15 +150,15 @@
                               onClick={async () => {
 
                                   try {
-                                          const existingCode = localStorage.getItem("referralCode");
-
-                                          if (!existingCode) {
-                                              const newCode = generateReferralCode();
-                                              localStorage.setItem("referralCode", newCode);
-                                              setReferralCode(newCode);
-                                          } else {
-                                              setReferralCode(existingCode);
-                                          }
+                                          // const existingCode = localStorage.getItem("referralCode");
+                                          //
+                                          // if (!existingCode) {
+                                          //     const newCode = generateReferralCode();
+                                          //     localStorage.setItem("referralCode", newCode);
+                                          //     setReferralCode(newCode);
+                                          // } else {
+                                          //     setReferralCode(existingCode);
+                                          // }
 
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
