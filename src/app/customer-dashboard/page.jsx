@@ -96,12 +96,11 @@
           );
       }
 
-      useEffect(() => {
-          const code = typeof window !== 'undefined' ? localStorage.getItem('referralCode') : '';
-          if (code) {
-              setReferralCode(code);
-          }
-      }, []);
+
+      // useEffect(() => {
+      //     const storedCode = typeof window !== 'undefined' ? localStorage.getItem('referralCode') : null;
+      //     setReferralCode(storedCode);
+      // }, []);
 
       // const Dashboard = dynamic(() => import('../src/app/customer-dashboard/page'), {
       //     ssr: false,
@@ -314,6 +313,7 @@
                                   try {
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
+                                          localStorage.setItem('referralCode', referralCode);
                                           const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
                                               method: 'POST',
                                               // credentials: "include",
@@ -328,6 +328,7 @@
                                           setBalance(balanceData.balance);
                                           setFetchedPackage(balanceData.packageType);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
+                                          setReferralCode(balanceData.referralCode)
                                       }
 
                                       } catch (err) {
