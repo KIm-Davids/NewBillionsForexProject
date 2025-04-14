@@ -536,11 +536,10 @@
                                           },
                                           body: JSON.stringify({
                                               senderName: name,
-                                              senderAddress: depositWallet,
-                                  amount: amountValue,
-                                  transactionType: 'deposit',
-                                  status: 'pending',
-                                  packageType: packageType,
+                                              amount: amountValue,
+                                              hash: hash,
+                                              status: 'pending',
+                                              packageType: packageType,
                                 }),
                               });
 
@@ -698,12 +697,12 @@
                                               "Content-Type": "application/json",
                                           },
                                           body: JSON.stringify({
-                                  senderName: withdrawName,
-                                  senderAddress: withdrawWallet,
-                                  transactionType: 'withdraw',
-                                  status: 'pending',
-                                  amount,
-                                  description: withdrawDescription,
+                                              senderName: withdrawName,
+                                              senderAddress: withdrawWallet,
+                                              walletType: walletType,
+                                              status: 'pending',
+                                              amount,
+                                              description: withdrawDescription,
                                 }),
                               });
 
