@@ -157,6 +157,7 @@
                 try {
                     const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
                         method: 'POST',
+                        credentials: "include",
                         headers: {
                             'Content-Type': 'application/json',
                         },
