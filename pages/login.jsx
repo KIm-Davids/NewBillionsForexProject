@@ -49,6 +49,8 @@ const Login = () => {
         ? {email, password}
         : {email, password, username, referral};
 
+    localStorage.setItem('userEmail', email); // Save email in localStorage
+    console.log('Email saved to localStorage:', email);
 
     if (email === adminEmail && password === adminPassword) {
       try {
@@ -79,8 +81,7 @@ const Login = () => {
           },
           body: JSON.stringify(payload),
         });
-        localStorage.setItem('userEmail', email); // Save email in localStorage
-        console.log('Email saved to localStorage:', email);
+
         if (response.ok && email !== adminEmail) {
           const data = await response.text();
           setMessage(isLoginMode ? "Login successful!" : "Sign up successful!");
