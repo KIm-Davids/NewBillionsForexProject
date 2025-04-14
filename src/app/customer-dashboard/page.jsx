@@ -190,6 +190,10 @@
                               }
 
                               }  // Trigger the fetchBalance function when clicked
+
+
+
+
                               className="px-4 py-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 flex items-center justify-center"
                           >
                               {/* Display the refresh icon */}
@@ -233,7 +237,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Current Package</CardDescription>
-                              <CardTitle>{fetchedPackage ? fetchedPackage : "No Package bought yet !"}</CardTitle>
+                              <CardTitle>{fetchedPackage ? fetchedPackage : "No Package!"}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               <Badge>Active</Badge>

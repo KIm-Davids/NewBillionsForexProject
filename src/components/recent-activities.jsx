@@ -1,114 +1,95 @@
-import { Clock, LogIn, LogOut, Settings, User } from 'lucide-react';
+'use client';
 
+import { useEffect, useState } from 'react';
+import { CheckCircle, XCircle } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 
-// Mock activity data
-const activities = [
-  {
-    id: 1,
-    user: {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
-    action: '1000',
-    timestamp: '2 minutes ago',
-    icon: LogIn,
-  },
-  {
-    id: 2,
-    user: {
-      name: 'Jane Smith',
-      email: 'jane.smith@example.com',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
-    action: 'Updated Profile',
-    timestamp: '15 minutes ago',
-    icon: User,
-  },
-  {
-    id: 3,
-    user: {
-      name: 'Robert Johnson',
-      email: 'robert.johnson@example.com',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
-    action: 'Logout',
-    timestamp: '1 hour ago',
-    icon: LogOut,
-  },
-  {
-    id: 4,
-    user: {
-      name: 'Emily Davis',
-      email: 'emily.davis@example.com',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
-    action: 'Changed Settings',
-    timestamp: '3 hours ago',
-    icon: Settings,
-  },
-  {
-    id: 5,
-    user: {
-      name: 'Michael Wilson',
-      email: 'michael.wilson@example.com',
-      avatar: '/placeholder.svg?height=40&width=40',
-    },
-    action: 'Login',
-    timestamp: '5 hours ago',
-    icon: LogIn,
-  },
-];
+export const RecentActivities = () => {
+  const [deposits, setDeposits] = useState([]);
 
-export const RecentActivities = () => (
-  <Table>
-    <TableHeader>
-      <TableRow>
-        <TableHead>User</TableHead>
-        <TableHead>Amount</TableHead>
-        <TableHead>Transaction Confirmation</TableHead>
-        <TableHead>Time</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {activities.map((activity) => (
-        <TableRow key={activity.id}>
-          <TableCell>
-            <div className="flex items-center gap-3">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={activity.user.avatar} alt={activity.user.name} />
-                <AvatarFallback>{activity.user.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className="grid gap-0.5">
-                <div className="font-medium">{activity.user.name}</div>
-                <div className="text-xs text-muted-foreground">{activity.user.email}</div>
-              </div>
-            </div>
-          </TableCell>
-          <TableCell>
-            <button
-                className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600"
-                onClick={() => handleConfirmPayment(activity.user.email, activity.action)}
-            >
-              Confirm
-            </button>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              {/*<activity.icon className="h-4 w-4 text-muted-foreground" />*/}
-              <span>$</span>
-            </div>
-          </TableCell>
-          <TableCell>
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-muted-foreground" />
-              <span>{activity.timestamp}</span>
-            </div>
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-);
+  const fetchDeposits = async () => {
+    try {
+      const res = await fetch('https://your-backend.com/admin/deposits');
+      const data = await res.json();
+      setDeposits(data);
+    } catch (error) {
+      console.error('Failed to fetch deposits:', error);
+    }
+  };
+
+  const handleConfirm = async (depositId) => {
+    try {
+      await fetch('https://your-backend.com/confirm-deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ deposit_id: depositId }),
+      });
+      fetchDeposits();
+    } catch (error) {
+      console.error('Error confirming deposit:', error);
+    }
+  };
+
+  const handleReject = async (depositId) => {
+    try {
+      await fetch('https://your-backend.com/reject-deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ deposit_id: depositId }),
+      });
+      fetchDeposits();
+    } catch (error) {
+      console.error('Error rejecting deposit:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDeposits();
+  }, []);
+
+  return (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>User</TableHead>
+            <TableHead>Amount</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Time</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {deposits.map((deposit) => (
+              <TableRow key={deposit.id}>
+                <TableCell>
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={deposit.user.avatar || '/placeholder.svg'} alt={deposit.user.name} />
+                      <AvatarFallback>{deposit.user.name?.charAt(0) || 'U'}</AvatarFallback>
+                    </Avatar>
+                    <div className="grid gap-0.5">
+                      <div className="font-medium">{deposit.user.name}</div>
+                      <div className="text-xs text-muted-foreground">{deposit.user.email}</div>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell>${deposit.amount}</TableCell>
+                <TableCell className="capitalize">{deposit.status}</TableCell>
+                <TableCell>{new Date(deposit.created_at).toLocaleString()}</TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <button onClick={() => handleConfirm(deposit.id)} title="Confirm">
+                      <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
+                    </button>
+                    <button onClick={() => handleReject(deposit.id)} title="Reject">
+                      <XCircle className="text-red-600 hover:scale-110 transition-all" />
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+  );
+};
