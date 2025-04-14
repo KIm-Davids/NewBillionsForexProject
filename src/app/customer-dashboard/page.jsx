@@ -177,7 +177,7 @@
                                           const balanceData = await response.json();
                                           console.log("User Info Response:", balanceData);
                                           setBalance(balanceData.balance);
-                                          setFetchedPackage(balanceData.packageType);
+                                          setFetchedPackage(balanceData.packages);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
                                           // setReferralCode(balanceData.referralCode)
                                       }
@@ -233,7 +233,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Current Package</CardDescription>
-                              <CardTitle>{fetchedPackage ? fetchedPackage.name : "No Package bought yet !"}</CardTitle>
+                              <CardTitle>{fetchedPackage ? fetchedPackage : "No Package bought yet !"}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               <Badge>Active</Badge>
