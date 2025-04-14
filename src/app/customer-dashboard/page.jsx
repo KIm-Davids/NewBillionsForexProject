@@ -320,10 +320,11 @@
                                           console.log(email)
                                           const balanceData = await response.json();
                                           console.log("User Info Response:", balanceData);
-                                      }
                                           setBalance(balanceData.balance);
                                           setFetchedPackage(balanceData.packageType);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
+                                      }
+
                                       } catch (err) {
                                           console.error("Failed to fetch balance", err);
                                       } finally {
