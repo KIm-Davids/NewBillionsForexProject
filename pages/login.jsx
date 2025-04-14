@@ -49,8 +49,6 @@ const Login = () => {
         ? {email, password}
         : {email, password, username, referral};
 
-    localStorage.setItem('userEmail', email); // Save email in localStorage
-    console.log('Email saved to localStorage:', email);
 
     if (email === adminEmail && password === adminPassword) {
       try {
@@ -88,9 +86,12 @@ const Login = () => {
           setMessageType("success");
 
           // Set email in localStorage after successful login or registration
-          // if (typeof window !== 'undefined') {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('userEmail', email); // Save email in localStorage
+            console.log('Email saved to localStorage:', email);
+          }
 
-          // }
+          console.log("Trying to save email...")
           router.push('/customerDashboard');
         } else {
           setMessage("Invalid details");
@@ -113,11 +114,11 @@ const Login = () => {
     //   console.log("Already set user email", email)
     // };
 
-
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('userEmail', email);
-    console.log(email)
-  }
+  //
+  // if (typeof window !== 'undefined') {
+  //   localStorage.setItem('userEmail', email);
+  //   console.log(email)
+  // }
 
 
   if (!mounted) {
@@ -212,7 +213,7 @@ const Login = () => {
           )}
           <button
             type="submit"
-            onClick={saveEmail}
+            // onClick={saveEmail}
             className="w-full p-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-full text-lg font-medium hover:opacity-90 transition"
           >
             {isLoginMode ? 'Login' : 'Sign Up'}
