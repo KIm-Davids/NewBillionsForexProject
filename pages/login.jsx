@@ -97,10 +97,10 @@ const Login = () => {
           // Set email in localStorage after successful login or registration
           if (typeof window !== 'undefined') {
             localStorage.setItem('userEmail', email); // Save email in localStorage
-            if (data.referralCode) {
-              localStorage.setItem('referralCode', data.referralCode.toString());
-              console.log('Referral code saved to localStorage:', data.referralCode);
-            }
+            // if (data.referralCode) {
+            //   localStorage.setItem('referralCode', data.referralCode.toString());
+            //   console.log('Referral code saved to localStorage:', data.referralCode);
+            // }
             console.log('Email saved to localStorage:', email);
           }
 
