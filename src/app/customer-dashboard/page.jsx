@@ -129,19 +129,6 @@
           return `${prefix}-${randomPart}`;
       };
 
-      useEffect(() => {
-          // Only run on client
-          if (typeof window !== 'undefined') {
-              let code = localStorage.getItem('referralCode');
-              if (!code) {
-                  code = generateReferralCode();
-                  localStorage.setItem('referralCode', code);
-              }
-              setReferralCode(code);
-          }
-      }, []);
-
-
 
       return (
           <div className="flex min-h-screen flex-col md:flex-row">
@@ -163,6 +150,16 @@
                               onClick={async () => {
 
                                   try {
+                                      // Only run on client
+                                      if (typeof window !== 'undefined') {
+                                          let code = localStorage.getItem('referralCode');
+                                          if (!code) {
+                                              code = generateReferralCode();
+                                              localStorage.setItem('referralCode', code);
+                                          }
+                                          setReferralCode(code);
+                                      }
+
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
                                           localStorage.setItem('referralCode', referralCode);
