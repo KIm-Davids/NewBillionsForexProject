@@ -152,34 +152,34 @@
 
 //
 
-        const fetchBalance = async () => {
-            try {
-                const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
-                    method: 'POST',
-                    credentials: "include",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({email: email}), // Send email in the body
-                });
-
-                const balanceData = await response.json();
-                console.log("User Info Response:", balanceData);
-
-                setBalance(balanceData.balance);
-                setFetchedPackage(balanceData.packageType);
-                setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
-            } catch (err) {
-                console.error("Failed to fetch balance", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        // Call fetchBalance when the component mounts or email changes
-        useEffect(() => {
-            fetchBalance();
-        }, [email]);
+        // const fetchBalance = async () => {
+        //     try {
+        //         const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
+        //             method: 'POST',
+        //             credentials: "include",
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //             },
+        //             body: JSON.stringify({email: email}), // Send email in the body
+        //         });
+        //
+        //         const balanceData = await response.json();
+        //         console.log("User Info Response:", balanceData);
+        //
+        //         setBalance(balanceData.balance);
+        //         setFetchedPackage(balanceData.packageType);
+        //         setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
+        //     } catch (err) {
+        //         console.error("Failed to fetch balance", err);
+        //     } finally {
+        //         setLoading(false);
+        //     }
+        // };
+        //
+        // // Call fetchBalance when the component mounts or email changes
+        // useEffect(() => {
+        //     fetchBalance();
+        // }, [email]);
 
       // useEffect(() => {
       //     fetchBalance();
@@ -289,7 +289,32 @@
 
                       <div className="mt-4">
                           <button
-                              onClick={fetchBalance}  // Trigger the fetchBalance function when clicked
+                              onClick={async () => {
+
+                                      try {
+                                          const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
+                                              method: 'POST',
+                                              credentials: "include",
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({email: email}), // Send email in the body
+                                          });
+
+                                          const balanceData = await response.json();
+                                          console.log("User Info Response:", balanceData);
+
+                                          setBalance(balanceData.balance);
+                                          setFetchedPackage(balanceData.packageType);
+                                          setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
+                                      } catch (err) {
+                                          console.error("Failed to fetch balance", err);
+                                      } finally {
+                                          setLoading(false);
+                                      }
+                              }
+
+                              }  // Trigger the fetchBalance function when clicked
                               className="px-4 py-2 bg-grey-500 text-white rounded-full hover:bg-blue-600 flex items-center justify-center"
                           >
                               {/* Display the refresh icon */}
