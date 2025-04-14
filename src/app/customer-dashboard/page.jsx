@@ -523,7 +523,7 @@
                                   }
 
                                   if (!isAmountValid) {
-                                      setResponseMessage(`❌ Amount must be exactly $${expectedAmount} for the selected package.`);
+                                      setResponseMessage(`❌ Amount must be more than $${expectedAmount} for the selected package.`);
                                       return;
                                   }
 
