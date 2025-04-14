@@ -198,15 +198,16 @@
     // }, [withdrawMessage]);
     //
 
-
-      const SomeComponent = () => {
-          const userContext = useUser();
-
-          if (!userContext) {
-              return <div>Loading...</div>;
-          }
-      }
-          const { userEmail } = userContext;
+      //
+      // const SomeComponent = () => {
+      //     const userContext = useUser();
+      //
+      //     if (!userContext) {
+      //         return <div>Loading...</div>;
+      //     }
+      //     const { userEmail } = userContext;
+      //
+      // }
 
           return (
           <div className="flex min-h-screen flex-col md:flex-row">
@@ -302,6 +303,13 @@
                       <div className="mt-4">
                           <button
                               onClick={async () => {
+
+                                  const userContext = useUser();
+
+                                  if (!userContext) {
+                                      return <div>Loading...</div>;
+                                  }
+                                  const { userEmail } = userContext;
 
                                       try {
                                           const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
