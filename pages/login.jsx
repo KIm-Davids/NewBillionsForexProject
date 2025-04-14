@@ -86,10 +86,10 @@ const Login = () => {
           setMessageType("success");
 
           // Set email in localStorage after successful login or registration
-          if (typeof window !== 'undefined') {
+          // if (typeof window !== 'undefined') {
             localStorage.setItem('userEmail', email); // Save email in localStorage
             console.log('Email saved to localStorage:', email);
-          }
+          // }
           router.push('/customerDashboard');
         } else {
           setMessage("Invalid details");
