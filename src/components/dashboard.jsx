@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { BellRing, ChevronDown, LogOut, Moon, Search, Settings, Sun, User } from 'lucide-react';
 import { useTheme } from './theme-provider';
 
@@ -21,6 +21,24 @@ export const Dashboard = () => {
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
+
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    fetch("https://your-backend-url.com/admin/users")
+        .then(res => res.json())
+        .then(data => {
+          setUsers(data);
+          setLoading(false);
+        });
+  }, []);
+
+  const filtered = users.filter(user =>
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -52,7 +70,7 @@ export const Dashboard = () => {
                 {/*  Settings*/}
                 {/*</DropdownMenuItem>*/}
                 <DropdownMenuItem>
-                  <LogOut className="mr-2 h-4 w-4" />
+                  {/*<LogOut className="mr-2 h-4 w-4" />*/}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

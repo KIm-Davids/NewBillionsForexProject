@@ -68,6 +68,7 @@ export const RecentActivities = () => (
       <TableRow>
         <TableHead>User</TableHead>
         <TableHead>Amount</TableHead>
+        <TableHead>Transaction Confirmation</TableHead>
         <TableHead>Time</TableHead>
       </TableRow>
     </TableHeader>
@@ -85,6 +86,14 @@ export const RecentActivities = () => (
                 <div className="text-xs text-muted-foreground">{activity.user.email}</div>
               </div>
             </div>
+          </TableCell>
+          <TableCell>
+            <button
+                className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600"
+                onClick={() => handleConfirmPayment(activity.user.email, activity.action)}
+            >
+              Confirm
+            </button>
           </TableCell>
           <TableCell>
             <div className="flex items-center gap-2">
