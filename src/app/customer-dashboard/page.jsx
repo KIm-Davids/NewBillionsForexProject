@@ -315,7 +315,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({email: savedEmail}), // Send email in the body
+                                              body: JSON.stringify({email: savedEmail.toString()}), // Send email in the body
                                           });
                                           console.log(email)
                                           const balanceData = await response.json();

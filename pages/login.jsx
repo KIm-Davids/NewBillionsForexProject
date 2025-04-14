@@ -28,9 +28,6 @@ const Login = () => {
   const adminEmail = "admin10k4u1234@gmail.com";
   const adminPassword = "admin1sWorkingHard4u"
 
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('userEmail', email);
-  }
 
   useEffect(() => {
     // Set mounted to true after the component has mounted
@@ -105,12 +102,17 @@ const Login = () => {
 
 
     // const {setUserEmail} = useUser();
+    //
+    // const saveEmail = () => {
+    //   setUserEmail(email);  // Set the email
+    //   console.log("Already set user email", email)
+    // };
 
-    const saveEmail = () => {
-      setUserEmail(email);  // Set the email
-      console.log("Already set user email", email)
-    };
 
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('userEmail', email);
+    console.log(email)
+  }
 
 
   if (!mounted) {
