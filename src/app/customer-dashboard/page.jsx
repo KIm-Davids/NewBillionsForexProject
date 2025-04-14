@@ -65,6 +65,7 @@
     const [isClient, setIsClient] = useState(false);
     const [loading, setLoading] = useState(true);
     const [referralCode, setReferralCode] = useState('');
+    const [balanceData, setBalanceData] = useState(null);
 
 
 
@@ -593,11 +594,11 @@
                                   <div className="flex justify-between text-sm">
                                       <span className="text-muted-foreground">Available for withdrawal:</span>
                                       <span className="font-medium">
-                                          {balanceData && balanceData.lastUpdated
-                                              ? balance !== null
-                                                  ? `$${balance.toString()}`
-                                                  : "Loading..."
-                                              : "Not available"}
+                                         {balanceData && balanceData.lastUpdated ? (
+                                             balance !== null ? `$${balance.toString()}` : "Loading..."
+                                         ) : (
+                                             "Not available"
+                                         )}
                         </span>
                                   </div>
                               </CardContent>
