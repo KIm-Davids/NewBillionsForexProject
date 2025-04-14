@@ -37,6 +37,9 @@
   import { ThemeToggle } from "../theme-toggle"
   import { Separator } from "../ui/separator"
   import { FaSyncAlt } from 'react-icons/fa';
+  import { useUser } from '../../context/UserContext';
+
+
 
   export default function Dashboard() {
     const {toast} = useToast()
@@ -196,7 +199,16 @@
     //
 
 
-      return (
+      const SomeComponent = () => {
+          const userContext = useUser();
+
+          if (!userContext) {
+              return <div>Loading...</div>;
+          }
+
+          const { userEmail } = userContext;
+
+          return (
           <div className="flex min-h-screen flex-col md:flex-row">
             {/* Sidebar */}
             {/* <div className="w-full md:w-64 bg-card border-r">
@@ -298,7 +310,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({email: "U@gmail.com"}), // Send email in the body
+                                              body: JSON.stringify({email: userEmail}), // Send email in the body
                                           });
                                             console.log(email)
                                           const balanceData = await response.json();
