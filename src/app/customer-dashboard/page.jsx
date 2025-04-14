@@ -151,26 +151,27 @@
 
     const BalanceCard = () => {
 //
-      useEffect(() => {
-        const fetchBalance = async () => {
-          try {
-              const balanceResponse = await fetch(`https://billions-backend-1.onrender.com/getUserInfo?email=${encodeURIComponent(email)}`);
-              const balanceData = await balanceResponse.json();
+        useEffect(() => {
+            const fetchBalance = async () => {
+                try {
+                    const balanceResponse = await fetch(`https://billions-backend-1.onrender.com/getUserInfo?email=${encodeURIComponent(email)}`);
+                    const balanceData = await balanceResponse.json();
 
-              console.log("User Info Response:", balanceData); // 👈 See what's coming in
+                    console.log("User Info Response:", balanceData);
 
-              setBalance(balanceData.balance);
-              setFetchedPackage(balanceData.packageType);
+                    // Set the state with fetched data
+                    setBalance(balanceData.balance);
+                    setFetchedPackage(balanceData.packageType);
+                    setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
+                } catch (err) {
+                    console.error("Failed to fetch balance", err);
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-          } catch (err) {
-            console.error("Failed to fetch balance", err);
-          } finally {
-              setLoading(false);
-          }
-        };
-
-        fetchBalance();
-      }, []);
+            fetchBalance();
+        }, [email]);
 }
 
 
@@ -287,7 +288,7 @@
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {/*<div className="text-xs text-muted-foreground"> Last updated: {lastUpdated || "Fetching..."}</div>*/}
+                    <div className="text-xs text-muted-foreground"> Last updated: {lastUpdated || "Fetching..."}</div>
                   </CardContent>
                 </Card>
 
