@@ -157,6 +157,8 @@
               const balanceResponse = await fetch(`https://billions-backend-1.onrender.com/getUserInfo?email=${encodeURIComponent(email)}`);
               const balanceData = await balanceResponse.json();
 
+              console.log("User Info Response:", balanceData); // 👈 See what's coming in
+
               setBalance(balanceData.balance);
               setFetchedPackage(balanceData.packageType);
 
