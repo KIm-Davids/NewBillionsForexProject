@@ -36,6 +36,7 @@
   import { Input } from "../ui/input"
   import { ThemeToggle } from "../theme-toggle"
   import { Separator } from "../ui/separator"
+  import { FaSyncAlt } from 'react-icons/fa';
 
   export default function Dashboard() {
     const {toast} = useToast()
@@ -154,12 +155,17 @@
         useEffect(() => {
             const fetchBalance = async () => {
                 try {
-                    const balanceResponse = await fetch(`https://billions-backend-1.onrender.com/getUserInfo?email=${encodeURIComponent(email)}`);
-                    const balanceData = await balanceResponse.json();
+                    const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email: email }), // Send email in the body
+                    });
 
+                    const balanceData = await response.json();
                     console.log("User Info Response:", balanceData);
 
-                    // Set the state with fetched data
                     setBalance(balanceData.balance);
                     setFetchedPackage(balanceData.packageType);
                     setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
@@ -266,470 +272,482 @@
         </div> */}
 
             {/* Main Content */}
-            <div className="flex-1 p-4 md:p-6">
-              <div className="flex items-center justify-between mb-6">
-                {/*//add usersname here*/}
-                <h1 className="text-3xl font-bold">Welcome !</h1>
-                <div className="flex items-center gap-2">
-                  {/*<ThemeToggle />*/}
-                  {/*<Button variant="outline" size="icon">*/}
-                  {/*  <Bell size={16} />*/}
-                  {/*</Button>*/}
-                </div>
-              </div>
+              <div className="flex-1 p-4 md:p-6">
+                  <div className="flex items-center justify-between mb-6">
+                      {/*//add usersname here*/}
+                      <h1 className="text-3xl font-bold">Welcome !</h1>
+                      <div className="flex items-center gap-2">
+                          {/*<ThemeToggle />*/}
+                          {/*<Button variant="outline" size="icon">*/}
+                          {/*  <Bell size={16} />*/}
+                          {/*</Button>*/}
+                      </div>
+                  </div>
 
-              {/* Balance and Package Info */}
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-6">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardDescription>Current Balance</CardDescription>
-                    <CardTitle className="text-3xl">
-                      {balance !== null ? `$${balance.toLocaleString()}` : "Loading..."}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-xs text-muted-foreground"> Last updated: {lastUpdated || "Fetching..."}</div>
-                  </CardContent>
-                </Card>
+                  <div className="mt-4">
+                      <button
+                          onClick={fetchBalance}  // Trigger the fetchBalance function when clicked
+                          className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center justify-center"
+                      >
+                          {/* Display the refresh icon */}
+                          <FaSyncAlt className="animate-spin text-white" size={20}/>
+                      </button>
+                  </div>
 
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardDescription>Next Withdrawal</CardDescription>
-                    <CardTitle>April 15, 2025</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Badge go o
-                           variant="outline"
-                           className="bg-green-50 text-green-700 hover:bg-green-50 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-950"
-                    >
-                      Available in 6 days
-                    </Badge>
-                  </CardContent>
-                </Card>
 
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardDescription>Current Package</CardDescription>
-                      <CardTitle>{fetchedPackage ? fetchedPackage.name : "Loading..."}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Badge>Active</Badge>
-                    <p className="text-xs text-muted-foreground mt-1">Renews on May 10, 2025</p>
-                  </CardContent>
-                </Card>
-              </div>
+                  {/* Balance and Package Info */}
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-6">
+                      <Card>
+                          <CardHeader className="pb-2">
+                              <CardDescription>Current Balance</CardDescription>
+                              <CardTitle className="text-3xl">
+                                  {balance !== null ? `$${balance.toLocaleString()}` : "Loading..."}
+                              </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                              <div className="text-xs text-muted-foreground"> Last
+                                  updated: {lastUpdated || "Fetching..."}</div>
+                          </CardContent>
+                      </Card>
 
-              {/* Wallet and Referral */}
-              <div className="grid gap-4 md:grid-cols-2 mb-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Wallet Addresses</CardTitle>
-                    <CardDescription>YOU CAN SEND TO ANY OF THESE WALLETS </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-4">
-                      {[
-                        {name: firstWalletName, address: firstWallet},
-                        {name: secondWalletName, address: secondWallet},
-                        {name: thirdWalletName, address: thirdWallet},
-                        {name: fourthWalletName, address: fourthWallet},
-                      ].map((wallet, index) => (
-                          <div key={index} className="flex flex-col items-start gap-1">
+                      <Card>
+                          <CardHeader className="pb-2">
+                              <CardDescription>Next Withdrawal</CardDescription>
+                              <CardTitle>April 15, 2025</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                              <Badge go o
+                                     variant="outline"
+                                     className="bg-green-50 text-green-700 hover:bg-green-50 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-950"
+                              >
+                                  Available in 6 days
+                              </Badge>
+                          </CardContent>
+                      </Card>
+
+                      <Card>
+                          <CardHeader className="pb-2">
+                              <CardDescription>Current Package</CardDescription>
+                              <CardTitle>{fetchedPackage ? fetchedPackage.name : "Loading..."}</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                              <Badge>Active</Badge>
+                              <p className="text-xs text-muted-foreground mt-1">Renews on May 10, 2025</p>
+                          </CardContent>
+                      </Card>
+                  </div>
+
+                  {/* Wallet and Referral */}
+                  <div className="grid gap-4 md:grid-cols-2 mb-6">
+                      <Card>
+                          <CardHeader>
+                              <CardTitle>Wallet Addresses</CardTitle>
+                              <CardDescription>YOU CAN SEND TO ANY OF THESE WALLETS </CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                              <div className="flex flex-wrap gap-4">
+                                  {[
+                                      {name: firstWalletName, address: firstWallet},
+                                      {name: secondWalletName, address: secondWallet},
+                                      {name: thirdWalletName, address: thirdWallet},
+                                      {name: fourthWalletName, address: fourthWallet},
+                                  ].map((wallet, index) => (
+                                      <div key={index} className="flex flex-col items-start gap-1">
             <span className="text-xs font-medium text-muted-foreground">
               {wallet.name}
             </span>
-                            <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                              <code className="text-xs md:text-sm font-mono truncate max-w-[160px]">
-                                {walletVisible ? wallet.address : maskedWallet}
-                              </code>
-                              <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  onClick={() =>
-                                      copyToClipboard(wallet.address, `${wallet.name} address copied`)
-                                  }
-                                  title={`Copy ${wallet.name} address`}
-                              >
-                                <Copy size={14}/>
-                              </Button>
-                            </div>
-                          </div>
-                      ))}
+                                          <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                                              <code className="text-xs md:text-sm font-mono truncate max-w-[160px]">
+                                                  {walletVisible ? wallet.address : maskedWallet}
+                                              </code>
+                                              <Button
+                                                  variant="ghost"
+                                                  size="icon"
+                                                  onClick={() =>
+                                                      copyToClipboard(wallet.address, `${wallet.name} address copied`)
+                                                  }
+                                                  title={`Copy ${wallet.name} address`}
+                                              >
+                                                  <Copy size={14}/>
+                                              </Button>
+                                          </div>
+                                      </div>
+                                  ))}
 
-                      {/* Eye toggle button once for all */}
-                      <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={toggleWalletVisibility}
-                          title={walletVisible ? "Hide wallet addresses" : "Show wallet addresses"}
-                          className="self-start"
-                      >
-                        {walletVisible ? <EyeOff size={14}/> : <Eye size={14}/>}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                                  {/* Eye toggle button once for all */}
+                                  <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={toggleWalletVisibility}
+                                      title={walletVisible ? "Hide wallet addresses" : "Show wallet addresses"}
+                                      className="self-start"
+                                  >
+                                      {walletVisible ? <EyeOff size={14}/> : <Eye size={14}/>}
+                                  </Button>
+                              </div>
+                          </CardContent>
+                      </Card>
 
 
-                {/*<Card>*/}
-                {/*  <CardHeader>*/}
-                {/*    <CardTitle>Referral Code</CardTitle>*/}
-                {/*    <CardDescription>SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED</CardDescription>*/}
-                {/*  </CardHeader>*/}
-                {/*  <CardContent>*/}
-                {/*    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">*/}
+                      {/*<Card>*/}
+                      {/*  <CardHeader>*/}
+                      {/*    <CardTitle>Referral Code</CardTitle>*/}
+                      {/*    <CardDescription>SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED</CardDescription>*/}
+                      {/*  </CardHeader>*/}
+                      {/*  <CardContent>*/}
+                      {/*    <div className="flex items-center gap-2 p-2 bg-muted rounded-md">*/}
                       {/*//Generated referral code should be added here*/}
-                {/*      <code className="text-sm font-mono">{referralCode}</code>*/}
-                {/*      <Button*/}
-                {/*          variant="ghost"*/}
-                {/*          size="icon"*/}
-                {/*          onClick={() =>*/}
-                {/*              copyToClipboard(referralCode, "Referral code copied to clipboard")*/}
-                {/*          }*/}
-                {/*      >*/}
-                {/*        <Copy size={14}/>*/}
-                {/*      </Button>*/}
-                {/*    </div>*/}
-                {/*    <p className="text-xl text-muted-foreground mt-2">You've referred 0 users so far</p>*/}
-                {/*  </CardContent>*/}
-                {/*</Card>*/}
-              </div>
+                      {/*      <code className="text-sm font-mono">{referralCode}</code>*/}
+                      {/*      <Button*/}
+                      {/*          variant="ghost"*/}
+                      {/*          size="icon"*/}
+                      {/*          onClick={() =>*/}
+                      {/*              copyToClipboard(referralCode, "Referral code copied to clipboard")*/}
+                      {/*          }*/}
+                      {/*      >*/}
+                      {/*        <Copy size={14}/>*/}
+                      {/*      </Button>*/}
+                      {/*    </div>*/}
+                      {/*    <p className="text-xl text-muted-foreground mt-2">You've referred 0 users so far</p>*/}
+                      {/*  </CardContent>*/}
+                      {/*</Card>*/}
+                  </div>
 
 
-              {/* Deposit and Withdraw */}
-              <Tabs defaultValue="deposit" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-4 ">
-                  <TabsTrigger
-                      className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
-                      value="deposit">Deposit</TabsTrigger>
+                  {/* Deposit and Withdraw */}
+                  <Tabs defaultValue="deposit" className="w-full">
+                      <TabsList className="grid w-full grid-cols-2 mb-4 ">
+                          <TabsTrigger
+                              className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
+                              value="deposit">Deposit</TabsTrigger>
 
-                  <TabsTrigger
-                      className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
-                      value="withdraw">Withdraw</TabsTrigger>
-                </TabsList>
+                          <TabsTrigger
+                              className="w-full rounded-lg text-white data-[state=active]:border-white data-[state=active]:border hover:bg-white/10 transition"
+                              value="withdraw">Withdraw</TabsTrigger>
+                      </TabsList>
 
-                <TabsContent value="deposit">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Deposit Funds</CardTitle>
-                      <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
-                    </CardHeader>
-                      <CardContent className="space-y-4">
-
-
-                          {/* Amount */}
-                          {/* Amount */}
-                          <div className="space-y-2">
-                              <Label htmlFor="deposit-amount">Amount</Label>
-                              <div className="relative w-72">
-                                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                  <Input
-                                      id="deposit-amount"
-                                      placeholder="0.00"
-                                      className="pl-9"
-                                      value={depositAmount}
-                                      onChange={(e) => setDepositAmount(e.target.value)}
-                                  />
-                              </div>
-
-                              {/* 🔴 Place the validation message HERE */}
-                              {packageType && !isAmountValid && (
-                                  <p className="text-red-500 text-sm">
-                                      Amount must be exactly ${expectedAmount}
-                                  </p>
-                              )}
-                          </div>
+                      <TabsContent value="deposit">
+                          <Card>
+                              <CardHeader>
+                                  <CardTitle>Deposit Funds</CardTitle>
+                                  <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
+                              </CardHeader>
+                              <CardContent className="space-y-4">
 
 
-                          {/* Name */}
-                          <div className="space-y-2">
-                              <Label htmlFor="name">Your Email</Label>
-                              <div className="relative w-72">
+                                  {/* Amount */}
+                                  {/* Amount */}
+                                  <div className="space-y-2">
+                                      <Label htmlFor="deposit-amount">Amount</Label>
+                                      <div className="relative w-72">
+                                          <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+                                          <Input
+                                              id="deposit-amount"
+                                              placeholder="0.00"
+                                              className="pl-9"
+                                              value={depositAmount}
+                                              onChange={(e) => setDepositAmount(e.target.value)}
+                                          />
+                                      </div>
 
-                                  <Input
-                                      id="email"
-                                      placeholder="Your email"
-                                      value={email}
-                                      onChange={(e) => setEmail(e.target.value)}
-                                      required
-                                  />
-                              </div>
-                          </div>
+                                      {/* 🔴 Place the validation message HERE */}
+                                      {packageType && !isAmountValid && (
+                                          <p className="text-red-500 text-sm">
+                                              Amount must be exactly ${expectedAmount}
+                                          </p>
+                                      )}
+                                  </div>
 
-                          {/* Wallet Address */}
-                          <div className="space-y-2">
-                              <Label htmlFor="wallet-address">Please provide the transaction hash</Label>
-                              <div className="relative w-72">
-                                  <Input
-                                      id="hash-address"
-                                      placeholder="e.g f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e"
-                                      value={hash}
-                                      onChange={(e) => setHash(e.target.value)}
-                                      required
-                                  />
-                              </div>
-                          </div>
 
-                          {/* Package Type */}
-                          <div className="space-y-2">
-                              <Label htmlFor="withdraw-description">Select Package</Label>
-                              <div className="relative w-72">
-                                  <select
-                                      id="withdraw-description"
-                                      value={packageType}
-                                      onChange={(e) => setPackageType(e.target.value)}
-                                      className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                      required
+                                  {/* Name */}
+                                  <div className="space-y-2">
+                                      <Label htmlFor="name">Your Email</Label>
+                                      <div className="relative w-72">
+
+                                          <Input
+                                              id="email"
+                                              placeholder="Your email"
+                                              value={email}
+                                              onChange={(e) => setEmail(e.target.value)}
+                                              required
+                                          />
+                                      </div>
+                                  </div>
+
+                                  {/* Wallet Address */}
+                                  <div className="space-y-2">
+                                      <Label htmlFor="wallet-address">Please provide the transaction hash</Label>
+                                      <div className="relative w-72">
+                                          <Input
+                                              id="hash-address"
+                                              placeholder="e.g f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e"
+                                              value={hash}
+                                              onChange={(e) => setHash(e.target.value)}
+                                              required
+                                          />
+                                      </div>
+                                  </div>
+
+                                  {/* Package Type */}
+                                  <div className="space-y-2">
+                                      <Label htmlFor="withdraw-description">Select Package</Label>
+                                      <div className="relative w-72">
+                                          <select
+                                              id="withdraw-description"
+                                              value={packageType}
+                                              onChange={(e) => setPackageType(e.target.value)}
+                                              className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                              required
+                                          >
+                                              <option value="">-- Choose a package --</option>
+                                              <option value="Test package">Test package</option>
+                                              <option value="Pro package">Pro package</option>
+                                              <option value="Premium package">Premium package</option>
+                                          </select>
+                                      </div>
+                                  </div>
+
+                                  {/*<div className="space-y-2">*/}
+                                  {/*    <Label htmlFor="withdraw-description">Select Wallet Type</Label>*/}
+                                  {/*    <div className="relative w-72">*/}
+                                  {/*        <select*/}
+                                  {/*            id="wallet-type"*/}
+                                  {/*            value={walletType}*/}
+                                  {/*            onChange={(e) => setWalletType(e.target.value)}*/}
+                                  {/*            className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"*/}
+                                  {/*            required*/}
+                                  {/*        >*/}
+                                  {/*            <option value="">-- Choose a wallet type --</option>*/}
+                                  {/*            <option value="USDT TRC20">USDT TRC20</option>*/}
+                                  {/*            <option value="USDT BEP20">USDT BEP20</option>*/}
+                                  {/*            <option value="USDT ERC20">USDT ERC20</option>*/}
+                                  {/*            <option value="USDC SOL">USDC SOL</option>*/}
+                                  {/*        </select>*/}
+                                  {/*    </div>*/}
+                                  {/*</div>*/}
+
+
+                              </CardContent>
+                              <CardFooter>
+                                  <Button
+                                      disabled={!packageType || !isAmountValid}
+                                      className="w-full border border-green-500 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                                      onClick={async () => {
+                                          const amountValue = parseFloat(depositAmount);
+
+                                          if (!packageType) {
+                                              setResponseMessage("❌ Please select a package.");
+                                              return;
+                                          }
+
+                                          if (!isAmountValid) {
+                                              setResponseMessage(`❌ Amount must be more than $${expectedAmount} for the selected package.`);
+                                              return;
+                                          }
+
+                                          try {
+                                              const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
+                                                  method: "POST",
+                                                  credentials: 'include',
+                                                  headers: {
+                                                      "Content-Type": "application/json",
+                                                  },
+                                                  body: JSON.stringify({
+                                                      email: email,
+                                                      amount: amountValue,
+                                                      hash: hash,
+                                                      status: 'pending',
+                                                      packageType: packageType,
+                                                  }),
+                                              });
+
+                                              const data = await response.json();
+                                              console.log("Server response:", data);
+
+                                              if (response.ok) {
+                                                  setResponseMessage("✅ Transaction request sent successfully!");
+                                                  setAvailableBalance(prev => prev + amountValue);
+                                              } else {
+                                                  // setResponseMessage("✅ Transaction request sent successfully!")
+                                                  setResponseMessage(`❌ ${data.error || "Something went wrong."}`);
+                                              }
+                                          } catch (error) {
+                                              console.error("Request error:", error);
+                                              // setResponseMessage("✅ Transaction request sent successfully!");
+                                              setResponseMessage("❌ Network error. Please try again.");
+                                          }
+                                      }}
                                   >
-                                      <option value="">-- Choose a package --</option>
-                                      <option value="Test package">Test package</option>
-                                      <option value="Pro package">Pro package</option>
-                                      <option value="Premium package">Premium package</option>
-                                  </select>
-                              </div>
-                          </div>
+                                      Invest Funds
+                                  </Button>
 
-                          {/*<div className="space-y-2">*/}
-                          {/*    <Label htmlFor="withdraw-description">Select Wallet Type</Label>*/}
-                          {/*    <div className="relative w-72">*/}
-                          {/*        <select*/}
-                          {/*            id="wallet-type"*/}
-                          {/*            value={walletType}*/}
-                          {/*            onChange={(e) => setWalletType(e.target.value)}*/}
-                          {/*            className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"*/}
-                          {/*            required*/}
-                          {/*        >*/}
-                          {/*            <option value="">-- Choose a wallet type --</option>*/}
-                          {/*            <option value="USDT TRC20">USDT TRC20</option>*/}
-                          {/*            <option value="USDT BEP20">USDT BEP20</option>*/}
-                          {/*            <option value="USDT ERC20">USDT ERC20</option>*/}
-                          {/*            <option value="USDC SOL">USDC SOL</option>*/}
-                          {/*        </select>*/}
-                          {/*    </div>*/}
-                          {/*</div>*/}
+                                  {responseMessage && (
+                                      <p className="mt-2 text-sm text-yellow-400">{responseMessage}</p>
+                                  )}
 
 
-                      </CardContent>
-                      <CardFooter>
-                          <Button
-                              disabled={!packageType || !isAmountValid}
-                              className="w-full border border-green-500 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
-                              onClick={async () => {
-                                  const amountValue = parseFloat(depositAmount);
-
-                                  if (!packageType) {
-                                      setResponseMessage("❌ Please select a package.");
-                                      return;
-                                  }
-
-                                  if (!isAmountValid) {
-                                      setResponseMessage(`❌ Amount must be more than $${expectedAmount} for the selected package.`);
-                                      return;
-                                  }
-
-                                  try {
-                                      const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
-                                          method: "POST",
-                                          credentials: 'include',
-                                          headers: {
-                                              "Content-Type": "application/json",
-                                          },
-                                          body: JSON.stringify({
-                                              email: email,
-                                              amount: amountValue,
-                                              hash: hash,
-                                              status: 'pending',
-                                              packageType: packageType,
-                                }),
-                              });
-
-                              const data = await response.json();
-                              console.log("Server response:", data);
-
-                              if (response.ok) {
-                                setResponseMessage("✅ Transaction request sent successfully!");
-                                setAvailableBalance(prev => prev + amountValue);
-                              } else {
-                                // setResponseMessage("✅ Transaction request sent successfully!")
-                                setResponseMessage(`❌ ${data.error || "Something went wrong."}`);
-                              }
-                            } catch (error) {
-                              console.error("Request error:", error);
-                              // setResponseMessage("✅ Transaction request sent successfully!");
-                              setResponseMessage("❌ Network error. Please try again.");
-                            }
-                          }}
-                      >
-                        Invest Funds
-                      </Button>
-
-                      {responseMessage && (
-                          <p className="mt-2 text-sm text-yellow-400">{responseMessage}</p>
-                      )}
+                              </CardFooter>
+                          </Card>
+                      </TabsContent>
 
 
-                    </CardFooter>
-                  </Card>
-                </TabsContent>
+                      <TabsContent value="withdraw">
+                          <Card>
+                              <CardHeader>
+                                  <CardTitle>Withdraw Funds</CardTitle>
+                                  <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
+                              </CardHeader>
+                              <CardContent className="space-y-4">
+                                  {/* Amount */}
+                                  <div className="space-y-2">
+                                      <Label htmlFor="withdraw-amount">Amount</Label>
+                                      <div className="relative w-72">
+                                          <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+                                          <Input
+                                              id="withdraw-amount"
+                                              placeholder="0.00"
+                                              className="pl-9"
+                                              value={withdrawAmount}
+                                              onChange={(e) => setWithdrawAmount(e.target.value)}
+                                          />
+                                      </div>
+                                  </div>
 
+                                  {/* Name */}
+                                  <div className="space-y-2">
+                                      <Label htmlFor="withdraw-name">Your Email</Label>
+                                      <div className="relative w-72">
+                                          <Input
+                                              id="withdraw-name"
+                                              placeholder="Your email"
+                                              value={email}
+                                              onChange={(e) => setEmail(e.target.value)}
+                                          />
+                                      </div>
+                                  </div>
 
-                <TabsContent value="withdraw">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Withdraw Funds</CardTitle>
-                      <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
-                    </CardHeader>
-                      <CardContent className="space-y-4">
-                          {/* Amount */}
-                          <div className="space-y-2">
-                              <Label htmlFor="withdraw-amount">Amount</Label>
-                              <div className="relative w-72">
-                                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
-                                  <Input
-                                      id="withdraw-amount"
-                                      placeholder="0.00"
-                                      className="pl-9"
-                                      value={withdrawAmount}
-                                      onChange={(e) => setWithdrawAmount(e.target.value)}
-                                  />
-                              </div>
-                          </div>
+                                  {/* Wallet Address */}
+                                  <div className="space-y-2">
+                                      <Label htmlFor="withdraw-wallet">Your Wallet Address</Label>
+                                      <div className="relative w-72">
+                                          <Input
+                                              id="withdraw-wallet"
+                                              placeholder="Enter wallet address"
+                                              value={withdrawWallet}
+                                              onChange={(e) => setWithdrawWallet(e.target.value)}
+                                          />
+                                      </div>
+                                  </div>
 
-                          {/* Name */}
-                          <div className="space-y-2">
-                              <Label htmlFor="withdraw-name">Your Email</Label>
-                              <div className="relative w-72">
-                                  <Input
-                                      id="withdraw-name"
-                                      placeholder="Your email"
-                                      value={email}
-                                      onChange={(e) => setEmail(e.target.value)}
-                                  />
-                              </div>
-                          </div>
+                                  <div className="space-y-2">
+                                      <Label htmlFor="withdraw-description">Select Wallet Type</Label>
+                                      <div className="relative w-72">
+                                          <select
+                                              id="wallet-type"
+                                              value={walletType}
+                                              onChange={(e) => setWalletType(e.target.value)}
+                                              className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                              required
+                                          >
+                                              <option value="">-- Choose a wallet type --</option>
+                                              <option value="USDT TRC20">USDT TRC20</option>
+                                              <option value="USDT BEP20">USDT BEP20</option>
+                                              <option value="USDT ERC20">USDT ERC20</option>
+                                              <option value="USDC SOL">USDC SOL</option>
+                                          </select>
+                                      </div>
+                                  </div>
 
-                          {/* Wallet Address */}
-                          <div className="space-y-2">
-                              <Label htmlFor="withdraw-wallet">Your Wallet Address</Label>
-                              <div className="relative w-72">
-                                  <Input
-                                      id="withdraw-wallet"
-                                      placeholder="Enter wallet address"
-                                      value={withdrawWallet}
-                                      onChange={(e) => setWithdrawWallet(e.target.value)}
-                                  />
-                              </div>
-                          </div>
+                                  {/* Description */}
+                                  <div className="space-y-2">
+                                      <Label htmlFor="withdraw-description">Description</Label>
+                                      <div className="relative w-72">
+                                          <Input
+                                              id="withdraw-description"
+                                              placeholder="Description or note (optional)"
+                                              value={withdrawDescription}
+                                              onChange={(e) => setWithdrawDescription(e.target.value)}
+                                          />
+                                      </div>
+                                  </div>
 
-                          <div className="space-y-2">
-                              <Label htmlFor="withdraw-description">Select Wallet Type</Label>
-                              <div className="relative w-72">
-                                  <select
-                                      id="wallet-type"
-                                      value={walletType}
-                                      onChange={(e) => setWalletType(e.target.value)}
-                                      className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                      required
-                                  >
-                                      <option value="">-- Choose a wallet type --</option>
-                                      <option value="USDT TRC20">USDT TRC20</option>
-                                      <option value="USDT BEP20">USDT BEP20</option>
-                                      <option value="USDT ERC20">USDT ERC20</option>
-                                      <option value="USDC SOL">USDC SOL</option>
-                                  </select>
-                              </div>
-                          </div>
+                                  {/* Withdraw Method */}
+                                  {/*<div className="space-y-2">*/}
+                                  {/*  <Label htmlFor="withdraw-method">Withdraw To</Label>*/}
+                                  {/*  <div className="flex items-center gap-2 p-2 border rounded-md">*/}
+                                  {/*    <ArrowLeftRight size={16} />*/}
+                                  {/*    <span className="text-sm">Bank Account (****6789)</span>*/}
+                                  {/*    <ChevronDown size={16} className="ml-auto" />*/}
+                                  {/*  </div>*/}
+                                  {/*</div>*/}
 
-                          {/* Description */}
-                          <div className="space-y-2">
-                              <Label htmlFor="withdraw-description">Description</Label>
-                              <div className="relative w-72">
-                                  <Input
-                                      id="withdraw-description"
-                                      placeholder="Description or note (optional)"
-                                      value={withdrawDescription}
-                                      onChange={(e) => setWithdrawDescription(e.target.value)}
-                                  />
-                              </div>
-                          </div>
+                                  <Separator/>
 
-                          {/* Withdraw Method */}
-                          {/*<div className="space-y-2">*/}
-                          {/*  <Label htmlFor="withdraw-method">Withdraw To</Label>*/}
-                          {/*  <div className="flex items-center gap-2 p-2 border rounded-md">*/}
-                          {/*    <ArrowLeftRight size={16} />*/}
-                          {/*    <span className="text-sm">Bank Account (****6789)</span>*/}
-                          {/*    <ChevronDown size={16} className="ml-auto" />*/}
-                          {/*  </div>*/}
-                          {/*</div>*/}
-
-                          <Separator/>
-
-                          <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Available for withdrawal:</span>
-                              <span className="font-medium">
+                                  <div className="flex justify-between text-sm">
+                                      <span className="text-muted-foreground">Available for withdrawal:</span>
+                                      <span className="font-medium">
                             {balance !== null ? `$${balance.toLocaleString()}` : "Loading..."}
                         </span>
-                          </div>
-                      </CardContent>
-                      <CardFooter>
-                          <Button
-                              className="w-full border-red-500 border hover:bg-white/10"
-                              onClick={async () => {
-                                  console.log('Withdraw button clicked');
-                                  const amount = parseFloat(withdrawAmount);
+                                  </div>
+                              </CardContent>
+                              <CardFooter>
+                                  <Button
+                                      className="w-full border-red-500 border hover:bg-white/10"
+                                      onClick={async () => {
+                                          console.log('Withdraw button clicked');
+                                          const amount = parseFloat(withdrawAmount);
 
-                                  if (isNaN(amount) || amount <= 0) {
-                                      setResponseMessage("❌ Please enter a valid amount.");
-                                      return;
-                                  }
+                                          if (isNaN(amount) || amount <= 0) {
+                                              setResponseMessage("❌ Please enter a valid amount.");
+                                              return;
+                                          }
 
-                                  if (amount > availableBalance) {
-                                      setResponseMessage("❌ You don't have enough balance for this withdrawal.");
-                                      return;
-                                  }
+                                          if (amount > availableBalance) {
+                                              setResponseMessage("❌ You don't have enough balance for this withdrawal.");
+                                              return;
+                                          }
 
-                                  try {
-                                      const response = await fetch("https://billions-backend-1.onrender.com/withdraw", {
-                                          method: "POST",
-                                          credentials: 'include',
-                                          headers: {
-                                              "Content-Type": "application/json",
-                                          },
-                                          body: JSON.stringify({
-                                              email: email,
-                                              senderAddress: withdrawWallet,
-                                              walletType: walletType,
-                                              status: 'pending',
-                                              amount,
-                                              description: withdrawDescription,
-                                }),
-                              });
+                                          try {
+                                              const response = await fetch("https://billions-backend-1.onrender.com/withdraw", {
+                                                  method: "POST",
+                                                  credentials: 'include',
+                                                  headers: {
+                                                      "Content-Type": "application/json",
+                                                  },
+                                                  body: JSON.stringify({
+                                                      email: email,
+                                                      senderAddress: withdrawWallet,
+                                                      walletType: walletType,
+                                                      status: 'pending',
+                                                      amount,
+                                                      description: withdrawDescription,
+                                                  }),
+                                              });
 
-                              const data = await response.json();
-                              console.log("Withdraw response:", data);
+                                              const data = await response.json();
+                                              console.log("Withdraw response:", data);
 
-                              if (response.ok) {
-                                setAvailableBalance(prev => prev - amount);
-                                setResponseMessage("✅ Withdrawal request sent successfully!");
-                              } else {
-                                // setResponseMessage("✅ Withdrawal request sent successfully!");
-                                setResponseMessage(`❌ ${data.error || "Withdrawal failed. Please try again."}`);
-                              }
-                            } catch (error) {
-                              console.error("Withdraw error:", error);
-                              // setResponseMessage("✅ Withdrawal request sent successfully!");
-                              setResponseMessage("❌ Network error. Please try again.");
-                            }
-                          }}
+                                              if (response.ok) {
+                                                  setAvailableBalance(prev => prev - amount);
+                                                  setResponseMessage("✅ Withdrawal request sent successfully!");
+                                              } else {
+                                                  // setResponseMessage("✅ Withdrawal request sent successfully!");
+                                                  setResponseMessage(`❌ ${data.error || "Withdrawal failed. Please try again."}`);
+                                              }
+                                          } catch (error) {
+                                              console.error("Withdraw error:", error);
+                                              // setResponseMessage("✅ Withdrawal request sent successfully!");
+                                              setResponseMessage("❌ Network error. Please try again.");
+                                          }
+                                      }}
 
-                      >Withdraw Funds</Button>
-                    </CardFooter>
-                  </Card>
-                </TabsContent>
+                                  >Withdraw Funds</Button>
+                              </CardFooter>
+                          </Card>
+                      </TabsContent>
 
-              </Tabs>
-            </div>
+                  </Tabs>
+              </div>
           </div>
       )
   }
