@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { UserList } from './user-list';
 import { UserStats } from './user-stats';
 import { RecentActivities } from './recent-activities';
+import {FaSyncAlt} from "react-icons/fa";
 
 export const Dashboard = () => {
   const { theme, setTheme } = useTheme();
@@ -52,7 +53,7 @@ export const Dashboard = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
-                  <img src="/placeholder.svg?height=32&width=32" alt="Avatar" className="rounded-full border h-8 w-8" />
+                  <FaSyncAlt className="text-white" size={20}/>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
