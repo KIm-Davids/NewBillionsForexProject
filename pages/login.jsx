@@ -45,9 +45,19 @@ const Login = () => {
 
     const API_URL = 'https://billions-backend-1.onrender.com';
     const endpoint = isLoginMode ? '/login' : '/register/client';
-    const payload = isLoginMode
-        ? {email, password}
-        : {email, password, username, referral};
+    let payload;
+
+    if (isLoginMode) {
+      payload = { email, password };
+    } else {
+      payload = {
+        email,
+        password,
+        username,
+        // Only add referral if it's a valid number
+        ...(referral && !isNaN(Number(referral)) ? { referral: Number(referral) } : {})
+      };
+    }
 
 
     if (email === adminEmail && password === adminPassword) {
