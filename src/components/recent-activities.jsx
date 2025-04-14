@@ -8,28 +8,28 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 export const RecentActivities = () => {
   const [deposits, setDeposits] = useState([]);
 
-  const fetchDeposits = async () => {
-    try {
-      const res = await fetch('https://billions-backend-1.onrender.com/fetchDeposits');
-      const data = await res.json();
-      setDeposits(data);
-    } catch (error) {
-      console.error('Failed to fetch deposits:', error);
-    }
-  };
-
-  const handleConfirm = async (depositId) => {
-    try {
-      await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ deposit_id: depositId }),
-      });
-      fetchDeposits();
-    } catch (error) {
-      console.error('Error confirming deposit:', error);
-    }
-  };
+  // const fetchDeposits = async () => {
+  //   try {
+  //     const res = await fetch('https://billions-backend-1.onrender.com/fetchDeposits');
+  //     const data = await res.json();
+  //     setDeposits(data);
+  //   } catch (error) {
+  //     console.error('Failed to fetch deposits:', error);
+  //   }
+  // };
+  //
+  // const handleConfirm = async (depositId) => {
+  //   try {
+  //     await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ deposit_id: depositId }),
+  //     });
+  //     fetchDeposits();
+  //   } catch (error) {
+  //     console.error('Error confirming deposit:', error);
+  //   }
+  // };
 
   // const handleReject = async (depositId) => {
   //   try {
