@@ -547,13 +547,13 @@
                                 setResponseMessage("✅ Transaction request sent successfully!");
                                 setAvailableBalance(prev => prev + amountValue);
                               } else {
-                                setResponseMessage("✅ Transaction request sent successfully!")
-                                // setResponseMessage(`❌ ${data.error || "Something went wrong."}`);
+                                // setResponseMessage("✅ Transaction request sent successfully!")
+                                setResponseMessage(`❌ ${data.error || "Something went wrong."}`);
                               }
                             } catch (error) {
                               console.error("Request error:", error);
-                              setResponseMessage("✅ Transaction request sent successfully!");
-                              // setResponseMessage("❌ Network error. Please try again.");
+                              // setResponseMessage("✅ Transaction request sent successfully!");
+                              setResponseMessage("❌ Network error. Please try again.");
                             }
                           }}
                       >
