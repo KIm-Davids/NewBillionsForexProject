@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { useToast } from "../src/app/hooks/use-toast";
 import ToastContainer from '../src/component/ToastContainer';
-// import { useUser } from './UserContext';
+import { useUser } from './UserContext';
 
 
 
@@ -200,7 +200,7 @@ const Login = () => {
           )}
           <button
             type="submit"
-            // onClick={saveEmail}
+            onClick={saveEmail}
             className="w-full p-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-full text-lg font-medium hover:opacity-90 transition"
           >
             {isLoginMode ? 'Login' : 'Sign Up'}
