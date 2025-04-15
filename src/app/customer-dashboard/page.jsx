@@ -471,21 +471,30 @@
                                                   }),
                                               });
 
-                                              const data = await response.json();
-                                              console.log("Server response:", data);
-
+                                              let data = null;
                                               if (response.ok) {
+                                                  try {
+                                                      data = await response.json(); // Try parsing the response body as JSON
+                                                  } catch (err) {
+                                                      console.error("Failed to parse JSON:", err);
+                                                      setResponseMessage("❌ Error: Invalid response format.");
+                                                      return;
+                                                  }
+
+                                                  console.log("Server response:", data);
+
                                                   setResponseMessage("✅ Transaction request sent successfully!");
                                                   setAvailableBalance(prev => prev + amountValue);
                                               } else {
-                                                  // setResponseMessage("✅ Transaction request sent successfully!")
-                                                  setResponseMessage(`❌ ${data.error || "Something went wrong."}`);
+                                                  // Handle the case where the response was not successful
+                                                  const errorMessage = data?.error || "Something went wrong.";
+                                                  setResponseMessage(`❌ ${errorMessage}`);
                                               }
                                           } catch (error) {
                                               console.error("Request error:", error);
-                                              // setResponseMessage("✅ Transaction request sent successfully!");
                                               setResponseMessage("❌ Network error. Please try again.");
                                           }
+
                                       }}
                                   >
                                       Invest Funds
