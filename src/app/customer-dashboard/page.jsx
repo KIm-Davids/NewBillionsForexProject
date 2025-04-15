@@ -68,6 +68,8 @@
       const [referralCode, setReferralCode] = useState('');
       const [balanceData, setBalanceData] = useState(null);
       const [userId, setUserId] = useState(null);
+      const [withdrawDate, setWithdrawDate] = useState("");
+
 
 
       const maskedWallet = "••••••••••••••••••••••••••••••••••••••••"
@@ -213,6 +215,25 @@
                                   try {
                                           const existingCode = localStorage.getItem("referralCode");
 
+                                      const savedEmail = localStorage.getItem('userEmail');
+                                      const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
+                                              method: "POST",
+                                              headers: {
+                                                  "Content-Type": "application/json",
+                                              },
+                                              body: JSON.stringify({ email: savedEmail }),
+                                          });
+
+                                              const data = await response.json();
+                                              console.log("Withdraw date response:", data);
+
+                                              if (response.ok) {
+                                                  setWithdrawDate(data.withdraw_date); // Format: YYYY-MM-DD
+                                              } else {
+                                                  console.error("Error fetching withdraw date:", data.error);
+                                              }
+
+
                                           if (!existingCode) {
                                               const newCode = generateReferralCode();
                                               localStorage.setItem("referralCode", newCode);
@@ -279,7 +300,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Next Withdrawal</CardDescription>
-                              <CardTitle>April 15, 2025</CardTitle>
+                              <CardTitle>{withdrawDate}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               <Badge go o
