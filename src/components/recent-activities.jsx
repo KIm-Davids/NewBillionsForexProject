@@ -15,7 +15,7 @@ export const RecentActivities = () => {
       // const res = await fetch('https://billions-backend-1.onrender.com/fetchDeposits?email=admin10k4u1234@gmail.com');
       const data = await res.json();
       if (Array.isArray(data)) {
-        setDeposits(data);
+        setDeposits(data.deposits);
       } else {
         console.error('Expected an array but got:', data);
         setDeposits([]); // fallback to empty to prevent crash
