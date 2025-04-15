@@ -694,37 +694,42 @@
                                               setResponseMessage("❌ You don't have enough balance for this withdrawal.");
                                               return;
                                           }
-
                                           try {
-                                              const response = await fetch("https://billions-backend-1.onrender.com/withdraw", {
+                                              const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
                                                   method: "POST",
                                                   credentials: 'include',
                                                   headers: {
                                                       "Content-Type": "application/json",
                                                   },
                                                   body: JSON.stringify({
-                                                      email: email,
-                                                      senderAddress: withdrawWallet,
-                                                      walletType: walletType,
+                                                      email: email, // Make sure the data is correct here
+                                                      amount: amountValue,
+                                                      hash: hash,
                                                       status: 'pending',
-                                                      amount,
-                                                      description: withdrawDescription,
+                                                      packageType: packageType,
                                                   }),
                                               });
 
-                                              const data = await response.json();
-                                              console.log("Withdraw response:", data);
-
+                                              let data = null;
                                               if (response.ok) {
-                                                  setAvailableBalance(prev => prev - amount);
-                                                  setResponseMessage("✅ Withdrawal request sent successfully!");
+                                                  try {
+                                                      data = await response.json(); // Try parsing the response body as JSON
+                                                      console.log("Server response:", data);
+
+                                                      setResponseMessage("✅ Transaction request sent successfully!");
+                                                      setAvailableBalance(prev => prev + amountValue);
+                                                  } catch (err) {
+                                                      console.error("Failed to parse JSON:", err);
+                                                      setResponseMessage("❌ Error: Invalid response format.");
+                                                      return;
+                                                  }
                                               } else {
-                                                  // setResponseMessage("✅ Withdrawal request sent successfully!");
-                                                  setResponseMessage(`❌ ${data.error || "Withdrawal failed. Please try again."}`);
+                                                  // Only reference data here if response is ok
+                                                  const errorMessage = data?.error || "Something went wrong.";
+                                                  setResponseMessage(`❌ ${errorMessage}`);
                                               }
                                           } catch (error) {
-                                              console.error("Withdraw error:", error);
-                                              // setResponseMessage("✅ Withdrawal request sent successfully!");
+                                              console.error("Request error:", error);
                                               setResponseMessage("❌ Network error. Please try again.");
                                           }
                                       }}
