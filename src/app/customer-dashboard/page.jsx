@@ -67,11 +67,8 @@
       const [loading, setLoading] = useState(true);
       const [referralCode, setReferralCode] = useState('');
       const [balanceData, setBalanceData] = useState(null);
-      const [userId, setUserId] = useState(() => {
-          // Initialize userId from localStorage
-          const savedUserId = localStorage.getItem('userId');
-          return savedUserId ? savedUserId : null; // If not found, set to null
-      });
+      const [userId, setUserId] = useState(null);
+
 
       const maskedWallet = "••••••••••••••••••••••••••••••••••••••••"
 
@@ -99,12 +96,28 @@
           );
       }
 
-      // Update userId in localStorage whenever it changes
+      // // Update userId in localStorage whenever it changes
+      // useEffect(() => {
+      //     if (userId !== null) {
+      //         localStorage.setItem('userId', userId);
+      //     }
+      // }, [userId]);
+
       useEffect(() => {
-          if (userId !== null) {
-              localStorage.setItem('userId', userId);
+          // Check if we're on the client side (i.e., window is defined)
+          if (typeof window !== "undefined") {
+              const savedUserId = localStorage.getItem('userId');
+              if (savedUserId) {
+                  setUserId(savedUserId); // If the userId exists in localStorage, set it in state
+              } else {
+                  const newUserId = uuidv4(); // Generate a new UUID
+                  localStorage.setItem('userId', newUserId); // Store it in localStorage
+                  setUserId(newUserId); // Update state with the new userId
+              }
           }
-      }, [userId]);
+      }, []);
+
+
 
 
       const packageAmounts = {
@@ -134,12 +147,6 @@
           return newUserId;
       };
 
-      const createUser = async () => {
-          if (!userId) {
-              console.error("User ID is not set!");
-              return;
-          }
-      }
 
           // // Fetch userId from the database (after it's saved)
           // const fetchUserIdFromDB = async () => {
@@ -502,47 +509,54 @@
                                               return;
                                           }
 
-                                          try {
-                                              const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
-                                                  method: "POST",
-                                                  credentials: 'include',
-                                                  headers: {
-                                                      "Content-Type": "application/json",
-                                                  },
-                                                  body: JSON.stringify({
-                                                      userID: userId, // Pass the userId in the request
-                                                      email: email,
-                                                      amount: amountValue,
-                                                      hash: hash,
-                                                      status: 'pending',
-                                                      packageType: packageType,
-                                                  }),
-                                              });
-
-                                              let data = null;
-                                              if (response.ok) {
-                                                  try {
-                                                      data = await response.json(); // Try parsing the response body as JSON
-                                                  } catch (err) {
-                                                      console.error("Failed to parse JSON:", err);
-                                                      setResponseMessage("❌ Error: Invalid response format.");
-                                                      return;
-                                                  }
-
-                                                  console.log("Server response:", data);
-
-                                                  setResponseMessage("✅ Transaction request sent successfully!");
-                                                  setAvailableBalance(prev => prev + amountValue);
-                                              } else {
-                                                  // Handle the case where the response was not successful
-                                                  const errorMessage = data?.error || "Something went wrong.";
-                                                  setResponseMessage(`❌ ${errorMessage}`);
+                                          // Handle user creation (sending the userId to the backend)
+                                          const createUser = async () => {
+                                              if (!userId) {
+                                                  console.error("User ID is not set!");
+                                                  return;
                                               }
-                                          } catch (error) {
-                                              console.error("Request error:", error);
-                                              setResponseMessage("❌ Network error. Please try again.");
-                                          }
 
+                                              try {
+                                                  const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
+                                                      method: "POST",
+                                                      credentials: 'include',
+                                                      headers: {
+                                                          "Content-Type": "application/json",
+                                                      },
+                                                      body: JSON.stringify({
+                                                          userID: userId, // Pass the userId in the request
+                                                          email: email,
+                                                          amount: amountValue,
+                                                          hash: hash,
+                                                          status: 'pending',
+                                                          packageType: packageType,
+                                                      }),
+                                                  });
+
+                                                  let data = null;
+                                                  if (response.ok) {
+                                                      try {
+                                                          data = await response.json(); // Try parsing the response body as JSON
+                                                      } catch (err) {
+                                                          console.error("Failed to parse JSON:", err);
+                                                          setResponseMessage("❌ Error: Invalid response format.");
+                                                          return;
+                                                      }
+
+                                                      console.log("Server response:", data);
+
+                                                      setResponseMessage("✅ Transaction request sent successfully!");
+                                                      setAvailableBalance(prev => prev + amountValue);
+                                                  } else {
+                                                      // Handle the case where the response was not successful
+                                                      const errorMessage = data?.error || "Something went wrong.";
+                                                      setResponseMessage(`❌ ${errorMessage}`);
+                                                  }
+                                              } catch (error) {
+                                                  console.error("Request error:", error);
+                                                  setResponseMessage("❌ Network error. Please try again.");
+                                              }
+                                          }
                                       }}
                                   >
                                       Invest Funds
