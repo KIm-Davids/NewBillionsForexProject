@@ -31,7 +31,7 @@ export const RecentActivities = () => {
     }
   };
 
-  const handleConfirm = async (email) => {
+  const handleConfirm = async (email, hash) => {
     try {
       await fetch('https://billions-backend-1.onrender.com/confirmDeposits', {
         method: 'POST',
