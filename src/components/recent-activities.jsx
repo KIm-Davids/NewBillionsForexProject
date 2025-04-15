@@ -44,12 +44,12 @@ export const RecentActivities = () => {
     }
   };
 
-  const handleReject = async (email) => {
+  const handleReject = async (email, hash) => {
     try {
       await fetch('https://billions-backend-1.onrender.com/rejectDeposits', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email }),
+        body: JSON.stringify({ email: email, hash: hash }),
       });
       fetchDeposits();
     } catch (error) {
