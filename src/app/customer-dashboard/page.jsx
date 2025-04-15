@@ -230,7 +230,7 @@
                                           });
                                           console.log(email)
                                           const balanceData = await response.json();
-                                          console.log("User Info Response:", balanceData.packages);
+                                          console.log("User Info Response:", balanceData.packageType);
                                           setBalance(balanceData.balance);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
                                           // setReferralCode(balanceData.referralCode)
@@ -244,9 +244,6 @@
                               }
 
                               }  // Trigger the fetchBalance function when clicked
-
-
-
 
                               className="px-4 py-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 flex items-center justify-center"
                           >
@@ -459,7 +456,7 @@
                                       <Label htmlFor="withdraw-description">Select Package</Label>
                                       <div className="relative w-72">
                                           <select
-                                              id="withdraw-description"
+                                              id="packageType"
                                               value={packageType}
                                               onChange={(e) => setPackageType(e.target.value)}
                                               className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
