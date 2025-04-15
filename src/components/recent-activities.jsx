@@ -103,10 +103,10 @@ export const RecentActivities = () => {
                 <TableCell>{new Date(deposit.created_at).toLocaleString()}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <button onClick={() => handleConfirm(deposit.email)} title="Confirm">
+                    <button onClick={() => handleConfirm(deposit.hash)} title="Confirm">
                       <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
                     </button>
-                    <button onClick={() => handleReject(deposit.email)} title="Reject">
+                    <button onClick={() => handleReject(deposit.hash)} title="Reject">
                       <XCircle className="text-red-600 hover:scale-110 transition-all" />
                     </button>
                   </div>
