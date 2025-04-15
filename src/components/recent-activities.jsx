@@ -26,7 +26,7 @@ export const RecentActivities = () => {
   }
   const handleConfirm = async (email) => {
     try {
-      await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
+      await fetch('https://billions-backend-1.onrender.com/confirmDeposits', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email }),
