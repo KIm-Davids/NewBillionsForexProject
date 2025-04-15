@@ -18,10 +18,10 @@ export const RecentActivities = () => {
         console.error('Expected an array but got:', data);
         setDeposits([]); // fallback to empty to prevent crash
       }
-    }catch (error) {
+    } catch (error) {
       console.error('Failed to fetch deposits:', error);
-  };
-
+    };
+  }
   // const handleConfirm = async (depositId) => {
   //   try {
   //     await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
