@@ -520,7 +520,7 @@
                                           //     }
 
                                               try {
-                                              console.log(userId)
+                                                  console.log(userId)
                                                   const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
                                                       method: "POST",
                                                       credentials: 'include',
@@ -537,25 +537,24 @@
                                                       }),
                                                   });
 
-                                                  let data = null;
-                                                  if (response.ok) {
-                                                      try {
-                                                          data = await response.json(); // Try parsing the response body as JSON
-                                                      } catch (err) {
-                                                          console.error("Failed to parse JSON:", err);
-                                                          setResponseMessage("❌ Error: Invalid response format.");
-                                                          return;
-                                                      }
+                                                  // let data = null;
+                                                  // if (response.ok) {
+                                                  //     try {
+                                                  //         data = await response.json(); // Try parsing the response body as JSON
+                                                  //     } catch (err) {
+                                                  //         console.error("Failed to parse JSON:", err);
+                                                  //         setResponseMessage("❌ Error: Invalid response format.");
+                                                  //         return;
+                                                  //     }
 
                                                       console.log("Server response:", data);
-
                                                       setResponseMessage("✅ Transaction request sent successfully!");
                                                       setAvailableBalance(prev => prev + amountValue);
-                                                  } else {
-                                                      // Handle the case where the response was not successful
-                                                      const errorMessage = data?.error || "Something went wrong.";
-                                                      setResponseMessage(`❌ ${errorMessage}`);
-                                                  }
+                                                  //  else {
+                                                  //     // Handle the case where the response was not successful
+                                                  //     const errorMessage = data?.error || "Something went wrong.";
+                                                  //     setResponseMessage(`❌ ${errorMessage}`);
+                                                  // }
                                               } catch (error) {
                                                   console.error("Request error:", error);
                                                   setResponseMessage("❌ Network error. Please try again.");
