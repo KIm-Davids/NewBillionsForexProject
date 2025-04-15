@@ -235,7 +235,7 @@
                                           });
                                           console.log(email)
                                           const balanceData = await response.json();
-                                          console.log("User Info Response:", balanceData.packageType);
+                                          console.log("User Info Response:", balanceData.packages);
                                           setBalance(balanceData.balance);
                                           setFetchedPackage(balanceData.packages);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
