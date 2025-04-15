@@ -65,8 +65,8 @@ export const RecentActivities = () => {
   return (
       <Table>
         <TableHeader>
-          <TableRow>
-            <TableHead>User</TableHead>
+          <TableRow key={`${deposit.email}-${deposit.created_at}`}>
+          <TableHead>User</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Time</TableHead>
