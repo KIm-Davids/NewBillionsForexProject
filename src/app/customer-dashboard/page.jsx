@@ -232,7 +232,6 @@
                                           const balanceData = await response.json();
                                           console.log("User Info Response:", balanceData.packages);
                                           setBalance(balanceData.balance);
-                                          setFetchedPackage(balanceData.packages);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
                                           // setReferralCode(balanceData.referralCode)
                                       }
@@ -716,6 +715,7 @@
                                                       data = await response.json(); // Try parsing the response body as JSON
                                                       console.log("Server response:", data);
 
+                                                      setFetchedPackage(data.packageType);
                                                       setResponseMessage("✅ Transaction request sent successfully!");
                                                       setAvailableBalance(prev => prev + amountValue);
                                                   } catch (err) {
