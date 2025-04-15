@@ -237,9 +237,7 @@
                                           const balanceData = await response.json();
                                           console.log("User Info Response:", balanceData.packages);
                                           setBalance(balanceData.balance);
-                                          // if(balanceData.status === "confirmed"){
-                                              setFetchedPackage(packageType);
-                                          // }
+                                          setFetchedPackage(balanceData.packages);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
                                           // setReferralCode(balanceData.referralCode)
                                       }
@@ -541,6 +539,7 @@
                                                       }),
                                                   });
                                                   console.log(packageType);
+                                                  setFetchedPackage(packageType);
 
                                                   // let data = null;
                                                   // if (response.ok) {
