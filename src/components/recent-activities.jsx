@@ -68,6 +68,10 @@ export const RecentActivities = () => {
     fetchDeposits();
   }, []);
 
+  useEffect(() => {
+    console.log("Deposits loaded:", deposits);
+  }, [deposits]);
+
   return (
       <Table>
         <TableHeader>
