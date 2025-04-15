@@ -24,31 +24,31 @@ export const RecentActivities = () => {
       console.error('Failed to fetch deposits:', error);
     };
   }
-  // const handleConfirm = async (depositId) => {
-  //   try {
-  //     await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ deposit_id: depositId }),
-  //     });
-  //     fetchDeposits();
-  //   } catch (error) {
-  //     console.error('Error confirming deposit:', error);
-  //   }
-  // };
+  const handleConfirm = async (email) => {
+    try {
+      await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email }),
+      });
+      fetchDeposits();
+    } catch (error) {
+      console.error('Error confirming deposit:', error);
+    }
+  };
 
-  // const handleReject = async (depositId) => {
-  //   try {
-  //     await fetch('https://your-backend.com/reject-deposit', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ deposit_id: depositId }),
-  //     });
-  //     fetchDeposits();
-  //   } catch (error) {
-  //     console.error('Error rejecting deposit:', error);
-  //   }
-  // };
+  const handleReject = async (email) => {
+    try {
+      await fetch('https://your-backend.com/rejectDeposits', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email }),
+      });
+      fetchDeposits();
+    } catch (error) {
+      console.error('Error rejecting deposit:', error);
+    }
+  };
 
   // if (Array.isArray(deposits)) {
   //   deposits.map(...);
