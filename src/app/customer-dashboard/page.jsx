@@ -535,6 +535,7 @@
                                                           packageType: packageType,
                                                       }),
                                                   });
+                                                  setFetchedPackage(packageType);
 
                                                   // let data = null;
                                                   // if (response.ok) {
@@ -715,7 +716,6 @@
                                                       data = await response.json(); // Try parsing the response body as JSON
                                                       console.log("Server response:", data);
 
-                                                      setFetchedPackage(data.packageType);
                                                       setResponseMessage("✅ Transaction request sent successfully!");
                                                       setAvailableBalance(prev => prev + amountValue);
                                                   } catch (err) {
