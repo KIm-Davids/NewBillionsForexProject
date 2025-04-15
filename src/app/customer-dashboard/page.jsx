@@ -103,19 +103,19 @@
       //     }
       // }, [userId]);
 
-      useEffect(() => {
-          // Check if we're on the client side (i.e., window is defined)
-          if (typeof window !== "undefined") {
-              const savedUserId = localStorage.getItem('userId');
-              if (savedUserId) {
-                  setUserId(savedUserId); // If the userId exists in localStorage, set it in state
-              } else {
-                  const newUserId = uuidv4(); // Generate a new UUID
-                  localStorage.setItem('userId', newUserId); // Store it in localStorage
-                  setUserId(newUserId); // Update state with the new userId
-              }
-          }
-      }, []);
+      // useEffect(() => {
+      //     // Check if we're on the client side (i.e., window is defined)
+      //     if (typeof window !== "undefined") {
+      //         const savedUserId = localStorage.getItem('userId');
+      //         if (savedUserId) {
+      //             setUserId(savedUserId); // If the userId exists in localStorage, set it in state
+      //         } else {
+      //             const newUserId = uuidv4(); // Generate a new UUID
+      //             localStorage.setItem('userId', newUserId); // Store it in localStorage
+      //             setUserId(newUserId); // Update state with the new userId
+      //         }
+      //     }
+      // }, []);
 
 
 
