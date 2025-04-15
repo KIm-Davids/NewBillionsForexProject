@@ -96,7 +96,7 @@
           );
       }
 
-      // // Update userId in localStorage whenever it changes
+      // Update userId in localStorage whenever it changes
       // useEffect(() => {
       //     if (userId !== null) {
       //         localStorage.setItem('userId', userId);
@@ -182,6 +182,9 @@
           return `${prefix}-${randomPart}`;
       };
 
+      useEffect(() => {
+          generateUniqueUserId();
+      }, []);
 
       return (
           <div className="flex min-h-screen flex-col md:flex-row">
