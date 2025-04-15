@@ -79,7 +79,7 @@ export const RecentActivities = () => {
                   <div className="flex items-center gap-3">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={'placeholder.svg'} alt={deposit.user.name} />
-                      <AvatarFallback>{deposit.email?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                      <AvatarFallback>{deposit.email?.charAt(0).toUpperCase() || 'A'}</AvatarFallback>
                     </Avatar>
                     <div className="grid gap-0.5">
                       <div className="font-medium">{deposit.email}</div>
