@@ -74,16 +74,16 @@ export const RecentActivities = () => {
         </TableHeader>
         <TableBody>
           {deposits.map((deposit) => (
-              <TableRow key={deposit.id}>
+              <TableRow key={deposit.email}>
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={deposit.user.avatar || '/placeholder.svg'} alt={deposit.user.name} />
-                      <AvatarFallback>{deposit.user.name?.charAt(0) || 'U'}</AvatarFallback>
+                      <AvatarFallback>{deposit.email?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
                     </Avatar>
                     <div className="grid gap-0.5">
-                      <div className="font-medium">{deposit.user.name}</div>
-                      <div className="text-xs text-muted-foreground">{deposit.user.email}</div>
+                      <div className="font-medium">{deposit.email}</div>
+                      <div className="text-xs text-muted-foreground">{deposit.user_id}</div>
                     </div>
                   </div>
                 </TableCell>
@@ -92,10 +92,10 @@ export const RecentActivities = () => {
                 <TableCell>{new Date(deposit.created_at).toLocaleString()}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <button onClick={() => handleConfirm(deposit.id)} title="Confirm">
+                    <button onClick={() => handleConfirm(deposit.email)} title="Confirm">
                       <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
                     </button>
-                    <button onClick={() => handleReject(deposit.id)} title="Reject">
+                    <button onClick={() => handleReject(deposit.email)} title="Reject">
                       <XCircle className="text-red-600 hover:scale-110 transition-all" />
                     </button>
                   </div>
