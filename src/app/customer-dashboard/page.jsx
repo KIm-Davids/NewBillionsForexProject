@@ -539,7 +539,7 @@
                                                       }),
                                                   });
                                                   console.log(packageType);
-                                                  setFetchedPackage(packageType);
+                                                  // setFetchedPackage(packageType);
 
                                                   // let data = null;
                                                   // if (response.ok) {
