@@ -532,6 +532,7 @@
                                                           packageType: packageType,
                                                       }),
                                                   });
+                                                  console.log(packageType);
                                                   setFetchedPackage(packageType);
 
                                                   // let data = null;
