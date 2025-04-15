@@ -11,11 +11,14 @@ export const RecentActivities = () => {
   const fetchDeposits = async () => {
     try {
       const res = await fetch('https://billions-backend-1.onrender.com/fetchDeposits');
-      const data = await res.json();
-      setDeposits(data);
-    } catch (error) {
+      if (Array.isArray(data)) {
+        setDeposits(data);
+      } else {
+        console.error('Expected an array but got:', data);
+        setDeposits([]); // fallback to empty to prevent crash
+      }
+    }catch (error) {
       console.error('Failed to fetch deposits:', error);
-    }
   };
 
   // const handleConfirm = async (depositId) => {
