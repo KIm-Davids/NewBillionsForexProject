@@ -10,7 +10,9 @@ export const RecentActivities = () => {
 
   const fetchDeposits = async () => {
     try {
-      const res = await fetch('https://billions-backend-1.onrender.com/fetchDeposits?email=admin10k4u1234@gmail.com');
+      const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
+      const res = await fetch(`https://billions-backend-1.onrender.com/fetchDeposits?email=${encodedEmail}`);
+      // const res = await fetch('https://billions-backend-1.onrender.com/fetchDeposits?email=admin10k4u1234@gmail.com');
       const data = await res.json();
       if (Array.isArray(data)) {
         setDeposits(data);
