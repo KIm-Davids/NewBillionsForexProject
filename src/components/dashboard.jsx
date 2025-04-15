@@ -13,6 +13,7 @@ import { UserList } from './user-list';
 import { UserStats } from './user-stats';
 import { RecentActivities } from './recent-activities';
 import {FaSyncAlt} from "react-icons/fa";
+import { RecentActivitiesWithdraw } from './recent-activities-withdrawal';
 
 export const Dashboard = () => {
   const { theme, setTheme } = useTheme();
@@ -137,7 +138,7 @@ export const Dashboard = () => {
                 <CardDescription>Monitor recent user withdrawals that need to be settled</CardDescription>
               </CardHeader>
               <CardContent>
-                <RecentActivities />
+                <RecentActivitiesWithdraw />
               </CardContent>
             </Card>
           </TabsContent>

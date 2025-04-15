@@ -103,9 +103,7 @@
           "Premium package": 1000,
       };
 
-      const expectedAmount = packageAmounts[packageType] || null;
-      const isAmountValid = expectedAmount !== null && parseFloat(depositAmount) >= 100;
-
+      const isAmountValid = !isNaN(parseFloat(depositAmount)) && parseFloat(depositAmount) >= 100;
 
       // Copy to clipboard function
       const copyToClipboard = (text, message) => {
@@ -453,7 +451,7 @@
                                           }
 
                                           if (!isAmountValid) {
-                                              setResponseMessage(`❌ Amount cannot be less than $${expectedAmount} for the selected package.`);
+                                              setResponseMessage(`❌ Amount must be at least $100`);
                                               return;
                                           }
 
