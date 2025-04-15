@@ -104,7 +104,7 @@
       };
 
       const expectedAmount = packageAmounts[packageType] || null;
-      const isAmountValid = expectedAmount !== null && parseFloat(depositAmount) === expectedAmount;
+      const isAmountValid = expectedAmount !== null && parseFloat(depositAmount) >= 100;
 
 
       // Copy to clipboard function
@@ -453,7 +453,7 @@
                                           }
 
                                           if (!isAmountValid) {
-                                              setResponseMessage(`❌ Amount must be more than $${expectedAmount} for the selected package.`);
+                                              setResponseMessage(`❌ Amount cannot be less than $${expectedAmount} for the selected package.`);
                                               return;
                                           }
 
