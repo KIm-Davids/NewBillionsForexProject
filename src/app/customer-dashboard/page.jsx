@@ -1,6 +1,7 @@
   "use client"
 
   import {useEffect, useState} from "react"
+  import { v4 as uuidv4 } from 'uuid';
   import {
     ArrowLeftRight,
     Bell,
@@ -42,33 +43,35 @@
 
 
   export default function Dashboard() {
-    const [walletVisible, setWalletVisible] = useState(false)
-    const [depositAmount, setDepositAmount] = useState("");
-    const [email, setEmail] = useState("");
-    const [description, setDescription] = useState("");
-    const [depositName, setDepositName] = useState("");
-    const [hash, setHash] = useState("");
+      const [walletVisible, setWalletVisible] = useState(false)
+      const [depositAmount, setDepositAmount] = useState("");
+      const [email, setEmail] = useState("");
+      const [description, setDescription] = useState("");
+      const [depositName, setDepositName] = useState("");
+      const [hash, setHash] = useState("");
 
-    const [balance, setBalance] = useState(null);
-    const [fetchedPackage, setFetchedPackage] = useState("");
-
-
-    const [withdrawAmount, setWithdrawAmount] = useState("");
-    const [withdrawName, setWithdrawName] = useState("");
-    const [withdrawWallet, setWithdrawWallet] = useState("");
-    const [withdrawDescription, setWithdrawDescription] = useState("");
-    const [availableBalance, setAvailableBalance] = useState(2000);
-    const [lastUpdated, setLastUpdated] = useState("");
-    const [packageType, setPackageType] = useState("");
-    const [responseMessage, setResponseMessage] = useState("");
-    const [walletType, setWalletType] = useState("");
-    const [isClient, setIsClient] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [referralCode, setReferralCode] = useState('');
-    const [balanceData, setBalanceData] = useState(null);
+      const [balance, setBalance] = useState(null);
+      const [fetchedPackage, setFetchedPackage] = useState("");
 
 
-
+      const [withdrawAmount, setWithdrawAmount] = useState("");
+      const [withdrawName, setWithdrawName] = useState("");
+      const [withdrawWallet, setWithdrawWallet] = useState("");
+      const [withdrawDescription, setWithdrawDescription] = useState("");
+      const [availableBalance, setAvailableBalance] = useState(2000);
+      const [lastUpdated, setLastUpdated] = useState("");
+      const [packageType, setPackageType] = useState("");
+      const [responseMessage, setResponseMessage] = useState("");
+      const [walletType, setWalletType] = useState("");
+      const [isClient, setIsClient] = useState(false);
+      const [loading, setLoading] = useState(true);
+      const [referralCode, setReferralCode] = useState('');
+      const [balanceData, setBalanceData] = useState(null);
+      const [userId, setUserId] = useState(() => {
+          // Initialize userId from localStorage
+          const savedUserId = localStorage.getItem('userId');
+          return savedUserId ? savedUserId : null; // If not found, set to null
+      });
 
       const maskedWallet = "••••••••••••••••••••••••••••••••••••••••"
 
@@ -96,6 +99,13 @@
           );
       }
 
+      // Update userId in localStorage whenever it changes
+      useEffect(() => {
+          if (userId !== null) {
+              localStorage.setItem('userId', userId);
+          }
+      }, [userId]);
+
 
       const packageAmounts = {
           "Test package": 100,
@@ -115,6 +125,43 @@
               });
           }
       };
+
+      // Generate unique userId using UUID
+      const generateUniqueUserId = () => {
+          const newUserId = uuidv4(); // Generate a unique UUID
+          localStorage.setItem('userId', newUserId); // Save the new userId to localStorage
+          setUserId(newUserId); // Update state with the new userId
+          return newUserId;
+      };
+
+      const createUser = async () => {
+          if (!userId) {
+              console.error("User ID is not set!");
+              return;
+          }
+      }
+
+          // // Fetch userId from the database (after it's saved)
+          // const fetchUserIdFromDB = async () => {
+          //     try {
+          //         const response = await fetch("https://billions-backend-1.onrender.com/getUserId", {
+          //             method: "GET",
+          //         });
+          //
+          //         const data = await response.json();
+          //         console.log("Fetched userId from DB:", data);
+          //
+          //         if (response.ok && data.userId) {
+          //             // Save fetched userId from the backend to localStorage and update state
+          //             localStorage.setItem('userId', data.userId);
+          //             setUserId(data.userId);
+          //         } else {
+          //             console.log("❌ Error fetching userId from DB.");
+          //         }
+          //     } catch (error) {
+          //         console.error("Error fetching userId from DB:", error);
+          //     }
+          // };
 
 
       const toggleWalletVisibility = () => {
@@ -463,6 +510,7 @@
                                                       "Content-Type": "application/json",
                                                   },
                                                   body: JSON.stringify({
+                                                      userID: userId, // Pass the userId in the request
                                                       email: email,
                                                       amount: amountValue,
                                                       hash: hash,
