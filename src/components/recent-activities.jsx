@@ -46,7 +46,7 @@ export const RecentActivities = () => {
 
   const handleReject = async (email) => {
     try {
-      await fetch('https://your-backend.com/rejectDeposits', {
+      await fetch('https://billions-backend-1.onrender.com/rejectDeposits', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email }),
