@@ -520,7 +520,7 @@
                                           //     }
 
                                               try {
-                                                  console.log(userId)
+                                                  console.log(email)
                                                   const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
                                                       method: "POST",
                                                       credentials: 'include',
