@@ -78,7 +78,7 @@ export const RecentActivities = () => {
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={deposit.user.avatar || '/placeholder.svg'} alt={deposit.user.name} />
+                      <AvatarImage src={/placeholder.svg'} alt={deposit.user.name} />
                       <AvatarFallback>{deposit.email?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
                     </Avatar>
                     <div className="grid gap-0.5">
