@@ -182,9 +182,9 @@
           return `${prefix}-${randomPart}`;
       };
 
-      useEffect(() => {
-          generateUniqueUserId();
-      }, []);
+      // useEffect(() => {
+      //     generateUniqueUserId();
+      // }, []);
 
       return (
           <div className="flex min-h-screen flex-col md:flex-row">
