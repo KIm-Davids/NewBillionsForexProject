@@ -126,6 +126,11 @@
           "Premium package": 1000,
       };
 
+      useEffect(() => {
+          setPackageType("Pro package");
+      }, []);
+
+
       const isAmountValid = !isNaN(parseFloat(depositAmount)) && parseFloat(depositAmount) >= 100;
 
       // Copy to clipboard function
