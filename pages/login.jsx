@@ -70,6 +70,7 @@ const Login = () => {
           },
           body: JSON.stringify(payload),
         });
+        localStorage.setItem('admin-email', email);
           router.push('/dashboard');
 
       } catch (error) {
