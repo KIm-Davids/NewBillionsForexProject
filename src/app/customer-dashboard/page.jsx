@@ -294,7 +294,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Current Package</CardDescription>
-                              <CardTitle>{packageType ? packageType : "No Package!"}</CardTitle>
+                              <CardTitle>{fetchedPackage ? fetchedPackage : "No Package!"}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               <Badge>Active</Badge>
