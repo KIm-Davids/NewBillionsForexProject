@@ -547,7 +547,7 @@
                                                   //         return;
                                                   //     }
 
-                                                      console.log("Server response:", data);
+                                                      // console.log("Server response:", data);
                                                       setResponseMessage("✅ Transaction request sent successfully!");
                                                       setAvailableBalance(prev => prev + amountValue);
                                                   //  else {
