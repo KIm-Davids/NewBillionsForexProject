@@ -363,7 +363,7 @@
                                       {/* 🔴 Place the validation message HERE */}
                                       {packageType && !isAmountValid && (
                                           <p className="text-red-500 text-sm">
-                                              Amount must not be less than ${expectedAmount}
+                                              Amount must not be less than $100
                                           </p>
                                       )}
                                   </div>
