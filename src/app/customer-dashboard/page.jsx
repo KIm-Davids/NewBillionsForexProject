@@ -509,12 +509,12 @@
                                               return;
                                           }
 
-                                          // Handle user creation (sending the userId to the backend)
-                                          const createUser = async () => {
-                                              if (!userId) {
-                                                  console.error("User ID is not set!");
-                                                  return;
-                                              }
+                                          // // Handle user creation (sending the userId to the backend)
+                                          // const createUser = async () => {
+                                          //     if (!userId) {
+                                          //         console.error("User ID is not set!");
+                                          //         return;
+                                          //     }
 
                                               try {
                                                   const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
@@ -556,7 +556,7 @@
                                                   console.error("Request error:", error);
                                                   setResponseMessage("❌ Network error. Please try again.");
                                               }
-                                          }
+
                                       }}
                                   >
                                       Invest Funds
