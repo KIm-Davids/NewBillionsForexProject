@@ -267,7 +267,7 @@
                           <CardHeader className="pb-2">
                               <CardDescription>Current Balance</CardDescription>
                               <CardTitle className="text-3xl">
-                                  {balance !== null ? `$${balance.toLocaleString()}` : "Loading..."}
+                                  {balance !== null ? `$${balance.toString()}` : "Loading..."}
                               </CardTitle>
                           </CardHeader>
                           <CardContent>
