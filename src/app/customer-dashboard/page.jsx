@@ -522,65 +522,58 @@
                                               return;
                                           }
 
-                                          // // Handle user creation (sending the userId to the backend)
-                                          // const createUser = async () => {
-                                          //     if (!userId) {
-                                          //         console.error("User ID is not set!");
-                                          //         return;
-                                          //     }
+                                          try {
+                                              console.log(email)
+                                              const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
+                                                  method: "POST",
+                                                  credentials: 'include',
+                                                  headers: {
+                                                      "Content-Type": "application/json",
+                                                  },
+                                                  body: JSON.stringify({
+                                                      // userID: userId, // Pass the userId in the request
+                                                      email: email,
+                                                      amount: amountValue,
+                                                      hash: hash,
+                                                      status: 'pending',
+                                                      packageType: packageType,
+                                                  }),
+                                              });
+                                              const data = await response.json(); // ✅ Always parse response
+                                              console.log("Response:", data);
 
-                                              try {
-                                                  console.log(email)
-                                                  const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
-                                                      method: "POST",
-                                                      credentials: 'include',
-                                                      headers: {
-                                                          "Content-Type": "application/json",
-                                                      },
-                                                      body: JSON.stringify({
-                                                          // userID: userId, // Pass the userId in the request
-                                                          email: email,
-                                                          amount: amountValue,
-                                                          hash: hash,
-                                                          status: 'pending',
-                                                          packageType: packageType,
-                                                      }),
-                                                  });
-                                                  console.log(packageType);
-                                                  // setFetchedPackage(packageType);
+                                              // let data = null;
+                                              if (response.ok) {
+                                                  //     try {
+                                                  //         data = await response.json(); // Try parsing the response body as JSON
+                                                  //     } catch (err) {
+                                                  //         console.error("Failed to parse JSON:", err);
+                                                  //         setResponseMessage("❌ Error: Invalid response format.");
+                                                  //         return;
+                                                  //     }
 
-                                                  // let data = null;
-                                                  if (response.ok) {
-                                                      //     try {
-                                                      //         data = await response.json(); // Try parsing the response body as JSON
-                                                      //     } catch (err) {
-                                                      //         console.error("Failed to parse JSON:", err);
-                                                      //         setResponseMessage("❌ Error: Invalid response format.");
-                                                      //         return;
-                                                      //     }
-
-                                                      // console.log("Server response:", data);
-                                                      setResponseMessage("✅ Transaction request sent successfully!");
-                                                      setAvailableBalance(prev => prev + amountValue);
-                                                  }else {
-                                                      // Handle the case where the response was not successful
-                                                      const errorMessage = data?.error || "Something went wrong.";
-                                                      setResponseMessage(`❌ ${errorMessage}`);
-                                                  }
-                                              } catch (error) {
-                                                  console.error("Request error:", error);
-                                                  setResponseMessage("❌ Network error. Please try again.");
+                                                  // console.log("Server response:", data);
+                                                  setResponseMessage("✅ Transaction request sent successfully!");
+                                                  setAvailableBalance(prev => prev + amountValue);
+                                              } else {
+                                                  // Handle the case where the response was not successful
+                                                  const errorMessage = data?.error || "Something went wrong.";
+                                                  setResponseMessage(`❌ ${errorMessage}`);
                                               }
+                                          } catch (error) {
+                                              console.error("Request error:", error);
+                                              setResponseMessage("❌ Network error. Please try again.");
+                                          }
 
                                       }}
                                   >
                                       Invest Funds
                                   </Button>
 
-                                  {responseMessage && (
-                                      <p className="mt-2 text-sm text-yellow-400">{responseMessage}</p>
-                                  )}
-
+                                  <div
+                                      className="animate-fade-in-down transition duration-500 ease-in-out mt-4 p-3 rounded-md bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
+                                      <p className="text-sm font-medium">{responseMessage}</p>
+                                  </div>
 
                               </CardFooter>
                           </Card>
@@ -590,7 +583,7 @@
                       <TabsContent value="withdraw">
                           <Card>
                               <CardHeader>
-                                  <CardTitle>Withdraw Funds</CardTitle>
+                              <CardTitle>Withdraw Funds</CardTitle>
                                   <CardDescription>Transaction may take a while, Please be patient!</CardDescription>
                               </CardHeader>
                               <CardContent className="space-y-4">
