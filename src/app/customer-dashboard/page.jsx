@@ -307,7 +307,6 @@
                                      variant="outline"
                                      className="bg-green-50 text-green-700 hover:bg-green-50 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-950"
                               >
-                                  Available in 6 days
                               </Badge>
                           </CardContent>
                       </Card>
@@ -319,7 +318,7 @@
                           </CardHeader>
                           <CardContent>
                               <Badge>Active</Badge>
-                              <p className="text-xs text-muted-foreground mt-1">Renews on May 10, 2025</p>
+                              <p className="text-xs text-muted-foreground mt-1"></p>
                           </CardContent>
                       </Card>
                   </div>
