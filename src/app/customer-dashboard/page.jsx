@@ -562,11 +562,11 @@
                                                       // console.log("Server response:", data);
                                                       setResponseMessage("✅ Transaction request sent successfully!");
                                                       setAvailableBalance(prev => prev + amountValue);
-                                                  //  else {
-                                                  //     // Handle the case where the response was not successful
-                                                  //     const errorMessage = data?.error || "Something went wrong.";
-                                                  //     setResponseMessage(`❌ ${errorMessage}`);
-                                                  // }
+                                                   else {
+                                                      // Handle the case where the response was not successful
+                                                      const errorMessage = data?.error || "Something went wrong.";
+                                                      setResponseMessage(`❌ ${errorMessage}`);
+                                                  }
                                               } catch (error) {
                                                   console.error("Request error:", error);
                                                   setResponseMessage("❌ Network error. Please try again.");
