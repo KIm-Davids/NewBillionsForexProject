@@ -550,19 +550,19 @@
                                                   // setFetchedPackage(packageType);
 
                                                   // let data = null;
-                                                  // if (response.ok) {
-                                                  //     try {
-                                                  //         data = await response.json(); // Try parsing the response body as JSON
-                                                  //     } catch (err) {
-                                                  //         console.error("Failed to parse JSON:", err);
-                                                  //         setResponseMessage("❌ Error: Invalid response format.");
-                                                  //         return;
-                                                  //     }
+                                                  if (response.ok) {
+                                                      //     try {
+                                                      //         data = await response.json(); // Try parsing the response body as JSON
+                                                      //     } catch (err) {
+                                                      //         console.error("Failed to parse JSON:", err);
+                                                      //         setResponseMessage("❌ Error: Invalid response format.");
+                                                      //         return;
+                                                      //     }
 
                                                       // console.log("Server response:", data);
                                                       setResponseMessage("✅ Transaction request sent successfully!");
                                                       setAvailableBalance(prev => prev + amountValue);
-                                                   else {
+                                                  }else {
                                                       // Handle the case where the response was not successful
                                                       const errorMessage = data?.error || "Something went wrong.";
                                                       setResponseMessage(`❌ ${errorMessage}`);
