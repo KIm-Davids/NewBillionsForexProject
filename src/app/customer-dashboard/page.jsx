@@ -299,8 +299,8 @@
 
                       <Card>
                           <CardHeader className="pb-2">
-                              <CardDescription>Next Withdrawal</CardDescription>
-                              <CardTitle>{withdrawDate}</CardTitle>
+                              <CardDescription>Daily Profits</CardDescription>
+                              <CardTitle>Loading...</CardTitle>
                           </CardHeader>
                           <CardContent>
                               {/*<Badge go o*/}

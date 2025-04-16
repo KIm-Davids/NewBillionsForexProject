@@ -26,7 +26,7 @@ const Login = () => {
 
 
   const adminEmail = "admin10k4u1234@gmail.com";
-  const adminPassword = "admin1sWorkingHard4u"
+    const adminPassword = "admin1sWorkingHard4u"
 
 
   useEffect(() => {
