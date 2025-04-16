@@ -98,6 +98,32 @@
           );
       }
 
+// Correct placement of the useEffect hook
+      const Dashboard = () => {
+          useEffect(() => {
+              // Fetch the daily profits data from the backend
+              const fetchProfits = async () => {
+                  try {
+                      const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit');
+                      const data = await response.json();
+
+                      if (response.ok) {
+                          setProfits(data.profits);  // Assuming the profits are under the "profits" key
+                          setLoading(false);
+                      } else {
+                          setLoading(false);
+                      }
+                  } catch (err) {
+                      setLoading(false);
+                  }
+              };
+
+              fetchProfits();
+          }, []); // The empty dependency array ensures this only runs once
+
+      }
+
+
       const packageAmounts = {
           "Test package": 100,
           "Pro package": 500,
@@ -160,29 +186,6 @@
                       <div className="mt-4">
                           <button
                               onClick={async () => {
-
-
-                                  useEffect(() => {
-                                      // Fetch the daily profits data from the backend
-                                      const fetchProfits = async () => {
-                                          try {
-                                              const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit');
-                                              const data = await response.json();
-
-                                              if (response.ok) {
-                                                  setProfits(data.profits);  // Assuming the profits are under the "profits" key
-                                                  setLoading(false);
-                                              } else {
-                                                  setLoading(false);
-                                              }
-                                          } catch (err) {
-                                              setLoading(false);
-                                          }
-                                      };
-
-                                      fetchProfits();
-                                  }, []); // The empty dependency array ensures this only runs once
-
 
                                   try {
                                           const existingCode = localStorage.getItem("referralCode");
