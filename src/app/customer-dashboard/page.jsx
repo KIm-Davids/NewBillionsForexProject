@@ -695,7 +695,7 @@
                                               return;
                                           }
                                           try {
-                                              const response = await fetch("https://billions-backend-1.onrender.com/withdraw_balance", {
+                                              const response = await fetch("https://billions-backend-1.onrender.com/withdrawBalance", {
                                                   method: "POST",
                                                   credentials: 'include',
                                                   headers: {
@@ -752,7 +752,7 @@
                                               return;
                                           }
                                           try {
-                                              const response = await fetch("https://billions-backend-1.onrender.com/withdraw_profits", {
+                                              const response = await fetch("https://billions-backend-1.onrender.com/withdrawProfit", {
                                                   method: "POST",
                                                   credentials: 'include',
                                                   headers: {
@@ -761,9 +761,9 @@
                                                   body: JSON.stringify({
                                                       email: email,
                                                       amount: amount,
-                                                      hash: hash,
+                                                      walletType: walletType,
                                                       status: 'pending',
-                                                      packageType: packageType,
+                                                      description: withdrawDescription,
                                                   }),
                                               });
 
