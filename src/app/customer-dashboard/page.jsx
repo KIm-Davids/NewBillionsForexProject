@@ -680,7 +680,7 @@
                               </CardContent>
                               <CardFooter>
                                   <Button
-                                      className="w-full border-red-500 border hover:bg-white/10"
+                                      className="w-full border-yellow-500 border hover:bg-white/10"
                                       onClick={async () => {
                                           console.log('Withdraw from Balance button clicked');
                                           const amount = parseFloat(withdrawAmount);
