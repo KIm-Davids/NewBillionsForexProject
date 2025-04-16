@@ -177,20 +177,27 @@
 
 
                                       // const fetchProfits = async () => {
-                                          try {
-                                              const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit');
-                                              const data = await response.json();
+                                      try {
+                                          const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit');
+                                          const data = await response.json();
 
-                                              if (response.ok) {
-                                                  console.log(data.profits);
-                                                  setProfits(data.profits);  // Assuming the profits are under the "profits" key
-                                                  setLoading(false);
+                                          if (response.ok) {
+                                              const userEmail = localStorage.getItem("userEmail");
+                                              const userProfitEntry = data.profits.find(p => p.email === userEmail);
+
+                                              if (userProfitEntry) {
+                                                  setProfits(userProfitEntry.profit);  // Set only the current user's profit
                                               } else {
-                                                  setLoading(false);
+                                                  setProfits(0); // Default to 0 if not found
                                               }
-                                          } catch (err) {
+
+                                              setLoading(false);
+                                          } else {
                                               setLoading(false);
                                           }
+                                      } catch (err) {
+                                          setLoading(false);
+                                      }
                                       // };
 
                                       const existingCode = localStorage.getItem("referralCode");
