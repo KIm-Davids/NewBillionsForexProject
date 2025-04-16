@@ -53,7 +53,7 @@
       const [balance, setBalance] = useState(null);
       const [fetchedPackage, setFetchedPackage] = useState("");
 
-
+      const [profits, setProfits] = useState([]);
       const [withdrawAmount, setWithdrawAmount] = useState("");
       const [withdrawName, setWithdrawName] = useState("");
       const [withdrawWallet, setWithdrawWallet] = useState("");
@@ -98,28 +98,27 @@
           );
       }
 
-      // Update userId in localStorage whenever it changes
-      // useEffect(() => {
-      //     if (userId !== null) {
-      //         localStorage.setItem('userId', userId);
-      //     }
-      // }, [userId]);
 
-      // useEffect(() => {
-      //     // Check if we're on the client side (i.e., window is defined)
-      //     if (typeof window !== "undefined") {
-      //         const savedUserId = localStorage.getItem('userId');
-      //         if (savedUserId) {
-      //             setUserId(savedUserId); // If the userId exists in localStorage, set it in state
-      //         } else {
-      //             const newUserId = uuidv4(); // Generate a new UUID
-      //             localStorage.setItem('userId', newUserId); // Store it in localStorage
-      //             setUserId(newUserId); // Update state with the new userId
-      //         }
-      //     }
-      // }, []);
+      useEffect(() => {
+          // Fetch the daily profits data from the backend
+          const fetchProfits = async () => {
+              try {
+                  const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit');
+                  const data = await response.json();
 
+                  if (response.ok) {
+                      setProfits(data.profits);  // Assuming the profits are under the "profits" key
+                      setLoading(false);
+                  } else {
+                      setLoading(false);
+                  }
+              } catch (err) {
+                  setLoading(false);
+              }
+          };
 
+          fetchProfits();
+      }, []);
 
 
       const packageAmounts = {
@@ -154,30 +153,6 @@
           return newUserId;
       };
 
-
-          // // Fetch userId from the database (after it's saved)
-          // const fetchUserIdFromDB = async () => {
-          //     try {
-          //         const response = await fetch("https://billions-backend-1.onrender.com/getUserId", {
-          //             method: "GET",
-          //         });
-          //
-          //         const data = await response.json();
-          //         console.log("Fetched userId from DB:", data);
-          //
-          //         if (response.ok && data.userId) {
-          //             // Save fetched userId from the backend to localStorage and update state
-          //             localStorage.setItem('userId', data.userId);
-          //             setUserId(data.userId);
-          //         } else {
-          //             console.log("❌ Error fetching userId from DB.");
-          //         }
-          //     } catch (error) {
-          //         console.error("Error fetching userId from DB:", error);
-          //     }
-          // };
-
-
       const toggleWalletVisibility = () => {
       setWalletVisible(!walletVisible)
     }
@@ -189,9 +164,6 @@
           return `${prefix}-${randomPart}`;
       };
 
-      // useEffect(() => {
-      //     generateUniqueUserId();
-      // }, []);
 
       return (
           <div className="flex min-h-screen flex-col md:flex-row">
@@ -300,7 +272,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Daily Profits</CardDescription>
-                              <CardTitle>Loading...</CardTitle>
+                              <CardTitle>{profits}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               {/*<Badge go o*/}
