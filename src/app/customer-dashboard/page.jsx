@@ -185,6 +185,7 @@
                                               const userEmail = localStorage.getItem("userEmail");
                                               const userProfitEntry = data.profits.find(p => p.email === userEmail);
 
+                                              console.log(userProfitEntry)
                                               if (userProfitEntry) {
                                                   setProfits(userProfitEntry.profit);  // Set only the current user's profit
                                               } else {
