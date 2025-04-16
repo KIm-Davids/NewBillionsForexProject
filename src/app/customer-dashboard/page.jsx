@@ -506,6 +506,15 @@
 
 
                               </CardContent>
+
+                              {responseMessage && (
+                                  <div className="mt-4 flex items-center gap-3 p-4 rounded-md shadow-sm">
+                                      <Info className="w-5 h-5 text-yellow-600 dark:text-yellow-300" />
+                                      <p className="text-sm font-medium text-yellow-700 dark:text-yellow-200">
+                                          {responseMessage}
+                                      </p>
+                                  </div>
+                              )}
                               <CardFooter>
                                   <Button
                                       disabled={!packageType || !isAmountValid}
@@ -570,15 +579,6 @@
                                   >
                                       Invest Funds
                                   </Button>
-
-                                  {responseMessage && (
-                                      <div className="mt-4 flex items-center gap-3 p-4 rounded-md bg-yellow-100 dark:bg-yellow-900 shadow-sm">
-                                          <Info className="w-5 h-5 text-yellow-600 dark:text-yellow-300" />
-                                          <p className="text-sm font-medium text-yellow-700 dark:text-yellow-200">
-                                              {responseMessage}
-                                          </p>
-                                      </div>
-                                  )}
 
                               </CardFooter>
                           </Card>
