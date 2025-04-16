@@ -183,7 +183,7 @@
 
                                           if (response.ok) {
                                               const userEmail = localStorage.getItem("userEmail");
-                                              const userProfitEntry = data.profit.find(p => p.email === userEmail);
+                                              const userProfitEntry = data.profits.find(p => p.email === userEmail);
 
                                               console.log(userProfitEntry)
                                               if (userProfitEntry) {
