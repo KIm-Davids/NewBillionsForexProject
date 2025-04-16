@@ -784,7 +784,7 @@
                                                       console.log("Server response:", data);
 
                                                       setResponseMessage("✅ Transaction request sent successfully!");
-                                                      setProfits(prev => prev - amount);
+                                                      // setProfits(prev => prev - amount);
                                                   } catch (err) {
                                                       console.error("Failed to parse JSON:", err);
                                                       setResponseMessage("❌ Error: Invalid response format.");
