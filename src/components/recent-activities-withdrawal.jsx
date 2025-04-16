@@ -31,31 +31,31 @@ export const RecentActivitiesWithdraw = () => {
         }
     };
 
-    const handleConfirm = async (email) => {
-        try {
-            await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
-            });
-            fetchWithdrawals(); // Reload the withdrawals after confirming
-        } catch (error) {
-            console.error('Error confirming withdrawal:', error);
-        }
-    };
-
-    const handleReject = async (email) => {
-        try {
-            await fetch('https://billions-backend-1.onrender.com/reject-deposit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
-            });
-            fetchWithdrawals(); // Reload the withdrawals after rejecting
-        } catch (error) {
-            console.error('Error rejecting withdrawal:', error);
-        }
-    };
+    // const handleConfirm = async (email) => {
+    //     try {
+    //         await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ email }),
+    //         });
+    //         fetchWithdrawals(); // Reload the withdrawals after confirming
+    //     } catch (error) {
+    //         console.error('Error confirming withdrawal:', error);
+    //     }
+    // };
+    //
+    // const handleReject = async (email) => {
+    //     try {
+    //         await fetch('https://billions-backend-1.onrender.com/reject-deposit', {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ email }),
+    //         });
+    //         fetchWithdrawals(); // Reload the withdrawals after rejecting
+    //     } catch (error) {
+    //         console.error('Error rejecting withdrawal:', error);
+    //     }
+    // };
 
     useEffect(() => {
         fetchWithdrawals(); // Fetch withdrawals when component mounts
