@@ -182,6 +182,7 @@
                                               const data = await response.json();
 
                                               if (response.ok) {
+                                                  console.log(data.profits);
                                                   setProfits(data.profits);  // Assuming the profits are under the "profits" key
                                                   setLoading(false);
                                               } else {
