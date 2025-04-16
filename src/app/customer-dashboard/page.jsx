@@ -752,6 +752,15 @@
                                               return;
                                           }
                                           try {
+
+                                              console.log({
+                                                  email,
+                                                  walletType,
+                                                  status: 'pending',
+                                                  amount,
+                                                  description: withdrawDescription
+                                              });
+
                                               const response = await fetch("https://billions-backend-1.onrender.com/withdrawProfit", {
                                                   method: "POST",
                                                   credentials: 'include',
@@ -760,9 +769,9 @@
                                                   },
                                                   body: JSON.stringify({
                                                       email: email,
-                                                      amount: amount,
                                                       walletType: walletType,
                                                       status: 'pending',
+                                                      amount: amount,
                                                       description: withdrawDescription,
                                                   }),
                                               });
