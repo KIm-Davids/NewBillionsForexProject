@@ -303,10 +303,10 @@
                               <CardTitle>{withdrawDate}</CardTitle>
                           </CardHeader>
                           <CardContent>
-                              <Badge go o
-                                     variant="outline"
-                                     className="bg-green-50 text-green-700 hover:bg-green-50 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-950"
-                              >
+                              {/*<Badge go o*/}
+                              {/*       variant="outline"*/}
+                              {/*       className="bg-green-50 text-green-700 hover:bg-green-50 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-950"*/}
+                              {/*>*/}
                               </Badge>
                           </CardContent>
                       </Card>
