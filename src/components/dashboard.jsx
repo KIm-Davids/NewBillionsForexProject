@@ -135,16 +135,6 @@ export const Dashboard = () => {
 
             <Card>
               <CardHeader>
-                <CardTitle>User Balance withdrawal</CardTitle>
-                <CardDescription>Monitor recent user withdrawals their balance</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <RecentActivities />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
                 <CardTitle>User Daily Profits</CardTitle>
                 <CardDescription>Monitor recent user withdrawals from their daily profits</CardDescription>
               </CardHeader>
@@ -155,8 +145,15 @@ export const Dashboard = () => {
           </TabsContent>
         </Tabs>
 
-
-
+        <Card>
+              <CardHeader>
+                <CardTitle>User Balance withdrawal</CardTitle>
+                <CardDescription>Monitor recent user withdrawals their balance</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RecentActivities />
+              </CardContent>
+            </Card>
       </main>
     </div>
   );
