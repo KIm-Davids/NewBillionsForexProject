@@ -1,6 +1,7 @@
   "use client"
 
   import {useEffect, useState} from "react"
+  import { Info } from "lucide-react";
   import { v4 as uuidv4 } from 'uuid';
   import {
     ArrowLeftRight,
@@ -570,10 +571,14 @@
                                       Invest Funds
                                   </Button>
 
-                                  <div
-                                      className="animate-fade-in-down transition duration-500 ease-in-out mt-4 p-3 rounded-md bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
-                                      <p className="text-sm font-medium">{responseMessage}</p>
-                                  </div>
+                                  {responseMessage && (
+                                      <div className="mt-4 flex items-center gap-3 p-4 rounded-md bg-yellow-100 dark:bg-yellow-900 shadow-sm">
+                                          <Info className="w-5 h-5 text-yellow-600 dark:text-yellow-300" />
+                                          <p className="text-sm font-medium text-yellow-700 dark:text-yellow-200">
+                                              {responseMessage}
+                                          </p>
+                                      </div>
+                                  )}
 
                               </CardFooter>
                           </Card>
