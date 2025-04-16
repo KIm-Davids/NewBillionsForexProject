@@ -690,7 +690,7 @@
                                               return;
                                           }
 
-                                          if (amount > availableBalance) {
+                                          if (amount > balance) {
                                               setResponseMessage("❌ You don't have enough balance for this withdrawal.");
                                               return;
                                           }
@@ -717,7 +717,7 @@
                                                       console.log("Server response:", data);
 
                                                       setResponseMessage("✅ Transaction request sent successfully!");
-                                                      setAvailableBalance(prev => prev - amount);
+                                                      setBalance(prev => prev - amount);
                                                   } catch (err) {
                                                       console.error("Failed to parse JSON:", err);
                                                       setResponseMessage("❌ Error: Invalid response format.");
@@ -747,7 +747,7 @@
                                               return;
                                           }
 
-                                          if (amount > availableProfits) {
+                                          if (amount > profits) {
                                               setResponseMessage("❌ You don't have enough profits for this withdrawal.");
                                               return;
                                           }
@@ -774,7 +774,7 @@
                                                       console.log("Server response:", data);
 
                                                       setResponseMessage("✅ Transaction request sent successfully!");
-                                                      // setAvailableProfits(prev => prev - amount);
+                                                      setProfits(prev => prev - amount);
                                                   } catch (err) {
                                                       console.error("Failed to parse JSON:", err);
                                                       setResponseMessage("❌ Error: Invalid response format.");
