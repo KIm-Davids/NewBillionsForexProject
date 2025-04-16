@@ -549,6 +549,7 @@
                                                       packageType: packageType,
                                                   }),
                                               });
+                                              setResponseMessage("Transaction Processing ...")
 
                                               if (response.ok) {
 
