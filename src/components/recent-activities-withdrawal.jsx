@@ -5,7 +5,7 @@ import { CheckCircle, XCircle } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 
-export const RecentActivities = () => {
+export const RecentActivitiesWithdraw = () => {
     const [deposits, setDeposits] = useState([]);
 
     const fetchWithdrawals = async () => {
@@ -74,6 +74,7 @@ export const RecentActivities = () => {
                 <TableRow>
                     <TableHead>User</TableHead>
                     <TableHead>Amount</TableHead>
+                    <TableHead>Withdraw Type</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Time</TableHead>
                     <TableHead>Actions</TableHead>
