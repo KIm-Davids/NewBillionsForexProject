@@ -549,25 +549,14 @@
                                                       packageType: packageType,
                                                   }),
                                               });
-                                              const data = await response.json(); // ✅ Always parse response
-                                              console.log("Response:", data);
 
-                                              // let data = null;
                                               if (response.ok) {
-                                                  //     try {
-                                                  //         data = await response.json(); // Try parsing the response body as JSON
-                                                  //     } catch (err) {
-                                                  //         console.error("Failed to parse JSON:", err);
-                                                  //         setResponseMessage("❌ Error: Invalid response format.");
-                                                  //         return;
-                                                  //     }
 
-                                                  // console.log("Server response:", data);
                                                   setResponseMessage("✅ Transaction request sent successfully!");
                                                   setAvailableBalance(prev => prev + amountValue);
                                               } else {
                                                   // Handle the case where the response was not successful
-                                                  const errorMessage = data?.error || "Something went wrong.";
+                                                  // const errorMessage = data?.error || "Something went wrong.";
                                                   setResponseMessage(`❌ ${errorMessage}`);
                                               }
                                           } catch (error) {
