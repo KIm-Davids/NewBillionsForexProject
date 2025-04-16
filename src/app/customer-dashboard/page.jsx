@@ -682,7 +682,7 @@
                                   <Button
                                       className="w-full border-red-500 border hover:bg-white/10"
                                       onClick={async () => {
-                                          console.log('Withdraw button clicked');
+                                          console.log('Withdraw from Balance button clicked');
                                           const amount = parseFloat(withdrawAmount);
 
                                           if (isNaN(amount) || amount <= 0) {
@@ -695,15 +695,15 @@
                                               return;
                                           }
                                           try {
-                                              const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
+                                              const response = await fetch("https://billions-backend-1.onrender.com/withdraw_balance", {
                                                   method: "POST",
                                                   credentials: 'include',
                                                   headers: {
                                                       "Content-Type": "application/json",
                                                   },
                                                   body: JSON.stringify({
-                                                      email: email, // Make sure the data is correct here
-                                                      amount: amountValue,
+                                                      email: email,
+                                                      amount: amount,
                                                       hash: hash,
                                                       status: 'pending',
                                                       packageType: packageType,
@@ -713,18 +713,17 @@
                                               let data = null;
                                               if (response.ok) {
                                                   try {
-                                                      data = await response.json(); // Try parsing the response body as JSON
+                                                      data = await response.json();
                                                       console.log("Server response:", data);
 
                                                       setResponseMessage("✅ Transaction request sent successfully!");
-                                                      setAvailableBalance(prev => prev + amountValue);
+                                                      setAvailableBalance(prev => prev - amount);
                                                   } catch (err) {
                                                       console.error("Failed to parse JSON:", err);
                                                       setResponseMessage("❌ Error: Invalid response format.");
                                                       return;
                                                   }
                                               } else {
-                                                  // Only reference data here if response is ok
                                                   const errorMessage = data?.error || "Something went wrong.";
                                                   setResponseMessage(`❌ ${errorMessage}`);
                                               }
@@ -733,9 +732,68 @@
                                               setResponseMessage("❌ Network error. Please try again.");
                                           }
                                       }}
+                                  >
+                                      Withdraw from Balance
+                                  </Button>
 
-                                  >Withdraw Funds</Button>
+                                  <Button
+                                      className="w-full border-green-500 border hover:bg-white/10"
+                                      onClick={async () => {
+                                          console.log('Withdraw from Profits button clicked');
+                                          const amount = parseFloat(withdrawAmount);
+
+                                          if (isNaN(amount) || amount <= 0) {
+                                              setResponseMessage("❌ Please enter a valid amount.");
+                                              return;
+                                          }
+
+                                          if (amount > availableProfits) {
+                                              setResponseMessage("❌ You don't have enough profits for this withdrawal.");
+                                              return;
+                                          }
+                                          try {
+                                              const response = await fetch("https://billions-backend-1.onrender.com/withdraw_profits", {
+                                                  method: "POST",
+                                                  credentials: 'include',
+                                                  headers: {
+                                                      "Content-Type": "application/json",
+                                                  },
+                                                  body: JSON.stringify({
+                                                      email: email,
+                                                      amount: amount,
+                                                      hash: hash,
+                                                      status: 'pending',
+                                                      packageType: packageType,
+                                                  }),
+                                              });
+
+                                              let data = null;
+                                              if (response.ok) {
+                                                  try {
+                                                      data = await response.json();
+                                                      console.log("Server response:", data);
+
+                                                      setResponseMessage("✅ Transaction request sent successfully!");
+                                                      setAvailableProfits(prev => prev - amount);
+                                                  } catch (err) {
+                                                      console.error("Failed to parse JSON:", err);
+                                                      setResponseMessage("❌ Error: Invalid response format.");
+                                                      return;
+                                                  }
+                                              } else {
+                                                  const errorMessage = data?.error || "Something went wrong.";
+                                                  setResponseMessage(`❌ ${errorMessage}`);
+                                              }
+                                          } catch (error) {
+                                              console.error("Request error:", error);
+                                              setResponseMessage("❌ Network error. Please try again.");
+                                          }
+                                      }}
+                                  >
+                                      Withdraw from Profits
+                                  </Button>
                               </CardFooter>
+
                           </Card>
                       </TabsContent>
 
