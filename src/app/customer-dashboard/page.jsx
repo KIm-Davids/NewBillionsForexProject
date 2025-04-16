@@ -53,7 +53,7 @@
       const [balance, setBalance] = useState(null);
       const [fetchedPackage, setFetchedPackage] = useState("");
 
-      const [profits, setProfits] = useState([]);
+      const [profits, setProfits] = useState(0);
       const [withdrawAmount, setWithdrawAmount] = useState("");
       const [withdrawName, setWithdrawName] = useState("");
       const [withdrawWallet, setWithdrawWallet] = useState("");
@@ -102,21 +102,7 @@
       const Dashboard = () => {
           useEffect(() => {
               // Fetch the daily profits data from the backend
-              const fetchProfits = async () => {
-                  try {
-                      const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit');
-                      const data = await response.json();
 
-                      if (response.ok) {
-                          setProfits(data.profits);  // Assuming the profits are under the "profits" key
-                          setLoading(false);
-                      } else {
-                          setLoading(false);
-                      }
-                  } catch (err) {
-                      setLoading(false);
-                  }
-              };
 
               fetchProfits();
           }, []); // The empty dependency array ensures this only runs once
@@ -188,7 +174,25 @@
                               onClick={async () => {
 
                                   try {
-                                          const existingCode = localStorage.getItem("referralCode");
+
+
+                                      // const fetchProfits = async () => {
+                                          try {
+                                              const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit');
+                                              const data = await response.json();
+
+                                              if (response.ok) {
+                                                  setProfits(data.profits);  // Assuming the profits are under the "profits" key
+                                                  setLoading(false);
+                                              } else {
+                                                  setLoading(false);
+                                              }
+                                          } catch (err) {
+                                              setLoading(false);
+                                          }
+                                      // };
+
+                                      const existingCode = localStorage.getItem("referralCode");
 
                                       const savedEmail = localStorage.getItem('userEmail');
                                       const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
@@ -275,7 +279,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Daily Profits</CardDescription>
-                              <CardTitle>{profits}</CardTitle>
+                              <CardTitle>${profits}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               {/*<Badge go o*/}
