@@ -317,7 +317,7 @@
                               <CardTitle>{fetchedPackage ? fetchedPackage : "No Package!"}</CardTitle>
                           </CardHeader>
                           <CardContent>
-                              <Badge>Active</Badge>
+                              <Badge  className="bg-green-500 text-white rounded-full px-3 py-1">Active</Badge>
                               <p className="text-xs text-muted-foreground mt-1"></p>
                           </CardContent>
                       </Card>
