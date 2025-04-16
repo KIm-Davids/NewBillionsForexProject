@@ -288,7 +288,7 @@
                       <Card>
                           <CardHeader className="pb-2">
                               <CardDescription>Daily Profits</CardDescription>
-                              <CardTitle>${profits}</CardTitle>
+                              <CardTitle className="text-3xl font-bold text-green-600">${profits}</CardTitle>
                           </CardHeader>
                           <CardContent>
                               {/*<Badge go o*/}
