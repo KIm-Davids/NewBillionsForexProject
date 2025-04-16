@@ -12,18 +12,25 @@ export const RecentActivities = () => {
         try {
             const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
             const res = await fetch(`https://billions-backend-1.onrender.com/fetchWithdrawals?email=${encodedEmail}`);
-            // const res = await fetch('https://billions-backend-1.onrender.com/fetchDeposits?email=admin10k4u1234@gmail.com');
             const data = await res.json();
+
             if (Array.isArray(data.withdrawals)) {
-                setDeposits(data.deposits);
+                const validWithdrawals = data.withdrawals.filter(
+                    (w) => w && w.created_at && !isNaN(new Date(w.created_at).getTime())
+                );
+                const sortedWithdrawals = validWithdrawals.sort(
+                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                );
+                setWithdrawals(sortedWithdrawals); // You'll need a `useState` for `withdrawals`
             } else {
                 console.error('Expected an array but got:', data);
-                setDeposits([]); // fallback to empty to prevent crash
+                setWithdrawals([]);
             }
         } catch (error) {
-            console.error('Failed to fetch deposits:', error);
-        };
-    }
+            console.error('Failed to fetch withdrawals:', error);
+        }
+    };
+
     // const handleConfirm = async (depositId) => {
     //   try {
     //     await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {

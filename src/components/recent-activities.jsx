@@ -51,6 +51,7 @@ export const RecentActivities = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, hash: hash }),
       });
+      console.log(hash);
       fetchDeposits();
     } catch (error) {
       console.error('Error rejecting deposit:', error);
