@@ -114,10 +114,10 @@ export const RecentActivitiesWithdraw = () => {
                         <TableCell>{withdrawal.withdrawAddress}</TableCell>
                         <TableCell>
                             <div className="flex gap-2">
-                                <button onClick={() => handleConfirm(withdrawal.email, withdrawal.withdraw_id)} title="Confirm">
+                                <button onClick={() => handleConfirm(withdrawal.email, withdrawal.withdrawId)} title="Confirm">
                                     <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
                                 </button>
-                                <button onClick={() => handleRejectWithdraw(withdrawal.email, withdrawal.withdraw_id)} title="Reject">
+                                <button onClick={() => handleRejectWithdraw(withdrawal.email, withdrawal.withdrawId)} title="Reject">
                                     <XCircle className="text-red-600 hover:scale-110 transition-all" />
                                 </button>
                             </div>
