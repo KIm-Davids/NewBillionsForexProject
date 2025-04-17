@@ -51,7 +51,7 @@ export const RecentActivitiesWithdraw = () => {
             await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, withdrawId: withdrawId  }),
+                body: JSON.stringify({ email: email, withdrawId: withdrawId  }),
             });
             fetchWithdrawals(); // Reload the withdrawals after confirming
         } catch (error) {
