@@ -10,8 +10,8 @@ export const RecentActivitiesWithdraw = () => {
 
     const fetchWithdrawals = async () => {
         try {
-            const userEmail = localStorage.getItem("admin-email");
-            const response = await fetch(`https://www.billionsforextrade.vip/getAllWithdrawProfit?email=${encodeURIComponent(userEmail)}`, {
+            const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
+            const response = await fetch(`https://www.billionsforextrade.vip/getAllWithdrawProfit?email==${encodedEmail}`, {
                 method: 'GET',
                 credentials: "include",
                 headers: {
