@@ -11,7 +11,7 @@ export const RecentActivitiesWithdraw = () => {
     const fetchWithdrawals = async () => {
         try {
             const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
-            const response = await fetch(`https://www.billionsforextrade.vip/getAllWithdrawProfit?email==${encodedEmail}`, {
+            const response = await fetch(`https://www.billionsforextrade.vip/getAllWithdrawProfit?email=${encodedEmail}`, {
                 method: 'GET',
                 credentials: "include",
                 headers: {
