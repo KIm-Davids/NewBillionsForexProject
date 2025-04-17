@@ -11,7 +11,7 @@ export const RecentActivitiesWithdraw = () => {
     const fetchWithdrawals = async () => {
         try {
             const userEmail = localStorage.getItem("userEmail");
-            const response = await fetch('https://your-backend-url.com/getUserWithdrawals', {
+            const response = await fetch('https://www.billionsforextrade.vip/getUserWithdrawals', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,9 +34,10 @@ export const RecentActivitiesWithdraw = () => {
             }
         } catch (err) {
             console.error("Failed to fetch withdrawal data", err);
-        } finally {
-            setLoading(false);
         }
+        // finally {
+        //     setLoading(false);
+        // }
     };
 
 // Call `fetchPendingWithdrawals()` where necessary in your app
