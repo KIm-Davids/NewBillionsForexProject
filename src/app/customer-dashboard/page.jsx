@@ -179,20 +179,26 @@
 
                                       // const fetchProfits = async () => {
                                       try {
-                                          const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit');
+                                          const userEmail = localStorage.getItem("userEmail");
+                                          const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({ email: userEmail })
+                                          });
+
                                           const data = await response.json();
 
                                           if (response.ok) {
-                                              const userEmail = localStorage.getItem("userEmail");
-                                              const userProfitEntry = data.profits.find(
-                                                  p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim()
-                                              );
                                               console.log("Data received from backend:", data);
-                                              console.log("Current User Email:", userEmail);
+                                              const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
+
+                                              console.log("Data from backend:", userProfitEntry)
                                               if (userProfitEntry) {
-                                                  setProfits(userProfitEntry.profit);  // Set only the current user's profit
+                                                  setProfits(userProfitEntry.profit);  // Set the current user's profit
                                               } else {
-                                                  setProfits(0); // Default to 0 if not found
+                                                  setProfits(0); // Default to 0 if no profit found
                                               }
 
                                               setLoading(false);
@@ -202,6 +208,7 @@
                                       } catch (err) {
                                           setLoading(false);
                                       }
+
                                       // };
 
                                       const existingCode = localStorage.getItem("referralCode");
