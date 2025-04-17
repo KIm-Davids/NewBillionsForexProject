@@ -46,12 +46,12 @@ export const RecentActivitiesWithdraw = () => {
         }
     }
 
-    const handleConfirm = async (email) => {
+    const handleConfirm = async (email, withdrawId) => {
         try {
             await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, deposit_id: depositID }),
+                body: JSON.stringify({ email, withdrawId: withdrawId  }),
             });
             fetchWithdrawals(); // Reload the withdrawals after confirming
         } catch (error) {
@@ -111,7 +111,7 @@ export const RecentActivitiesWithdraw = () => {
                         <TableCell>{withdrawal.withdrawAddress}</TableCell>
                         <TableCell>
                             <div className="flex gap-2">
-                                <button onClick={() => handleConfirm(withdrawal.email, withdrawal.deposit_id)} title="Confirm">
+                                <button onClick={() => handleConfirm(withdrawal.email, withdrawal.withdrawId)} title="Confirm">
                                     <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
                                 </button>
                                 {/*<button onClick={() => handleReject(withdrawal.email)} title="Reject">*/}
