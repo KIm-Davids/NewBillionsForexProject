@@ -11,13 +11,12 @@ export const RecentActivitiesWithdraw = () => {
     const fetchWithdrawals = async () => {
         try {
             const userEmail = localStorage.getItem("admin-email");
-            const response = await fetch('https://www.billionsforextrade.vip/getWithdrawProfit', {
-                method: 'POST',
+            const response = await fetch(`https://www.billionsforextrade.vip/getAllWithdrawProfit?email=${encodeURIComponent(userEmail)}`, {
+                method: 'GET',
                 credentials: "include",
                 headers: {
                     'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: userEmail })
+                }
             });
 
             const data = await response.json();
@@ -35,6 +34,7 @@ export const RecentActivitiesWithdraw = () => {
         } catch (err) {
             console.error("Failed to fetch withdrawal data", err);
         }
+
         // finally {
         //     setLoading(false);
         // }
