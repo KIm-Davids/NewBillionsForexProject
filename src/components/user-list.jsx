@@ -31,46 +31,46 @@ export const UserList = ({ searchQuery }) => {
   const API_URL = 'https://billions-backend-1.onrender.com';
 
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await fetch(`https://billions-backend-1.onrender.com/get/users`, {
-          credentials: 'include',
-        }); // 👈 Replace with your actual endpoint
-        if (!res.ok) throw new Error('Failed to fetch');
-        const data = await res.json();
-        setUsers(data);
-        console.log(data);
-      } catch (err) {
-        console.error('Error fetching users:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const res = await fetch(`https://billions-backend-1.onrender.com/get/users`, {
+  //         credentials: 'include',
+  //       }); // 👈 Replace with your actual endpoint
+  //       if (!res.ok) throw new Error('Failed to fetch');
+  //       const data = await res.json();
+  //       setUsers(data);
+  //       console.log(data);
+  //     } catch (err) {
+  //       console.error('Error fetching users:', err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //
+  //   fetchUsers();
+  // }, []);
 
-    fetchUsers();
-  }, []);
 
-
-  useEffect(() => {
-    const fetchTransaction = async () => {
-      try {
-        const res = await fetch(`https://billions-backend-1.onrender.com/get/transaction`, {
-          credentials: 'include',
-        }); // 👈 Replace with your actual endpoint
-        if (!res.ok) throw new Error('Failed to fetch');
-        const data = await res.json();
-        console.log(data.transactions);
-        setTransaction(data.transactions);
-      } catch (err) {
-        console.error('Error fetching transaction:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTransaction();
-  }, []);
+  // useEffect(() => {
+  //   const fetchTransaction = async () => {
+  //     try {
+  //       const res = await fetch(`https://billions-backend-1.onrender.com/get/transaction`, {
+  //         credentials: 'include',
+  //       }); // 👈 Replace with your actual endpoint
+  //       if (!res.ok) throw new Error('Failed to fetch');
+  //       const data = await res.json();
+  //       console.log(data.transactions);
+  //       setTransaction(data.transactions);
+  //     } catch (err) {
+  //       console.error('Error fetching transaction:', err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //
+  //   fetchTransaction();
+  // }, []);
 
 
 
