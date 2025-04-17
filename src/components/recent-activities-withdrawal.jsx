@@ -52,7 +52,7 @@ export const RecentActivitiesWithdraw = () => {
             await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, withdrawId: withdrawId  }),
+                body: JSON.stringify({ email: email,withdrawId: parseInt(withdrawId, 10), }),
             });
             fetchWithdrawals(); // Reload the withdrawals after confirming
         } catch (error) {
@@ -65,11 +65,11 @@ export const RecentActivitiesWithdraw = () => {
             await fetch('https://billions-backend-1.onrender.com/rejectWithdraw', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({email: email, withdrawId: withdrawId  }),
+                body: JSON.stringify({email: email, withdrawId: parseInt(withdrawId, 10),  }),
             });
 
-            console.log("Rejected withdrawal ID:", withdraw_id);
-            console.log("Rejected withdrawal ID:", withdraw_id);
+            console.log("Rejected withdrawal ID:", withdrawId);
+            console.log("Rejected withdrawal ID:", withdrawId);
             fetchWithdrawals(); // Refresh the table/list
         } catch (error) {
             console.error('Error rejecting withdrawal:', error);
