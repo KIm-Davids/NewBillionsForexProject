@@ -20,9 +20,8 @@ export const RecentActivitiesWithdraw = () => {
             });
 
             const data = await response.json();
-
+            console.log("Pending Withdrawals data:", data);
             if (response.ok) {
-                console.log("Pending Withdrawals data:", data);
                 if (data.withdrawals && data.withdrawals.length > 0) {
                     // Handle and display the pending withdrawal data
                     setWithdrawals(data.withdrawals);
