@@ -59,18 +59,21 @@ export const RecentActivitiesWithdraw = () => {
         }
     };
 
-    // const handleReject = async (email) => {
-    //     try {
-    //         await fetch('https://billions-backend-1.onrender.com/reject-deposit', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ email }),
-    //         });
-    //         fetchWithdrawals(); // Reload the withdrawals after rejecting
-    //     } catch (error) {
-    //         console.error('Error rejecting withdrawal:', error);
-    //     }
-    // };
+    const handleRejectWithdraw = async (email, withdraw_id) => {
+        try {
+            await fetch('https://billions-backend-1.onrender.com/rejectWithdraw', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, withdraw_id }),
+            });
+
+            console.log("Rejected withdrawal ID:", withdraw_id);
+            fetchWithdrawals(); // Refresh the table/list
+        } catch (error) {
+            console.error('Error rejecting withdrawal:', error);
+        }
+    };
+
 
     useEffect(() => {
         fetchWithdrawals(); // Fetch withdrawals when component mounts
@@ -111,12 +114,12 @@ export const RecentActivitiesWithdraw = () => {
                         <TableCell>{withdrawal.withdrawAddress}</TableCell>
                         <TableCell>
                             <div className="flex gap-2">
-                                <button onClick={() => handleConfirm(withdrawal.email, withdrawal.withdrawId)} title="Confirm">
+                                <button onClick={() => handleConfirm(withdrawal.email, withdrawal.withdraw_id)} title="Confirm">
                                     <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
                                 </button>
-                                {/*<button onClick={() => handleReject(withdrawal.email)} title="Reject">*/}
-                                {/*    <XCircle className="text-red-600 hover:scale-110 transition-all" />*/}
-                                {/*</button>*/}
+                                <button onClick={() => handleRejectWithdraw(withdrawal.email, withdrawal.withdraw_id)} title="Reject">
+                                    <XCircle className="text-red-600 hover:scale-110 transition-all" />
+                                </button>
                             </div>
                         </TableCell>
                     </TableRow>
