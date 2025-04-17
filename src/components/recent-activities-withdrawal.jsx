@@ -13,6 +13,7 @@ export const RecentActivitiesWithdraw = () => {
             const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
             const response = await fetch(`https://billions-backend-1.onrender.com/getAllWithdrawProfit?email=${encodedEmail}`);
             const data = await response.json();
+            console.log("Withdrawals:", data.withdrawals);
 
             // const data = await response.json();
             console.log("Pending Withdrawals data:", data);
