@@ -688,6 +688,16 @@
                         </span>
                                   </div>
                               </CardContent>
+
+                              {responseMessage && (
+                                  <div className="mt-4 flex items-center gap-3 p-4 rounded-md shadow-sm">
+                                      <Info className="w-5 h-5 text-secondary-white dark:text-yellow-300" />
+                                      <p className="text-sm font-medium text-yellow-700 dark:text-yellow-200">
+                                          {responseMessage}
+                                      </p>
+                                  </div>
+                              )}
+
                               <CardFooter>
                                   <Button
                                       className="w-full border-yellow-500 border hover:bg-white/10"
