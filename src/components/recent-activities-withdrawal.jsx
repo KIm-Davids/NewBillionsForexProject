@@ -17,40 +17,46 @@ export const RecentActivitiesWithdraw = () => {
             // const data = await response.json();
             console.log("Pending Withdrawals data:", data);
             if (response.ok) {
-                if (data.withdrawals && data.withdrawals.length > 0) {
-                    // Handle and display the pending withdrawal data
-                    setWithdrawals(data.withdrawals);
+                //         if (data.withdrawals && data.withdrawals.length > 0) {
+                //             // Handle and display the pending withdrawal data
+                //             setWithdrawals(data.withdrawals);
+                //         } else {
+                //             setWithdrawals([]);
+                //         }
+                //     } else {
+                //         console.error("Error fetching withdrawals:", data.message);
+                //     }
+                // } catch (err) {
+                //     console.error("Failed to fetch withdrawal data", err);
+                // }
+                //
+                if (Array.isArray(data.withdrawals)) {
+                    const validWithdrawals = data.withdrawals.filter(
+                        (w) => w && w.created_at && !isNaN(new Date(w.created_at).getTime())
+                    );
+                    const sortedWithdrawals = validWithdrawals.sort(
+                        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                    );
+                    setWithdrawals(sortedWithdrawals);
                 } else {
+                    console.error('Expected an array but got:', data);
                     setWithdrawals([]);
                 }
-            } else {
-                console.error("Error fetching withdrawals:", data.message);
             }
-        } catch (err) {
-            console.error("Failed to fetch withdrawal data", err);
         }
-
-        // finally {
-        //     setLoading(false);
-        // }
+    const handleConfirm = async (email) => {
+        try {
+            await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
+            fetchWithdrawals(); // Reload the withdrawals after confirming
+        } catch (error) {
+            console.error('Error confirming withdrawal:', error);
+        }
     };
 
-// Call `fetchPendingWithdrawals()` where necessary in your app
-
-
-    // const handleConfirm = async (email) => {
-    //     try {
-    //         await fetch('https://billions-backend-1.onrender.com/confirm-deposit', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ email }),
-    //         });
-    //         fetchWithdrawals(); // Reload the withdrawals after confirming
-    //     } catch (error) {
-    //         console.error('Error confirming withdrawal:', error);
-    //     }
-    // };
-    //
     // const handleReject = async (email) => {
     //     try {
     //         await fetch('https://billions-backend-1.onrender.com/reject-deposit', {
@@ -102,14 +108,14 @@ export const RecentActivitiesWithdraw = () => {
                         <TableCell>{withdrawal.wallet_type}</TableCell>
                         <TableCell>{withdrawal.withdrawAddress}</TableCell>
                         <TableCell>
-                            {/*<div className="flex gap-2">*/}
-                            {/*    <button onClick={() => handleConfirm(withdrawal.email)} title="Confirm">*/}
-                            {/*        <CheckCircle className="text-green-600 hover:scale-110 transition-all" />*/}
-                            {/*    </button>*/}
-                            {/*    <button onClick={() => handleReject(withdrawal.email)} title="Reject">*/}
-                            {/*        <XCircle className="text-red-600 hover:scale-110 transition-all" />*/}
-                            {/*    </button>*/}
-                            {/*</div>*/}
+                            <div className="flex gap-2">
+                                <button onClick={() => handleConfirm(withdrawal.email)} title="Confirm">
+                                    <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
+                                </button>
+                                {/*<button onClick={() => handleReject(withdrawal.email)} title="Reject">*/}
+                                {/*    <XCircle className="text-red-600 hover:scale-110 transition-all" />*/}
+                                {/*</button>*/}
+                            </div>
                         </TableCell>
                     </TableRow>
                 ))}
