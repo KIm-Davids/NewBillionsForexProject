@@ -188,6 +188,7 @@
                                                   p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim()
                                               );
                                               console.log("Data received from backend:", data);
+                                              console.log("Current User Email:", userEmail);
                                               if (userProfitEntry) {
                                                   setProfits(userProfitEntry.profit);  // Set only the current user's profit
                                               } else {
