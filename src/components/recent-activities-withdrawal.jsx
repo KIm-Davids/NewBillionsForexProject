@@ -68,6 +68,7 @@ export const RecentActivitiesWithdraw = () => {
             });
 
             console.log("Rejected withdrawal ID:", withdraw_id);
+            console.log("Rejected withdrawal ID:", withdraw_id);
             fetchWithdrawals(); // Refresh the table/list
         } catch (error) {
             console.error('Error rejecting withdrawal:', error);
