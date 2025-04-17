@@ -11,15 +11,10 @@ export const RecentActivitiesWithdraw = () => {
     const fetchWithdrawals = async () => {
         try {
             const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
-            const response = await fetch(`https://www.billionsforextrade.vip/getAllWithdrawProfit?email=${encodedEmail}`, {
-                method: 'GET',
-                credentials: "include",
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
+            const response = await fetch(`https://billions-backend-1.onrender.com/getAllWithdrawProfit?email=${encodedEmail}`);
             const data = await response.json();
+
+            // const data = await response.json();
             console.log("Pending Withdrawals data:", data);
             if (response.ok) {
                 if (data.withdrawals && data.withdrawals.length > 0) {
