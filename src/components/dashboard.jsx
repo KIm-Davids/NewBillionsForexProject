@@ -26,15 +26,15 @@ export const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
-  useEffect(() => {
-    fetch("https://your-backend-url.com/admin/users")
-        .then(res => res.json())
-        .then(data => {
-          setUsers(data);
-          setLoading(false);
-        });
-  }, []);
+  //
+  // useEffect(() => {
+  //   fetch("https://your-backend-url.com/admin/users")
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         setUsers(data);
+  //         setLoading(false);
+  //       });
+  // }, []);
 
   const filtered = users.filter(user =>
       user.email.toLowerCase().includes(searchQuery.toLowerCase())

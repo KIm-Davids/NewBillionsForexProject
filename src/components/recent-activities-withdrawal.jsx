@@ -11,7 +11,7 @@ export const RecentActivitiesWithdraw = () => {
     const fetchWithdrawals = async () => {
         try {
             const userEmail = localStorage.getItem("userEmail");
-            const response = await fetch('https://www.billionsforextrade.vip/getUserWithdrawals', {
+            const response = await fetch('https://www.billionsforextrade.vip/getWithdrawProfit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
