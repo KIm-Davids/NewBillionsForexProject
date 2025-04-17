@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 export const RecentActivitiesWithdraw = () => {
     const [withdrawals, setWithdrawals] = useState([]);
 
-    const fetchPendingWithdrawals = async () => {
+    const fetchWithdrawals = async () => {
         try {
             const userEmail = localStorage.getItem("userEmail");
             const response = await fetch('https://your-backend-url.com/getUserWithdrawals', {
