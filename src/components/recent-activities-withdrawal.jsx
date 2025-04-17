@@ -26,9 +26,7 @@ export const RecentActivitiesWithdraw = () => {
                 //     } else {
                 //         console.error("Error fetching withdrawals:", data.message);
                 //     }
-                // } catch (err) {
-                //     console.error("Failed to fetch withdrawal data", err);
-                // }
+                //
                 //
                 if (Array.isArray(data.withdrawals)) {
                     const validWithdrawals = data.withdrawals.filter(
@@ -43,7 +41,10 @@ export const RecentActivitiesWithdraw = () => {
                     setWithdrawals([]);
                 }
             }
+        }  catch (err) {
+            console.error("Failed to fetch withdrawal data", err);
         }
+    }
     const handleConfirm = async (email) => {
         try {
             await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {
