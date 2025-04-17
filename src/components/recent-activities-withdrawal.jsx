@@ -100,7 +100,7 @@ export const RecentActivitiesWithdraw = () => {
                         <TableCell className="capitalize">{withdrawal.status}</TableCell>
                         <TableCell>{new Date(withdrawal.created_at).toLocaleString()}</TableCell>
                         <TableCell>{withdrawal.wallet_type}</TableCell>
-                        <TableCell>{withdrawal.withdraw_address}</TableCell>
+                        <TableCell>{withdrawal.withdrawAddress}</TableCell>
                         <TableCell>
                             {/*<div className="flex gap-2">*/}
                             {/*    <button onClick={() => handleConfirm(withdrawal.email)} title="Confirm">*/}
