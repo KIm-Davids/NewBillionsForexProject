@@ -73,10 +73,10 @@ export const RecentActivitiesWithdraw = () => {
             <TableHeader>
                 <TableRow>
                     <TableHead>User</TableHead>
-                    <TableHead>Withdraw Address</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Time</TableHead>
+                    <TableHead>Withdraw Address</TableHead>
                     <TableHead>Actions</TableHead>
                 </TableRow>
             </TableHeader>
@@ -91,14 +91,14 @@ export const RecentActivitiesWithdraw = () => {
                                 </Avatar>
                                 <div className="grid gap-0.5">
                                     <div className="font-medium">{withdrawal.email}</div>
-                                    <div className="text-xs text-muted-foreground">{withdrawal.withdrawAddress}</div>
+                                    <div className="text-xs text-muted-foreground">{withdrawal.email}</div>
                                 </div>
                             </div>
                         </TableCell>
                         <TableCell>${withdrawal.amount}</TableCell>
                         <TableCell className="capitalize">{withdrawal.status}</TableCell>
                         <TableCell>{new Date(withdrawal.createdAt).toLocaleString()}</TableCell>
-                        {/*<TableCell>{new Date(withdrawal.status).toLocaleString()}</TableCell>*/}
+                        <TableCell>{withdrawal.withdrawAddress}</TableCell>
                         <TableCell>
                             {/*<div className="flex gap-2">*/}
                             {/*    <button onClick={() => handleConfirm(withdrawal.email)} title="Confirm">*/}
