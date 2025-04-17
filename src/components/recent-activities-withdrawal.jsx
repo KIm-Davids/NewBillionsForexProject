@@ -95,9 +95,9 @@ export const RecentActivitiesWithdraw = () => {
                                 </div>
                             </div>
                         </TableCell>
-                        <TableCell>${withdrawal.amount}</TableCell>
-                        <TableCell className="capitalize">{withdrawal.status}</TableCell>
-                        <TableCell>{new Date(withdrawal.created_at).toLocaleString()}</TableCell>
+                        <TableCell>${withdrawal.withdrawAddress}</TableCell>
+                        <TableCell className="capitalize">{withdrawal.amount}</TableCell>
+                        <TableCell>{new Date(withdrawal.status).toLocaleString()}</TableCell>
                         <TableCell>
                             {/*<div className="flex gap-2">*/}
                             {/*    <button onClick={() => handleConfirm(withdrawal.email)} title="Confirm">*/}
