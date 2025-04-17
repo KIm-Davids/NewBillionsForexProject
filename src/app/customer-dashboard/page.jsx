@@ -196,7 +196,14 @@
 
                                               console.log("Data from backend:", userProfitEntry)
                                               if (userProfitEntry) {
-                                                  setProfits(userProfitEntry.profit);  // Set the current user's profit
+                                                  const formattedProfit = new Intl.NumberFormat('en-US', {
+                                                      style: 'currency',
+                                                      currency: 'USD',
+                                                  }).format(userProfitEntry.profit);
+
+                                                  setProfits(formattedProfit);
+
+                                                  // setProfits(userProfitEntry.profit);  // Set the current user's profit
                                               } else {
                                                   setProfits(0); // Default to 0 if no profit found
                                               }
