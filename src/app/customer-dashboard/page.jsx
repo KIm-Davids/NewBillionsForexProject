@@ -184,9 +184,10 @@
 
                                           if (response.ok) {
                                               const userEmail = localStorage.getItem("userEmail");
-                                              const userProfitEntry = data.profits.find(p => p.email === userEmail);
-
-                                              console.log(userProfitEntry)
+                                              const userProfitEntry = data.profits.find(
+                                                  p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim()
+                                              );
+                                              console.log("Data received from backend:", data);
                                               if (userProfitEntry) {
                                                   setProfits(userProfitEntry.profit);  // Set only the current user's profit
                                               } else {
