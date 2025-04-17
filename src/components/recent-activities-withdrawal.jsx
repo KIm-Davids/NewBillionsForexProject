@@ -58,7 +58,6 @@ export const RecentActivitiesWithdraw = () => {
             console.error('Error confirming withdrawal:', error);
         }
     };
-    console.log("Rejected withdrawal ID before function:", withdraw_id);
 
     const handleRejectWithdraw = async (email, withdraw_id) => {
         try {
