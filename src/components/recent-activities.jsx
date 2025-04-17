@@ -44,19 +44,21 @@ export const RecentActivities = () => {
     }
   };
 
-  const handleReject = async (email, hash) => {
+  const handleRejectWithdraw = async (email, withdraw_id) => {
     try {
-      await fetch('https://billions-backend-1.onrender.com/rejectDeposits', {
+      await fetch('https://billions-backend-1.onrender.com/rejectWithdraw', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, hash: hash }),
+        body: JSON.stringify({ email, withdraw_id }),
       });
-      console.log(hash);
-      fetchDeposits();
+
+      console.log("Rejected withdrawal ID:", withdraw_id);
+      fetchWithdrawals(); // Refresh the table/list
     } catch (error) {
-      console.error('Error rejecting deposit:', error);
+      console.error('Error rejecting withdrawal:', error);
     }
   };
+
 
   // if (Array.isArray(deposits)) {
   //   deposits.map(...);
@@ -107,7 +109,7 @@ export const RecentActivities = () => {
                     <button onClick={() => handleConfirm(deposit.email, deposit.hash)} title="Confirm">
                       <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
                     </button>
-                    <button onClick={() => handleReject(deposit.email, deposit.hash)} title="Reject">
+                    <button onClick={() => handleRejectWithdraw(deposit.email, deposit.hash)} title="Reject">
                       <XCircle className="text-red-600 hover:scale-110 transition-all" />
                     </button>
                   </div>
