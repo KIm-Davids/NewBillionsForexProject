@@ -8,28 +8,39 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 export const RecentActivitiesWithdraw = () => {
     const [withdrawals, setWithdrawals] = useState([]);
 
-    const fetchWithdrawals = async () => {
+    const fetchPendingWithdrawals = async () => {
         try {
-            const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
-            const res = await fetch(`https://billions-backend-1.onrender.com/withdrawProfit?email=${encodedEmail}`);
-            const data = await res.json();
+            const userEmail = localStorage.getItem("userEmail");
+            const response = await fetch('https://your-backend-url.com/getUserWithdrawals', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: userEmail })
+            });
 
-            if (Array.isArray(data.withdrawals)) {
-                const validWithdrawals = data.withdrawals.filter(
-                    (w) => w && w.created_at && !isNaN(new Date(w.created_at).getTime())
-                );
-                const sortedWithdrawals = validWithdrawals.sort(
-                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
-                );
-                setWithdrawals(sortedWithdrawals); // Correct state function
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Pending Withdrawals data:", data);
+                if (data.withdrawals && data.withdrawals.length > 0) {
+                    // Handle and display the pending withdrawal data
+                    setWithdrawals(data.withdrawals);
+                } else {
+                    setWithdrawals([]);
+                }
             } else {
-                console.error('Expected an array but got:', data);
-                setWithdrawals([]); // Empty withdrawals on error
+                console.error("Error fetching withdrawals:", data.message);
             }
-        } catch (error) {
-            console.error('Failed to fetch withdrawals:', error);
+        } catch (err) {
+            console.error("Failed to fetch withdrawal data", err);
+        } finally {
+            setLoading(false);
         }
     };
+
+// Call `fetchPendingWithdrawals()` where necessary in your app
+
 
     // const handleConfirm = async (email) => {
     //     try {
@@ -66,8 +77,8 @@ export const RecentActivitiesWithdraw = () => {
             <TableHeader>
                 <TableRow>
                     <TableHead>User</TableHead>
+                    <TableHead>Withdraw Address</TableHead>
                     <TableHead>Amount</TableHead>
-                    <TableHead>Withdraw Type</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Time</TableHead>
                     <TableHead>Actions</TableHead>
@@ -84,7 +95,7 @@ export const RecentActivitiesWithdraw = () => {
                                 </Avatar>
                                 <div className="grid gap-0.5">
                                     <div className="font-medium">{withdrawal.email}</div>
-                                    <div className="text-xs text-muted-foreground">{withdrawal.user_id}</div>
+                                    <div className="text-xs text-muted-foreground">{withdrawal.withdrawAddress}</div>
                                 </div>
                             </div>
                         </TableCell>
@@ -92,14 +103,14 @@ export const RecentActivitiesWithdraw = () => {
                         <TableCell className="capitalize">{withdrawal.status}</TableCell>
                         <TableCell>{new Date(withdrawal.created_at).toLocaleString()}</TableCell>
                         <TableCell>
-                            <div className="flex gap-2">
-                                <button onClick={() => handleConfirm(withdrawal.email)} title="Confirm">
-                                    <CheckCircle className="text-green-600 hover:scale-110 transition-all" />
-                                </button>
-                                <button onClick={() => handleReject(withdrawal.email)} title="Reject">
-                                    <XCircle className="text-red-600 hover:scale-110 transition-all" />
-                                </button>
-                            </div>
+                            {/*<div className="flex gap-2">*/}
+                            {/*    <button onClick={() => handleConfirm(withdrawal.email)} title="Confirm">*/}
+                            {/*        <CheckCircle className="text-green-600 hover:scale-110 transition-all" />*/}
+                            {/*    </button>*/}
+                            {/*    <button onClick={() => handleReject(withdrawal.email)} title="Reject">*/}
+                            {/*        <XCircle className="text-red-600 hover:scale-110 transition-all" />*/}
+                            {/*    </button>*/}
+                            {/*</div>*/}
                         </TableCell>
                     </TableRow>
                 ))}
