@@ -255,7 +255,7 @@
                                           console.log(email)
                                           const balanceData = await response.json();
                                           console.log("User Info Response:", balanceData.packages);
-                                          setBalance(balanceData.balance);
+                                          setBalance(parseFloat(balanceData.balance).toFixed(2));
                                           setFetchedPackage(balanceData.packages);
                                           setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
                                           // setReferralCode(balanceData.referralCode)
