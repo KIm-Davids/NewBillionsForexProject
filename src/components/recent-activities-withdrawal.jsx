@@ -13,6 +13,7 @@ export const RecentActivitiesWithdraw = () => {
             const userEmail = localStorage.getItem("admin-email");
             const response = await fetch('https://www.billionsforextrade.vip/getWithdrawProfit', {
                 method: 'POST',
+                credentials: "include",
                 headers: {
                     'Content-Type': 'application/json',
                 },
