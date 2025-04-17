@@ -190,6 +190,7 @@
 
                                           const data = await response.json();
 
+                                          console.log(data.profits);
                                           if (response.ok) {
                                               console.log("Data received from backend:", data);
                                               const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
