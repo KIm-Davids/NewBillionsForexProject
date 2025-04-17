@@ -76,7 +76,7 @@ export const RecentActivitiesWithdraw = () => {
                     <TableHead>Amount</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Time</TableHead>
-                    <TableHead>Withdraw Address</TableHead>
+                    <TableHead>Wallet Type</TableHead>
                     <TableHead>Actions</TableHead>
                 </TableRow>
             </TableHeader>
