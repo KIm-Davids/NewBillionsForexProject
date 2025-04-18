@@ -750,12 +750,13 @@
                                                       status: 'pending',
                                                       amount: amount,
                                                       description: withdrawDescription,
+                                                      packageType: packageType,
                                                   }),
                                               });
 
                                               let data = null;
                                               data = await response.json();
-                                              console.log("User email", email)
+                                              console.log("User email", packageType)
                                               console.log("Server response:", data);
                                               if (response.ok) {
                                                   try {
