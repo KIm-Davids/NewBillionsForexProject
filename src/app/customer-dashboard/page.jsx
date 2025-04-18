@@ -753,6 +753,7 @@
                                               });
 
                                               let data = null;
+                                              console.log("Server response:", data);
                                               if (response.ok) {
                                                   try {
                                                       data = await response.json();
