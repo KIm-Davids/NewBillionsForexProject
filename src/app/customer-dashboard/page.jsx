@@ -753,12 +753,11 @@
                                               });
 
                                               let data = null;
+                                              data = await response.json();
                                               console.log("Server response:", data);
                                               if (response.ok) {
                                                   try {
-                                                      data = await response.json();
                                                       console.log("Server response:", data);
-
                                                       setResponseMessage("✅ Transaction request sent successfully!");
                                                       setBalance(prev => prev - amount);
                                                   } catch (err) {
