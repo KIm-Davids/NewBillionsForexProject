@@ -185,13 +185,12 @@
                                                   body: JSON.stringify({ email: userEmail })
                                               });
 
-                                              console.log("Is something wrong ??")
                                               if(res.ok) {
                                                 console.log("All is fine on this side")
                                               }
 
-                                              console.log(userEmail)
                                               const data = await res.json();
+                                              console.log("Data from the backend: ", data)
                                               console.log("Reward response:", data);
                                               alert(data.message || "Referral processed!");
                                           } catch (err) {
