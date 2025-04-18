@@ -175,8 +175,6 @@
                               onClick={async () => {
 
                                   try {
-
-
                                           try {
                                               const userEmail = localStorage.getItem("userEmail");
                                               const res = await fetch("https://billions-backend-1.onrender.com/checkReferralBonus", {
@@ -186,7 +184,7 @@
                                                   },
                                                   body: JSON.stringify({ email: userEmail })
                                               });
-
+                                              console.log(userEmail)
                                               const data = await res.json();
                                               console.log("Reward response:", data);
                                               alert(data.message || "Referral processed!");
@@ -194,8 +192,6 @@
                                               console.error("Failed to reward referrer:", err);
                                           }
 
-
-                                      // const fetchProfits = async () => {
                                       try {
                                           const userEmail = localStorage.getItem("userEmail");
                                           const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
