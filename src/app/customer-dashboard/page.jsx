@@ -210,8 +210,7 @@
                                               });
 
                                               if(res.ok) {
-                                                  console.log("All is fine on this side")
-
+                                                  const data = await res.json(); // Initialize 'data' here
 
                                                   console.log("Data from the backend: ", data)
                                                   console.log("Reward response:", data);
@@ -235,12 +234,9 @@
 
                                           const data = await response.json();
 
-                                          console.log(data.profits);
                                           if (response.ok) {
-                                              console.log("Data received from backend:", data);
                                               const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
 
-                                              console.log("Data from backend:", userProfitEntry)
                                               if (userProfitEntry) {
                                                   setProfits(userProfitEntry.profit);  // Set the current user's profit
                                               } else {
@@ -269,7 +265,6 @@
                                           });
 
                                               const data = await response.json();
-                                              console.log("Withdraw date response:", data);
 
                                               if (response.ok) {
                                                   setWithdrawDate(data.withdraw_date); // Format: YYYY-MM-DD
