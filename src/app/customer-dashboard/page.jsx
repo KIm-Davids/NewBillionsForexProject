@@ -184,6 +184,12 @@
                                                   },
                                                   body: JSON.stringify({ email: userEmail })
                                               });
+
+                                              console.log("Is something wrong ??")
+                                              if(res.ok) {
+                                                console.log("All is fine on this side")
+                                              }
+
                                               console.log(userEmail)
                                               const data = await res.json();
                                               console.log("Reward response:", data);
