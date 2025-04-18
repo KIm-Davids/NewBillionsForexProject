@@ -176,23 +176,23 @@
 
                                   try {
 
-                                          //
-                                          // try {
-                                          //     const userEmail = localStorage.getItem("userEmail");
-                                          //     const res = await fetch("https://billions-backend-1.onrender.com/checkReferralBonus", {
-                                          //         method: "POST",
-                                          //         headers: {
-                                          //             "Content-Type": "application/json"
-                                          //         },
-                                          //         body: JSON.stringify({ email: userEmail })
-                                          //     });
-                                          //
-                                          //     const data = await res.json();
-                                          //     console.log("Reward response:", data);
-                                          //     alert(data.message || "Referral processed!");
-                                          // } catch (err) {
-                                          //     console.error("Failed to reward referrer:", err);
-                                          // }
+
+                                          try {
+                                              const userEmail = localStorage.getItem("userEmail");
+                                              const res = await fetch("https://billions-backend-1.onrender.com/checkReferralBonus", {
+                                                  method: "POST",
+                                                  headers: {
+                                                      "Content-Type": "application/json"
+                                                  },
+                                                  body: JSON.stringify({ email: userEmail })
+                                              });
+
+                                              const data = await res.json();
+                                              console.log("Reward response:", data);
+                                              alert(data.message || "Referral processed!");
+                                          } catch (err) {
+                                              console.error("Failed to reward referrer:", err);
+                                          }
 
 
                                       // const fetchProfits = async () => {
