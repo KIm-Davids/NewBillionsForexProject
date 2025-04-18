@@ -376,7 +376,7 @@
 
                       <Card>
                           <CardHeader className="pb-2">
-                              <CardDescription>Daily Profits</CardDescription>
+                              <CardDescription>Profits</CardDescription>
                               <CardTitle className="text-3xl font-bold text-green-600">${profits}</CardTitle>
                           </CardHeader>
                           <CardContent>
