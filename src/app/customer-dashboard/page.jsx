@@ -253,7 +253,7 @@
 
                                       // };
 
-                                      const existingCode = localStorage.getItem("referralCode");
+                                      // const existingCode = localStorage.getItem("referralCode");
 
                                       const savedEmail = localStorage.getItem('userEmail');
                                       const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
@@ -272,15 +272,21 @@
                                                   console.error("Error fetching withdraw date:", data.error);
                                               }
 
+                            // Function to generate a random referral code
+                                      const generateReferralCode = () => {
+                                          return Math.random().toString(36).substring(2, 8).toUpperCase(); // e.g., "A1B2C3"
+                                      };
 
-                                          // if (!existingCode) {
-                                          //     const newCode = generateReferralCode();
-                                          //     localStorage.setItem("referralCode", newCode);
-                                          //     // setReferralCode(newCode);
-                                          // }
-                                          // // else {
-                                          //     setReferralCode(existingCode);
-                                          // }
+                                      const existingCode = localStorage.getItem("referralCode");
+
+                                      if (!existingCode) {
+                                          const newCode = generateReferralCode();
+                                          localStorage.setItem("referralCode", newCode);
+                                          setReferralCode(newCode);
+                                      } else {
+                                          setReferralCode(existingCode);
+                                      }
+
 
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
