@@ -194,6 +194,7 @@
                                               console.log("Reward response:", data);
                                               // alert(data.message || "Referral processed!");
                                               setReferralCode(data.referral_code)
+                                              localStorage.setItem(data.referral_code)
                                           } catch (err) {
                                               console.error("Failed to reward referrer:", err);
                                           }
@@ -253,18 +254,18 @@
                                               }
 
 
-                                          if (!existingCode) {
-                                              const newCode = generateReferralCode();
-                                              localStorage.setItem("referralCode", newCode);
-                                              // setReferralCode(newCode);
-                                          }
-                                          // else {
+                                          // if (!existingCode) {
+                                          //     const newCode = generateReferralCode();
+                                          //     localStorage.setItem("referralCode", newCode);
+                                          //     // setReferralCode(newCode);
+                                          // }
+                                          // // else {
                                           //     setReferralCode(existingCode);
                                           // }
 
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
-                                          localStorage.setItem('referralCode', referralCode);
+                                          // localStorage.setItem('referralCode', referralCode);
                                           const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
                                               method: 'POST',
                                               // credentials: "include",
