@@ -770,7 +770,7 @@
                                                   }
                                               } else {
                                                   const errorMessage = data?.error || "Something went wrong.";
-                                                  setResponseMessage(`❌ ${errorMessage} ${data.unlock_date}`);
+                                                  setResponseMessage(`❌ ${errorMessage} until ${data.unlock_date}`);
                                               }
                                           } catch (error) {
                                               console.error("Request error:", error);
