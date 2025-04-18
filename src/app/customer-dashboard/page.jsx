@@ -736,6 +736,7 @@
                                               return;
                                           }
                                           try {
+                                              const userEmail = localStorage.getItem("userEmail")
                                               const response = await fetch("https://billions-backend-1.onrender.com/withdrawBalance", {
                                                   method: "POST",
                                                   credentials: 'include',
@@ -744,7 +745,7 @@
                                                   },
                                                   body: JSON.stringify({
                                                       withdrawAddress: withdrawWallet,
-                                                      email: email,
+                                                      email: userEmail,
                                                       walletType: walletType,
                                                       status: 'pending',
                                                       amount: amount,
