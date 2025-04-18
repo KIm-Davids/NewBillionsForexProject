@@ -187,12 +187,13 @@
                                       }
 
                                           try {
+                                          const userEmail = localStorage.getItem('userEmail')
                                               const response = await fetch("https://billions-backend-1.onrender.com/getReferrerCode", {
                                                   method: "POST",
                                                   headers: {
                                                       "Content-Type": "application/json",
                                                   },
-                                                  body: JSON.stringify({email}),
+                                                  body: JSON.stringify({email: userEmail}),
                                               });
 
                                               const data = await response.json();
