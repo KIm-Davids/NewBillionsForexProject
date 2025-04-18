@@ -47,6 +47,9 @@ export const RecentActivitiesWithdraw = () => {
         }
     }
 
+
+
+
     const handleConfirm = async (email,  withdrawId) => {
         try {
             await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {

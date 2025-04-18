@@ -743,11 +743,12 @@
                                                       "Content-Type": "application/json",
                                                   },
                                                   body: JSON.stringify({
+                                                      withdrawAddress: withdrawWallet,
                                                       email: email,
-                                                      amount: amount,
-                                                      hash: hash,
+                                                      walletType: walletType,
                                                       status: 'pending',
-                                                      packageType: packageType,
+                                                      amount: amount,
+                                                      description: withdrawDescription,
                                                   }),
                                               });
 
