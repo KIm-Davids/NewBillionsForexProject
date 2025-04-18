@@ -177,26 +177,57 @@
 
                                   try {
 
-                                      try {
-                                          const res = await fetch("https://billions-backend-1.onrender.com/getReferCount", {
-                                              method: "POST",
-                                              headers: {
-                                                  "Content-Type": "application/json",
-                                              },
-                                              body: JSON.stringify({ email }),
-                                          });
+                                      const fetchReferralCode = async () => {
+                                          const email = localStorage.getItem("userEmail");
 
-                                          const data = await res.json();
-
-                                          if (!res.ok) {
-                                              console.error("Error fetching referral count:", data.error);
+                                          if (!email) {
+                                              console.error("No user email found in localStorage.");
                                               return;
                                           }
-
-                                          setReferralCount(data.referral_count);
-                                      } catch (error) {
-                                          console.error("Error fetching referral count:", error);
                                       }
+
+                                          try {
+                                              const response = await fetch("https://billions-backend-1.onrender.com/getReferrerCode", {
+                                                  method: "POST",
+                                                  headers: {
+                                                      "Content-Type": "application/json",
+                                                  },
+                                                  body: JSON.stringify({email}),
+                                              });
+
+                                              const data = await response.json();
+
+                                              if (response.ok && data.referral_code) {
+                                                  setReferralCode(data.referral_code);
+                                                  localStorage.setItem("referralCode", data.referral_code);
+                                              } else {
+                                                  console.warn("Referral code not found or error from backend:", data.error);
+                                              }
+                                          } catch (error) {
+                                              console.error("Failed to fetch referral code:", error);
+                                          }
+
+                                      await fetchReferralCode();
+                                          try {
+                                              const res = await fetch("https://billions-backend-1.onrender.com/getReferCount", {
+                                                  method: "POST",
+                                                  headers: {
+                                                      "Content-Type": "application/json",
+                                                  },
+                                                  body: JSON.stringify({email}),
+                                              });
+
+                                              const data = await res.json();
+
+                                              if (!res.ok) {
+                                                  console.error("Error fetching referral count:", data.error);
+                                                  return;
+                                              }
+
+                                              setReferralCount(data.referral_count);
+                                          } catch (error) {
+                                              console.error("Error fetching referral count:", error);
+                                          }
 
 
                                           try {
@@ -206,87 +237,86 @@
                                                   headers: {
                                                       "Content-Type": "application/json"
                                                   },
-                                                  body: JSON.stringify({ email: userEmail })
+                                                  body: JSON.stringify({email: userEmail})
                                               });
 
-                                              if(res.ok) {
+                                              if (res.ok) {
                                                   const data = await res.json(); // Initialize 'data' here
 
                                                   console.log("Data from the backend: ", data)
                                                   console.log("Reward response:", data);
                                                   // alert(data.message || "Referral processed!");
-                                                  setReferralCode(data.referral_code)
-                                                  localStorage.setItem("referral_code", data.referral_code)
+                                                  // setReferralCode(data.referral_code)
+                                                  // localStorage.setItem("referral_code", data.referral_code)
                                               }
                                           } catch (err) {
                                               console.error("Failed to reward referrer:", err);
                                           }
 
-                                      try {
-                                          const userEmail = localStorage.getItem("userEmail");
-                                          const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
-                                              method: 'POST',
+                                          try {
+                                              const userEmail = localStorage.getItem("userEmail");
+                                              const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
+                                                  method: 'POST',
+                                                  headers: {
+                                                      'Content-Type': 'application/json',
+                                                  },
+                                                  body: JSON.stringify({email: userEmail})
+                                              });
+
+                                              const data = await response.json();
+
+                                              if (response.ok) {
+                                                  const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
+
+                                                  if (userProfitEntry) {
+                                                      setProfits(userProfitEntry.profit);  // Set the current user's profit
+                                                  } else {
+                                                      setProfits(0); // Default to 0 if no profit found
+                                                  }
+
+                                                  setLoading(false);
+                                              } else {
+                                                  setLoading(false);
+                                              }
+                                          } catch (err) {
+                                              setLoading(false);
+                                          }
+
+                                          // };
+
+                                          // const existingCode = localStorage.getItem("referralCode");
+
+                                          const savedEmail = localStorage.getItem('userEmail');
+                                          const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
+                                              method: "POST",
                                               headers: {
-                                                  'Content-Type': 'application/json',
+                                                  "Content-Type": "application/json",
                                               },
-                                              body: JSON.stringify({ email: userEmail })
+                                              body: JSON.stringify({email: savedEmail}),
                                           });
 
                                           const data = await response.json();
 
                                           if (response.ok) {
-                                              const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
-
-                                              if (userProfitEntry) {
-                                                  setProfits(userProfitEntry.profit);  // Set the current user's profit
-                                              } else {
-                                                  setProfits(0); // Default to 0 if no profit found
-                                              }
-
-                                              setLoading(false);
+                                              setWithdrawDate(data.withdraw_date); // Format: YYYY-MM-DD
                                           } else {
-                                              setLoading(false);
+                                              console.error("Error fetching withdraw date:", data.error);
                                           }
-                                      } catch (err) {
-                                          setLoading(false);
-                                      }
 
-                                      // };
+                                          // Function to generate a random referral code
+                                          const generateReferralCode = () => {
+                                              return Math.random().toString(36).substring(2, 8).toUpperCase(); // e.g., "A1B2C3"
+                                          };
 
-                                      // const existingCode = localStorage.getItem("referralCode");
+                                          // const existingCode = localStorage.getItem("referralCode");
 
-                                      const savedEmail = localStorage.getItem('userEmail');
-                                      const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
-                                              method: "POST",
-                                              headers: {
-                                                  "Content-Type": "application/json",
-                                              },
-                                              body: JSON.stringify({ email: savedEmail }),
-                                          });
-
-                                              const data = await response.json();
-
-                                              if (response.ok) {
-                                                  setWithdrawDate(data.withdraw_date); // Format: YYYY-MM-DD
-                                              } else {
-                                                  console.error("Error fetching withdraw date:", data.error);
-                                              }
-
-                            // Function to generate a random referral code
-                                      const generateReferralCode = () => {
-                                          return Math.random().toString(36).substring(2, 8).toUpperCase(); // e.g., "A1B2C3"
-                                      };
-
-                                      const existingCode = localStorage.getItem("referralCode");
-
-                                      if (!existingCode) {
-                                          const newCode = generateReferralCode();
-                                          localStorage.setItem("referralCode", newCode);
-                                          setReferralCode(newCode);
-                                      } else {
-                                          setReferralCode(existingCode);
-                                      }
-
+                                          // if (!existingCode) {
+                                          //     const newCode = generateReferralCode();
+                                          //     localStorage.setItem("referralCode", newCode);
+                                          //     setReferralCode(newCode);
+                                          // } else {
+                                          //     setReferralCode(existingCode);
+                                          // }
 
                                       if (typeof window !== 'undefined') {
                                           const savedEmail = localStorage.getItem('userEmail');
