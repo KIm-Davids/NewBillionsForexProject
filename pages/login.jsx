@@ -55,7 +55,7 @@ const Login = () => {
         password,
         username,
         // Only add referral if it's a valid number
-        ...(referral && !isNaN(Number(referral)) ? { referral: Number(referral) } : {})
+        ...(referral ? { referral } : {})
       };
     }
 
