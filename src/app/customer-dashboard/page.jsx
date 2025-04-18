@@ -192,7 +192,7 @@
                                               const data = await res.json();
                                               console.log("Data from the backend: ", data)
                                               console.log("Reward response:", data);
-                                              alert(data.message || "Referral processed!");
+                                              // alert(data.message || "Referral processed!");
                                           } catch (err) {
                                               console.error("Failed to reward referrer:", err);
                                           }
