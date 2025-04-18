@@ -59,7 +59,7 @@ export const RecentActivities = () => {
   };
 
   // if (Array.isArray(deposits)) {
-  //   deposits.map(...);
+  //   deposits.map(...);]
   // } else {
   //   console.error("Expected an array but received:", deposits);
   // }
