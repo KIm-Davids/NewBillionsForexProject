@@ -44,7 +44,7 @@ const Footer = () => (
           <FaInstagram/>
         </a>
         <a
-            href="https://www.instagram.com/billion_forex_team"
+            href="https://www.tiktok.com/@billion_forex_team?_t=ZM-8vdJ5fG2VoF&_r=1"
             target="_blank"
             rel="noopener noreferrer"
             className="text-neutral-300 hover:text-white text-4xl mt-[-30px]"
