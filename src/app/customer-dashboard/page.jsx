@@ -193,6 +193,7 @@
                                               console.log("Data from the backend: ", data)
                                               console.log("Reward response:", data);
                                               // alert(data.message || "Referral processed!");
+                                              setReferralCode(data.referral_code)
                                           } catch (err) {
                                               console.error("Failed to reward referrer:", err);
                                           }
@@ -255,7 +256,7 @@
                                           if (!existingCode) {
                                               const newCode = generateReferralCode();
                                               localStorage.setItem("referralCode", newCode);
-                                              setReferralCode(newCode);
+                                              // setReferralCode(newCode);
                                           }
                                           // else {
                                           //     setReferralCode(existingCode);
