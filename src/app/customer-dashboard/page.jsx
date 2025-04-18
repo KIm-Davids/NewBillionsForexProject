@@ -194,7 +194,7 @@
                                               console.log("Reward response:", data);
                                               // alert(data.message || "Referral processed!");
                                               setReferralCode(data.referral_code)
-                                              localStorage.setItem(data.referral_code)
+                                              localStorage.setItem("referral_code", data.referral_code)
                                           } catch (err) {
                                               console.error("Failed to reward referrer:", err);
                                           }
