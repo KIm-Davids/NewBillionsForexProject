@@ -754,6 +754,7 @@
 
                                               let data = null;
                                               data = await response.json();
+                                              console.log("Package type", packageType)
                                               console.log("Server response:", data);
                                               if (response.ok) {
                                                   try {
