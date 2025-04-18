@@ -149,7 +149,7 @@ export const Dashboard = () => {
                     <CardDescription>Monitor recent user withdrawals their balance</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <RecentActivities />
+                    <RecentActivitiesWithdraw />
                   </CardContent>
                 </Card>
           </TabsContent>

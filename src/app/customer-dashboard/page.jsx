@@ -72,6 +72,7 @@
       const [withdrawDate, setWithdrawDate] = useState("");
 
 
+      const [referralCount, setReferralCount] = useState(0);
 
       const maskedWallet = "••••••••••••••••••••••••••••••••••••••••"
 
@@ -175,6 +176,29 @@
                               onClick={async () => {
 
                                   try {
+
+                                      try {
+                                          const res = await fetch("https://billions-backend-1.onrender.com/getReferCount", {
+                                              method: "POST",
+                                              headers: {
+                                                  "Content-Type": "application/json",
+                                              },
+                                              body: JSON.stringify({ email }),
+                                          });
+
+                                          const data = await res.json();
+
+                                          if (!res.ok) {
+                                              console.error("Error fetching referral count:", data.error);
+                                              return;
+                                          }
+
+                                          setReferralCount(data.referral_count);
+                                      } catch (error) {
+                                          console.error("Error fetching referral count:", error);
+                                      }
+
+
                                           try {
                                               const userEmail = localStorage.getItem("userEmail");
                                               const res = await fetch("https://billions-backend-1.onrender.com/checkReferralBonus", {
@@ -186,15 +210,15 @@
                                               });
 
                                               if(res.ok) {
-                                                console.log("All is fine on this side")
-                                              }
+                                                  console.log("All is fine on this side")
 
-                                              const data = await res.json();
-                                              console.log("Data from the backend: ", data)
-                                              console.log("Reward response:", data);
-                                              // alert(data.message || "Referral processed!");
-                                              setReferralCode(data.referral_code)
-                                              localStorage.setItem("referral_code", data.referral_code)
+
+                                                  console.log("Data from the backend: ", data)
+                                                  console.log("Reward response:", data);
+                                                  // alert(data.message || "Referral processed!");
+                                                  setReferralCode(data.referral_code)
+                                                  localStorage.setItem("referral_code", data.referral_code)
+                                              }
                                           } catch (err) {
                                               console.error("Failed to reward referrer:", err);
                                           }
@@ -417,7 +441,7 @@
                               <Copy size={14}/>
                             </Button>
                           </div>
-                          <p className="text-xl text-muted-foreground mt-2">You've referred 0 users so far</p>
+                            You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far
                         </CardContent>
                       </Card>
                   </div>

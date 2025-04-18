@@ -48,29 +48,29 @@ export const RecentActivitiesWithdraw = () => {
     }
 
 
-    const handleWithdraw = async () => {
-
-        const userEmail = localStorage.getItem("userEmail");
-        const response = await fetch("https://billions-backend-1.onrender.com/withdrawBalance", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: userEmail,
-                amount: withdrawAmount,
-                wallet_type: selectedWallet,
-                status: "pending", // or whatever initial status you use
-                description: "User requested withdrawal",
-            }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-        }
-    }
-
+    // const handleWithdraw = async () => {
+    //
+    //     const userEmail = localStorage.getItem("userEmail");
+    //     const response = await fetch("https://billions-backend-1.onrender.com/withdrawBalance", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             email: userEmail,
+    //             amount: withdrawAmount,
+    //             wallet_type: selectedWallet,
+    //             status: "pending", // or whatever initial status you use
+    //             description: "User requested withdrawal",
+    //         }),
+    //     });
+    //
+    //     const data = await response.json();
+    //
+    //     if (response.ok) {
+    //     }
+    // }
+    //
 
 
     const handleConfirm = async (email,  withdrawId) => {
