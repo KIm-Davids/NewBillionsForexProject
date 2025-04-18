@@ -198,6 +198,7 @@
 
                                               const data = await response.json();
 
+                                              console.log(data)
                                               if (response.ok && data.referral_code) {
                                                   setReferralCode(data.referral_code);
                                                   localStorage.setItem("referralCode", data.referral_code);
