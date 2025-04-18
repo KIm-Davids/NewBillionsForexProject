@@ -757,7 +757,7 @@
                                               let data = null;
                                               data = await response.json();
                                               console.log("User email", packageType)
-                                              console.log("Server response:", data);
+                                              console.log("Server response:", data.unlock_date);
                                               if (response.ok) {
                                                   try {
                                                       console.log("Server response:", data);
@@ -770,7 +770,7 @@
                                                   }
                                               } else {
                                                   const errorMessage = data?.error || "Something went wrong.";
-                                                  setResponseMessage(`❌ ${errorMessage}`);
+                                                  setResponseMessage(`❌ ${errorMessage} ${errorMessage.}`);
                                               }
                                           } catch (error) {
                                               console.error("Request error:", error);
