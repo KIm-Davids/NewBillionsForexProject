@@ -643,7 +643,7 @@
                                               if (response.ok) {
 
                                                   setResponseMessage("✅ Transaction request sent successfully!");
-                                                  setAvailableBalance(prev => prev + amountValue);
+                                                  // setAvailableBalance(prev => prev + amountValue);
                                               } else {
                                                   // Handle the case where the response was not successful
                                                   // const errorMessage = data?.error || "Something went wrong.";
@@ -820,7 +820,7 @@
                                                   try {
                                                       console.log("Server response:", data);
                                                       setResponseMessage("✅ Transaction request sent successfully!");
-                                                      setBalance(prev => prev - amount);
+                                                      // setBalance(prev => prev - amount);
                                                   } catch (err) {
                                                       console.error("Failed to parse JSON:", err);
                                                       setResponseMessage("❌ Error: Invalid response format.");
