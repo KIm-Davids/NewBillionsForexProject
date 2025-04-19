@@ -237,7 +237,6 @@
                                           }
 
                                       const userEmail = localStorage.getItem('userEmail');
-                                      const referralId = localStorage.getItem('referrerId')
 
                                       try {
                                           const response = await fetch('https://billions-backend-1.onrender.com/checkReferralBonus', {
@@ -245,20 +244,22 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({ email: userEmail, referrer: referralId }),
+                                              body: JSON.stringify({ email: userEmail }),
                                           });
+
+                                          if (!response.ok) {
+                                              throw new Error("Failed to fetch referral bonus.");
+                                          }
 
                                           const data = await response.json();
 
-                                          if (response.ok && data.referral_bonuses && data.referral_bonuses.length > 0) {
-                                              const totalBonus = data.referral_bonuses.reduce((acc, bonus) => acc + bonus.amount, 0);
-                                              setBonusAmount(totalBonus);
-                                              console.log("total bonus",totalBonus);
+                                          if (data.bonus_amount) {
+                                              setBonusAmount(data.bonus_amount);
                                           } else {
-                                              setBonusAmount(0);
+                                              console.error("No bonus available or an error occurred.");
                                           }
-                                      } catch (err) {
-                                          console.error('Error fetching referral bonus:', err);
+                                      } catch (error) {
+                                          console.error("Failed to fetch referral bonus. Please try again later.");
                                       }
 
 
