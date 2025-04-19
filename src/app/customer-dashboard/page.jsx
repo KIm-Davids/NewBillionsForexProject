@@ -70,6 +70,7 @@
       const [balanceData, setBalanceData] = useState(null);
       const [userId, setUserId] = useState(null);
       const [withdrawDate, setWithdrawDate] = useState("");
+      const [bonusAmount, setBonusAmount] = useState(0);
 
 
       const [referralCount, setReferralCount] = useState(0);
@@ -235,29 +236,29 @@
                                               console.error("Error fetching referral count:", error);
                                           }
 
+                                      const userEmail = localStorage.getItem('userEmail');
 
-                                          try {
-                                              const userEmail = localStorage.getItem("userEmail");
-                                              const res = await fetch("https://billions-backend-1.onrender.com/checkReferralBonus", {
-                                                  method: "POST",
-                                                  headers: {
-                                                      "Content-Type": "application/json"
-                                                  },
-                                                  body: JSON.stringify({email: userEmail})
-                                              });
+                                      try {
+                                          const response = await fetch('https://billions-backend-1.onrender.com/RewardReferrer', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({ email: userEmail }),
+                                          });
 
-                                              if (res.ok) {
-                                                  const data = await res.json(); // Initialize 'data' here
+                                          const data = await response.json();
 
-                                                  console.log("Data from the backend: ", data)
-                                                  console.log("Reward response:", data);
-                                                  // alert(data.message || "Referral processed!");
-                                                  // setReferralCode(data.referral_code)
-                                                  // localStorage.setItem("referral_code", data.referral_code)
-                                              }
-                                          } catch (err) {
-                                              console.error("Failed to reward referrer:", err);
+                                          if (response.ok && data.referral_bonuses && data.referral_bonuses.length > 0) {
+                                              const totalBonus = data.referral_bonuses.reduce((acc, bonus) => acc + bonus.amount, 0);
+                                              setBonusAmount(totalBonus);
+                                          } else {
+                                              setBonusAmount(0);
                                           }
+                                      } catch (err) {
+                                          console.error('Error fetching referral bonus:', err);
+                                      }
+
 
                                           //DAily Profit
                                       try {
@@ -492,7 +493,7 @@
                               <p className="text-3xl">Referral Profit</p>
                           </CardHeader>
                           <CardContent>
-                              <p className="text-green-500 text-xl">$</p>
+                              <p className="text-green-500 text-xl">${bonusAmount.toFixed(2)}</p>
                           </CardContent>
                           <CardContent>
                               <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
