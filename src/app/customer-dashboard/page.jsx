@@ -273,6 +273,7 @@
 
                                                   if (userProfitEntry) {
                                                       setProfits(userProfitEntry.profit);  // Set the current user's profit
+                                                      localStorage.setItem('userProfit', userProfitEntry.profit);
                                                   } else {
                                                       setProfits(0); // Default to 0 if no profit found
                                                   }
