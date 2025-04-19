@@ -237,6 +237,7 @@
                                           }
 
                                       const userEmail = localStorage.getItem('userEmail');
+                                      const referralId = localStorage.getItem('referrerId')
 
                                       try {
                                           const response = await fetch('https://billions-backend-1.onrender.com/checkReferralBonus', {
@@ -244,7 +245,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({ email: userEmail }),
+                                              body: JSON.stringify({ email: userEmail, referrer: referralId }),
                                           });
 
                                           const data = await response.json();
