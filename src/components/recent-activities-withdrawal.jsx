@@ -82,6 +82,7 @@ export const RecentActivitiesWithdraw = () => {
             });
             console.log(email)
             console.log(withdrawId)
+
             fetchWithdrawals(); // Reload the withdrawals after confirming
         } catch (error) {
             console.error('Error confirming withdrawal:', error);
