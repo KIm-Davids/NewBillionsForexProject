@@ -239,7 +239,7 @@
                                       const userEmail = localStorage.getItem('userEmail');
 
                                       try {
-                                          const response = await fetch('https://billions-backend-1.onrender.com/RewardReferrer', {
+                                          const response = await fetch('https://billions-backend-1.onrender.com/checkReferralBonus', {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
