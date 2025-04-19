@@ -415,10 +415,8 @@
                               }
 
                               >
-                                  <FaSyncAlt
-                                      className={`text-white ${isSpinning ? 'spin' : ''}`}
-                                      size={20}
-                                  />
+                                  <FaSyncAlt className="text-white" size={20}/>
+
                               </button>
                           </CardHeader>
                           <CardContent>
