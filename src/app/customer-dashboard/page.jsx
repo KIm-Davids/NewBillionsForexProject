@@ -259,65 +259,68 @@
                                               console.error("Failed to reward referrer:", err);
                                           }
 
-                                          try {
-                                              const userEmail = localStorage.getItem("userEmail");
-                                              const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
-                                                  method: 'POST',
-                                                  headers: {
-                                                      'Content-Type': 'application/json',
-                                                  },
-                                                  body: JSON.stringify({email: userEmail})
-                                              });
+                                          //DAily Profit
+                                         try {
+                                          const userEmail = localStorage.getItem("userEmail");
 
-                                              const data = await response.json();
+                                          // Step 1: Fetch Daily Profit
+                                          const dailyResponse = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({ email: userEmail }),
+                                          });
 
-                                              console.log("For the display of the profit:",data)
-                                              if (response.ok) {
-                                                  const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
+                                          const dailyData = await dailyResponse.json();
+                                          console.log("Daily profit data:", dailyData);
 
-                                                  if (userProfitEntry) {
-                                                      setProfits(userProfitEntry.profit);  // Set the current user's profit
-                                                      localStorage.setItem('userProfit', userProfitEntry.profit);
+                                          if (dailyResponse.ok) {
+                                              // Find the matching profit entry
+                                              const userProfitEntry = dailyData.net_profit.find(
+                                                  (p) => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim()
+                                              );
 
-                                                      if (userProfitEntry?.profit?.net_profit_status === "updatedProfit") {
-                                                          // Do something if the status is "updatedProfit"
+                                              if (userProfitEntry) {
+                                                  setProfits(userProfitEntry.net_profit);
+                                                  localStorage.setItem('userProfit', userProfitEntry.net_profit);
 
-                                                          try {
-                                                              const userEmail = localStorage.getItem('userEmail');
+                                                  // Check for updatedProfit status
+                                                  if (userProfitEntry?.net_profit_status === "updatedProfit") {
+                                                      // Step 2: Fetch Net Profit if condition is met
+                                                      try {
+                                                          const netProfitResponse = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
+                                                              method: 'POST',
+                                                              headers: {
+                                                                  'Content-Type': 'application/json',
+                                                              },
+                                                              body: JSON.stringify({ email: userEmail }),
+                                                          });
 
-                                                              const response = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
-                                                                  method: 'POST',
-                                                                  headers: {
-                                                                      'Content-Type': 'application/json',
-                                                                  },
-                                                                  body: JSON.stringify({ email: userEmail }),
-                                                              });
+                                                          const netProfitData = await netProfitResponse.json();
+                                                          console.log("Net profit response:", netProfitData);
 
-                                                              const data = await response.json();
-                                                              console.log('Net profit response:', data);
-
-                                                              if (response.ok) {
-                                                                  setProfits(data.net_profit); // Set the profits state
-                                                                  localStorage.setItem('userNetProfit', data.net_profit); // Store net profit in localStorage
-                                                              } else {
-                                                                  console.error(data.error || 'Something went wrong');
-                                                              }
-                                                          } catch (err) {
-                                                              console.error('Error fetching net profit:', err);
+                                                          if (netProfitResponse.ok) {
+                                                              setProfits(netProfitData.net_profit);
+                                                              localStorage.setItem('userNetProfit', netProfitData.net_profit);
+                                                          } else {
+                                                              console.error(netProfitData.error || 'Failed to fetch net profit');
                                                           }
+                                                      } catch (err) {
+                                                          console.error("Error fetching net profit:", err);
                                                       }
-                                                  } else {
-                                                      setProfits(0); // Default to 0 if no profit found
                                                   }
-                                                  setLoading(false);
                                               } else {
-                                                  setLoading(false);
+                                                  setProfits(0); // No entry found
                                               }
-                                          } catch (err) {
-                                              setLoading(false);
+                                          } else {
+                                              console.error(dailyData.error || 'Failed to fetch daily profit');
                                           }
-
-
+                                      } catch (err) {
+                                          console.error("Error fetching daily profit:", err);
+                                      } finally {
+                                          setLoading(false);
+                                      }
 
                                           // };
 
