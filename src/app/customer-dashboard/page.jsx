@@ -271,6 +271,7 @@
 
                                               const data = await response.json();
 
+                                              console.log(data)
                                               if (response.ok) {
                                                   const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
 
