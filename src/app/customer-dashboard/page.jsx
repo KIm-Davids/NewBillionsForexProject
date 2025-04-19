@@ -221,6 +221,7 @@
 
                                               const data = await res.json();
 
+                                              console.log(data);
                                               if (!res.ok) {
                                                   console.error("Error fetching referral count:", data.error);
                                                   return;
