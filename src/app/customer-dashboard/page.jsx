@@ -304,9 +304,6 @@
                                                               }
                                                           } catch (err) {
                                                               console.error('Error fetching net profit:', err);
-                                                          } finally {
-                                                              setIsSpinning(false); // Stop the spinner animation
-                                                              setLoading(false); // Stop loading state
                                                           }
                                                       }
                                                   } else {
