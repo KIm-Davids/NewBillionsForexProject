@@ -257,30 +257,36 @@
                                           } catch (err) {
                                               console.error("Failed to reward referrer:", err);
                                           }
-                                      try {
-                                          const userEmail = localStorage.getItem("userEmail");
 
-                                          const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
-                                              method: 'POST',
-                                              headers: {
-                                                  'Content-Type': 'application/json',
-                                              },
-                                              body: JSON.stringify({ email: userEmail }),
-                                          });
+                                          try {
+                                              const userEmail = localStorage.getItem("userEmail");
+                                              const response = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
+                                                  method: 'POST',
+                                                  headers: {
+                                                      'Content-Type': 'application/json',
+                                                  },
+                                                  body: JSON.stringify({email: userEmail})
+                                              });
 
-                                          const data = await response.json();
-                                          console.log("For the display of the profit:", data);
+                                              const data = await response.json();
 
-                                          if (response.ok && data.net_profit !== undefined) {
-                                              setProfits(data.net_profit); // ✅ Set directly from backend
-                                              localStorage.setItem("userProfit", data.net_profit);
-                                          } else {
-                                              setProfits(0);
+                                              console.log("For the display of the profit:",data)
+                                              if (response.ok) {
+                                                  const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
+
+                                                  if (userProfitEntry) {
+                                                      setProfits(userProfitEntry.profit);  // Set the current user's profit
+                                                      localStorage.setItem('userProfit', userProfitEntry.profit);
+                                                  } else {
+                                                      setProfits(0); // Default to 0 if no profit found
+                                                  }
+                                                  setLoading(false);
+                                              } else {
+                                                  setLoading(false);
+                                              }
+                                          } catch (err) {
+                                              setLoading(false);
                                           }
-                                      } catch (err) {
-                                          console.error("Error fetching net profit:", err);
-                                          setProfits(0);
-                                      }
 
                                           // };
 
