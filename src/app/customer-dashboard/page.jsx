@@ -260,7 +260,7 @@
 
                                           try {
                                               const userEmail = localStorage.getItem("userEmail");
-                                              const response = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
+                                              const response = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
                                                   method: 'POST',
                                                   headers: {
                                                       'Content-Type': 'application/json',
@@ -280,7 +280,6 @@
                                                   } else {
                                                       setProfits(0); // Default to 0 if no profit found
                                                   }
-
                                                   setLoading(false);
                                               } else {
                                                   setLoading(false);
