@@ -252,7 +252,7 @@
                                           if (response.ok && data.referral_bonuses && data.referral_bonuses.length > 0) {
                                               const totalBonus = data.referral_bonuses.reduce((acc, bonus) => acc + bonus.amount, 0);
                                               setBonusAmount(totalBonus);
-                                              console.log(totalBonus);
+                                              console.log("total bonus",totalBonus);
                                           } else {
                                               setBonusAmount(0);
                                           }
