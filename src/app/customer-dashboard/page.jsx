@@ -462,25 +462,27 @@
                           <CardTitle>Referral Code</CardTitle>
                           <CardDescription>SHARE THIS CODE WITH YOUR FRIENDS & GET 5% OF WHAT THEY INVESTED</CardDescription>
                         </CardHeader>
-                        <CardContent>
-                          <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                            <code className="text-sm font-mono">{referralCode ? (
-                                <code className="text-sm font-mono">{referralCode}</code>
-                            ) : (
-                                <span className="text-sm text-muted">Loading code...</span>
-                            )}</code>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() =>
-                                    copyToClipboard(referralCode, "Referral code copied to clipboard")
-                                }
-                            >
-                              <Copy size={14}/>
-                            </Button>
-                          </div>
-                            You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far
-                        </CardContent>
+                          <CardContent>
+                              <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                                  <code className="text-sm font-mono">{referralCode ? (
+                                      <code className="text-sm font-mono">{referralCode}</code>
+                                  ) : (
+                                      <span className="text-sm text-muted">Loading code...</span>
+                                  )}</code>
+                                  <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() =>
+                                          copyToClipboard(referralCode, "Referral code copied to clipboard")
+                                      }
+                                  >
+                                      <Copy size={14}/>
+                                  </Button>
+                              </div>
+                              <p>You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far</p>
+                              <p>Referral Profit</p>
+                              <p>$</p>
+                          </CardContent>
                       </Card>
                   </div>
 
