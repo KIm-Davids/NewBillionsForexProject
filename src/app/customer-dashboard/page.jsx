@@ -481,7 +481,7 @@
                               </div>
                               <p>You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far</p>
                               <p>Referral Profit</p>
-                              <p>$</p>
+                              <p className="text-green-500 text-xl">$</p>
                           </CardContent>
                       </Card>
                   </div>
