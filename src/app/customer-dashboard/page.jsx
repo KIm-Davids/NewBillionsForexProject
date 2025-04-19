@@ -467,7 +467,10 @@
                               <p className="text-3xl">Referral Profit</p>
                           </CardHeader>
                           <CardContent>
-                          <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                              <p className="text-green-500 text-xl">$</p>
+                          </CardContent>
+                          <CardContent>
+                              <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
                                   <code className="text-sm font-mono">{referralCode ? (
                                       <code className="text-sm font-mono">{referralCode}</code>
                                   ) : (
@@ -485,7 +488,6 @@
                               </div>
                               <p>You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far</p>
                           </CardContent>
-                          <p className="text-green-500 text-xl">$</p>
                       </Card>
                   </div>
 
