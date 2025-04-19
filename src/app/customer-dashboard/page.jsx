@@ -278,6 +278,37 @@
                                                   if (userProfitEntry) {
                                                       setProfits(userProfitEntry.profit);  // Set the current user's profit
                                                       localStorage.setItem('userProfit', userProfitEntry.profit);
+
+                                                      if (userProfitEntry?.profit?.net_profit_status === "updatedProfit") {
+                                                          // Do something if the status is "updatedProfit"
+
+                                                          try {
+                                                              const userEmail = localStorage.getItem('userEmail');
+
+                                                              const response = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
+                                                                  method: 'POST',
+                                                                  headers: {
+                                                                      'Content-Type': 'application/json',
+                                                                  },
+                                                                  body: JSON.stringify({ email: userEmail }),
+                                                              });
+
+                                                              const data = await response.json();
+                                                              console.log('Net profit response:', data);
+
+                                                              if (response.ok) {
+                                                                  setProfits(data.net_profit); // Set the profits state
+                                                                  localStorage.setItem('userNetProfit', data.net_profit); // Store net profit in localStorage
+                                                              } else {
+                                                                  console.error(data.error || 'Something went wrong');
+                                                              }
+                                                          } catch (err) {
+                                                              console.error('Error fetching net profit:', err);
+                                                          } finally {
+                                                              setIsSpinning(false); // Stop the spinner animation
+                                                              setLoading(false); // Stop loading state
+                                                          }
+                                                      }
                                                   } else {
                                                       setProfits(0); // Default to 0 if no profit found
                                                   }
@@ -288,6 +319,8 @@
                                           } catch (err) {
                                               setLoading(false);
                                           }
+
+
 
                                           // };
 
