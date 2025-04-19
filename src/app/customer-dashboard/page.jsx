@@ -177,32 +177,6 @@
 
                                   try {
 
-                                      try {
-                                          const userEmail = localStorage.getItem('userEmail');
-
-                                          const response = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
-                                              method: 'POST',
-                                              headers: {
-                                                  'Content-Type': 'application/json',
-                                              },
-                                              body: JSON.stringify({ email: userEmail }),
-                                          });
-
-                                          const data = await response.json();
-                                          console.log('Net profit response:', data);
-
-                                          if (response.ok) {
-                                              setProfits(data.net_profit);
-                                              localStorage.setItem('userNetProfit', data.net_profit);
-                                          } else {
-                                              console.error(data.error || 'Something went wrong');
-                                          }
-                                      } catch (err) {
-                                          console.error('Error fetching net profit:', err);
-                                      } finally {
-                                          setLoading(false);
-                                      }
-
 
                                       const fetchReferralCode = async () => {
                                           const email = localStorage.getItem("userEmail");
@@ -409,6 +383,43 @@
                           <CardHeader className="pb-2">
                               <CardDescription>Profits</CardDescription>
                               <CardTitle className="text-3xl font-bold text-green-600">${profits}</CardTitle>
+                              <button  onClick={async () => {
+
+                                  try {
+                                      const userEmail = localStorage.getItem('userEmail');
+
+                                      const response = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
+                                          method: 'POST',
+                                          headers: {
+                                              'Content-Type': 'application/json',
+                                          },
+                                          body: JSON.stringify({email: userEmail}),
+                                      });
+
+                                      const data = await response.json();
+                                      console.log('Net profit response:', data);
+
+                                      if (response.ok) {
+                                          setProfits(data.net_profit);
+                                          localStorage.setItem('userNetProfit', data.net_profit);
+                                      } else {
+                                          console.error(data.error || 'Something went wrong');
+                                      }
+                                  } catch (err) {
+                                      console.error('Error fetching net profit:', err);
+                                  } finally {
+                                      setLoading(false);
+                                  }
+
+                              }
+                              }
+
+                              >
+                                  <FaSyncAlt
+                                      className={`text-white ${isSpinning ? 'spin' : ''}`}
+                                      size={20}
+                                  />
+                              </button>
                           </CardHeader>
                           <CardContent>
                               {/*<Badge go o*/}
