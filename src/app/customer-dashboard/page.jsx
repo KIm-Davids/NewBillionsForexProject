@@ -260,10 +260,9 @@
                                           }
 
                                           //DAily Profit
-                                         try {
+                                      try {
                                           const userEmail = localStorage.getItem("userEmail");
 
-                                          // Step 1: Fetch Daily Profit
                                           const dailyResponse = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
                                               method: 'POST',
                                               headers: {
@@ -276,18 +275,13 @@
                                           console.log("Daily profit data:", dailyData);
 
                                           if (dailyResponse.ok) {
-                                              // Find the matching profit entry
-                                              const userProfitEntry = dailyData.net_profit.find(
-                                                  (p) => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim()
-                                              );
+                                              const userProfitEntry = dailyData.entry;
 
                                               if (userProfitEntry) {
-                                                  setProfits(userProfitEntry.net_profit);
-                                                  localStorage.setItem('userProfit', userProfitEntry.net_profit);
+                                                  setProfits(userProfitEntry.Amount);
+                                                  localStorage.setItem('userProfit', userProfitEntry.Amount);
 
-                                                  // Check for updatedProfit status
-                                                  if (userProfitEntry?.net_profit_status === "updatedProfit") {
-                                                      // Step 2: Fetch Net Profit if condition is met
+                                                  if (userProfitEntry?.NetProfitStatus === "updatedProfit") {
                                                       try {
                                                           const netProfitResponse = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
                                                               method: 'POST',
@@ -311,17 +305,14 @@
                                                       }
                                                   }
                                               } else {
-                                                  setProfits(0); // No entry found
+                                                  setProfits(0);
                                               }
                                           } else {
                                               console.error(dailyData.error || 'Failed to fetch daily profit');
                                           }
                                       } catch (err) {
                                           console.error("Error fetching daily profit:", err);
-                                      } finally {
-                                          setLoading(false);
                                       }
-
                                           // };
 
                                           // const existingCode = localStorage.getItem("referralCode");
