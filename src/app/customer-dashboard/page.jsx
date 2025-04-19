@@ -220,8 +220,7 @@
                                                   body: JSON.stringify({email: userEmail}),
                                               });
 
-                                              console.log(email)
-                                              console.log(userEmail)
+
                                               const data = await res.json();
 
                                               console.log(data);
@@ -271,7 +270,7 @@
 
                                               const data = await response.json();
 
-                                              console.log(data)
+                                              console.log("For the display of the profit:",data)
                                               if (response.ok) {
                                                   const userProfitEntry = data.profits.find(p => p.email.toLowerCase().trim() === userEmail.toLowerCase().trim());
 
