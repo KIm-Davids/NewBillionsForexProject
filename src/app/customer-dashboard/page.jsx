@@ -256,7 +256,7 @@
                                           if (data.bonus_amount) {
                                               setBonusAmount(data.bonus_amount);
                                           } else {
-                                              console.error("No bonus available or an error occurred.");
+                                              console.error("No bonus available or an error occurred.", data);
                                           }
                                       } catch (error) {
                                           console.error("Failed to fetch referral bonus. Please try again later.");
