@@ -246,6 +246,7 @@
                                           // Parse the response
                                           const data = await res.json();
 
+                                          console.log('Referral Bonuses:', data);
                                           // Handle the response
                                           if (data.bonuses) {
                                               console.log('Referral Bonuses:', data.bonuses);
@@ -325,7 +326,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({ email: userEmail, referrerId: referrerId }),
+                                              body: JSON.stringify({email: userEmail, referrerId: referrerId}),
                                           });
 
                                           if (!res.ok) {
@@ -335,68 +336,71 @@
                                           const data = await res.json();
 
 
-                                      //     if (data.bonus_amount) {
-                                      //         setBonusAmount(data.bonus_amount);
-                                      //     } else {
-                                      //         console.error("No bonus available or an error occurred.", data);
-                                      //     }
-                                      // } catch (error) {
-                                      //     console.error("Failed to fetch referral bonus. Please try again later.");
-                                      // }
+                                          //     if (data.bonus_amount) {
+                                          //         setBonusAmount(data.bonus_amount);
+                                          //     } else {
+                                          //         console.error("No bonus available or an error occurred.", data);
+                                          //     }
+                                          // } catch (error) {
+                                          //     console.error("Failed to fetch referral bonus. Please try again later.");
+                                          // }
 
 
                                           //DAily Profit
-                                      try {
-                                          const userEmail = localStorage.getItem("userEmail");
+                                          try {
+                                              const userEmail = localStorage.getItem("userEmail");
 
-                                          const dailyResponse = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
-                                              method: 'POST',
-                                              headers: {
-                                                  'Content-Type': 'application/json',
-                                              },
-                                              body: JSON.stringify({ email: userEmail }),
-                                          });
+                                              const dailyResponse = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
+                                                  method: 'POST',
+                                                  headers: {
+                                                      'Content-Type': 'application/json',
+                                                  },
+                                                  body: JSON.stringify({email: userEmail}),
+                                              });
 
-                                          const dailyData = await dailyResponse.json();
-                                          console.log("Daily profit data:", dailyData);
+                                              const dailyData = await dailyResponse.json();
+                                              console.log("Daily profit data:", dailyData);
 
-                                          if (dailyResponse.ok) {
-                                              const userProfitEntry = dailyData.entry;
+                                              if (dailyResponse.ok) {
+                                                  const userProfitEntry = dailyData.entry;
 
-                                              if (userProfitEntry) {
-                                                  setProfits(userProfitEntry.Amount);
-                                                  localStorage.setItem('userProfit', userProfitEntry.Amount);
+                                                  if (userProfitEntry) {
+                                                      setProfits(userProfitEntry.Amount);
+                                                      localStorage.setItem('userProfit', userProfitEntry.Amount);
 
-                                                  if (userProfitEntry?.NetProfitStatus === "updatedProfit") {
-                                                      try {
-                                                          const netProfitResponse = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
-                                                              method: 'POST',
-                                                              headers: {
-                                                                  'Content-Type': 'application/json',
-                                                              },
-                                                              body: JSON.stringify({ email: userEmail }),
-                                                          });
+                                                      if (userProfitEntry?.NetProfitStatus === "updatedProfit") {
+                                                          try {
+                                                              const netProfitResponse = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
+                                                                  method: 'POST',
+                                                                  headers: {
+                                                                      'Content-Type': 'application/json',
+                                                                  },
+                                                                  body: JSON.stringify({email: userEmail}),
+                                                              });
 
-                                                          const netProfitData = await netProfitResponse.json();
-                                                          console.log("Net profit response:", netProfitData);
+                                                              const netProfitData = await netProfitResponse.json();
+                                                              console.log("Net profit response:", netProfitData);
 
-                                                          if (netProfitResponse.ok) {
-                                                              setProfits(netProfitData.net_profit);
-                                                              localStorage.setItem('userNetProfit', netProfitData.net_profit);
-                                                          } else {
-                                                              console.error(netProfitData.error || 'Failed to fetch net profit');
+                                                              if (netProfitResponse.ok) {
+                                                                  setProfits(netProfitData.net_profit);
+                                                                  localStorage.setItem('userNetProfit', netProfitData.net_profit);
+                                                              } else {
+                                                                  console.error(netProfitData.error || 'Failed to fetch net profit');
+                                                              }
+                                                          } catch (err) {
+                                                              console.error("Error fetching net profit:", err);
                                                           }
-                                                      } catch (err) {
-                                                          console.error("Error fetching net profit:", err);
                                                       }
+                                                  } else {
+                                                      setProfits(0);
                                                   }
                                               } else {
-                                                  setProfits(0);
+                                                  console.error(dailyData.error || 'Failed to fetch daily profit');
                                               }
-                                          } else {
-                                              console.error(dailyData.error || 'Failed to fetch daily profit');
+                                          } catch (err) {
+                                              console.error("Error fetching daily profit:", err);
                                           }
-                                      } catch (err) {
+                                      }catch (err) {
                                           console.error("Error fetching daily profit:", err);
                                       }
                                           // };
