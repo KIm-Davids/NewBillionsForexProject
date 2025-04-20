@@ -215,7 +215,48 @@
 //                                           console.error("Error fetching referral bonus:", err);
 //                                       }
 
+                                      try {
+                                          // Fetch the referral code from localStorage
+                                          const referrerId = localStorage.getItem('referralCode');
 
+                                          // Check if the referral code exists in localStorage
+                                          if (!referrerId) {
+                                              console.error("Referrer ID is missing from localStorage.");
+                                              return;
+                                          }
+
+                                          // Prepare the request body
+                                          const requestBody = {
+                                              referrerId: referrerId
+                                          };
+
+                                          // Make the POST request to your backend API
+                                          const res = await fetch('https://your-backend-url.com/getReferrerBonusDetails', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify(requestBody),
+                                          });
+
+                                          if (!res.ok) {
+                                              throw new Error("Failed to fetch referral bonus details.");
+                                          }
+
+                                          // Parse the response
+                                          const data = await res.json();
+
+                                          // Handle the response
+                                          if (data.bonuses) {
+                                              console.log('Referral Bonuses:', data.bonuses);
+                                              setBonusAmount(data.bonuses)
+                                              // Here you can display the bonuses or use them in the UI
+                                          } else {
+                                              console.error("No bonuses found or an error occurred.", data);
+                                          }
+                                      } catch (error) {
+                                          console.error("Error fetching referral bonuses:", error);
+                                      }
 
 
                                       const fetchReferralCode = async () => {
@@ -294,14 +335,14 @@
                                           const data = await res.json();
 
 
-                                          if (data.bonus_amount) {
-                                              setBonusAmount(data.bonus_amount);
-                                          } else {
-                                              console.error("No bonus available or an error occurred.", data);
-                                          }
-                                      } catch (error) {
-                                          console.error("Failed to fetch referral bonus. Please try again later.");
-                                      }
+                                      //     if (data.bonus_amount) {
+                                      //         setBonusAmount(data.bonus_amount);
+                                      //     } else {
+                                      //         console.error("No bonus available or an error occurred.", data);
+                                      //     }
+                                      // } catch (error) {
+                                      //     console.error("Failed to fetch referral bonus. Please try again later.");
+                                      // }
 
 
                                           //DAily Profit
