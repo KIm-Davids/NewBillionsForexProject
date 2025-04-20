@@ -55,7 +55,7 @@ const Login = () => {
         password,
         username,
         // Only add referral if it's a valid number
-        ...(referral ? { referrer: referral } : {})  // ✅ this matches json:"referrer"
+        ...(referral ? { referral: referral } : {})  // ✅ this matches json:"referrer"
       };
     }
 
