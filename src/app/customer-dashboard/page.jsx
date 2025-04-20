@@ -190,7 +190,7 @@
                                           setBonusAmount(data.bonuses);
                                           // setTotalBonus(data.total_bonus);
                                       } catch (err) {
-                                          setError(err.message);
+                                          // setError(err.message);
                                           console.error(err);
                                       }
 
