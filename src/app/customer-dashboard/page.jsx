@@ -519,7 +519,7 @@
                               <p className="text-3xl">Referral Profit</p>
                           </CardHeader>
                           <CardContent>
-                              <p className="text-green-500 text-xl">${bonusAmount.toFixed(2)}</p>
+                              <p className="text-green-500 text-xl">${bonusAmount}</p>
                           </CardContent>
                           <CardContent>
                               <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
