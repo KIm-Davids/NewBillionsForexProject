@@ -179,6 +179,23 @@
                                   try {
 
 
+                                      try {
+                                          const email = localStorage.getItem("userEmail");
+                                          const response = await fetch(`https://billions-backend-1.onrender.com /getReferBonus?email=${email}`);
+                                          if (!response.ok) {
+                                              throw new Error("Failed to fetch referral bonuses");
+                                          }
+
+                                          const data = await response.json();
+                                          setBonusAmount(data.bonuses);
+                                          // setTotalBonus(data.total_bonus);
+                                      } catch (err) {
+                                          setError(err.message);
+                                          console.error(err);
+                                      }
+
+
+
                                       const fetchReferralCode = async () => {
                                           const email = localStorage.getItem("userEmail");
 
