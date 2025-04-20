@@ -296,7 +296,7 @@
                                       const referrerId = localStorage.getItem("referralCode");
 
                                       try {
-                                          const res = await fetch('https://billions-backend-1.onrender.com/countReferrals', {
+                                          const res = await fetch('https://billions-backend-1.onrender.com/getReferCount', {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
