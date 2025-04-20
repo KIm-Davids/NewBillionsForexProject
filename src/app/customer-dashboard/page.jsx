@@ -248,9 +248,9 @@
                                               throw new Error("Failed to fetch referral bonus details.");
                                           }
                                           // Handle the response
-                                          if (data.bonuses) {
-                                              console.log('Referral Bonuses:', data.bonuses);
-                                              setBonusAmount(data.bonuses)
+                                          if (data.total_bonus) {
+                                              console.log('Referral Bonuses:', data.total_bonus);
+                                              setBonusAmount(data.total_bonus)
                                               // Here you can display the bonuses or use them in the UI
                                           } else {
                                               console.error("No bonuses found or an error occurred.", data);
