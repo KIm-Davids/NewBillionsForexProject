@@ -188,7 +188,12 @@
 
                                           const data = await response.json();
                                           console.log("refer bonus data", data)
-                                          setBonusAmount(data.bonuses);
+
+                                          if (typeof bonusAmount === 'number') {
+                                              setBonusAmount(data.bonuses);
+                                          } else {
+                                              console.log('bonusAmount is not a number');
+                                          }
                                           // setTotalBonus(data.total_bonus);
                                       } catch (err) {
                                           // setError(err.message);
