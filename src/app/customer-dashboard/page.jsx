@@ -515,7 +515,7 @@
                                       <Copy size={14}/>
                                   </Button>
                               </div>
-                              <p>You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far</p>
+                              {/*<p>You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far</p>*/}
                           </CardContent>
                       </Card>
                   </div>
