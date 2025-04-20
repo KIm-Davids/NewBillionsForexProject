@@ -294,7 +294,7 @@
                                           const data = await response.json();
 
 
-                                          if (data.bonus_amount && referralCode === data.referrerId) {
+                                          if (data.bonus_amount && referralCode === data.referrer_id) {
                                               setBonusAmount(data.bonus_amount);
                                           } else {
                                               console.error("No bonus available or an error occurred.", data);
