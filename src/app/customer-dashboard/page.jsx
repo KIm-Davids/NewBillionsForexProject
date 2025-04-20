@@ -291,7 +291,7 @@
                                               throw new Error("Failed to fetch referral bonus.");
                                           }
 
-                                          const data = await response.json();
+                                          const data = await res.json();
 
 
                                           if (data.bonus_amount) {
