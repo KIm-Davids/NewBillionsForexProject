@@ -180,21 +180,36 @@
 
 
                                       try {
+                                          // Retrieve email from localStorage
                                           const email = localStorage.getItem("userEmail");
-                                          const response = await fetch(`https://billions-backend-1.onrender.com/getReferBonus?email=${email}`);
+
+                                          // Ensure email exists before making the API call
+                                          if (!email) {
+                                              throw new Error("Email is required");
+                                          }
+
+                                          // Make the fetch request to the backend
+                                          const response = await fetch(`https://billions-backend-1.onrender.com/getReferBonus?email=${encodeURIComponent(email)}`);
+
+                                          // Check if the response is not OK
                                           if (!response.ok) {
                                               throw new Error("Failed to fetch referral bonuses");
                                           }
 
+                                          // Parse the response JSON
                                           const data = await response.json();
-                                          console.log("refer bonus data", data)
+                                          console.log("Refer bonus data:", data);
 
+                                          // Update the state with the total bonus
                                           setBonusAmount(data.total_bonus);
-                                          // setTotalBonus(data.total_bonus);
+                                          // setTotalBonus(data.total_bonus); // Uncomment if you have another state to track this
+
                                       } catch (err) {
+                                          // You can optionally set an error state here to show a message in the UI
                                           // setError(err.message);
-                                          console.error(err);
+                                          console.error("Error fetching referral bonus:", err);
                                       }
+
 
 
 
