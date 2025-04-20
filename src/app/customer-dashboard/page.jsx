@@ -187,6 +187,7 @@
                                           }
 
                                           const data = await response.json();
+                                          console.log("refer bonus data"), data
                                           setBonusAmount(data.bonuses);
                                           // setTotalBonus(data.total_bonus);
                                       } catch (err) {
