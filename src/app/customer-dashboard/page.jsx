@@ -179,36 +179,41 @@
                                   try {
 
 
-                                      // try {
-                                      //     // Retrieve email from localStorage
-                                      //     const email = localStorage.getItem("userEmail");
-                                      //
-                                      //     // Ensure email exists before making the API call
-                                      //     if (!email) {
-                                      //         throw new Error("Email is required");
-                                      //     }
-                                      //
-                                      //     // Make the fetch request to the backend
-                                      //     const response = await fetch(`https://billions-backend-1.onrender.com/getReferBonus?email=${encodeURIComponent(email)}`);
-                                      //
-                                      //     // Check if the response is not OK
-                                      //     if (!response.ok) {
-                                      //         throw new Error("Failed to fetch referral bonuses");
-                                      //     }
-                                      //
-                                      //     // Parse the response JSON
-                                      //     const data = await response.json();
-                                      //     console.log("Refer bonus data:", data);
-                                      //
-                                      //     // Update the state with the total bonus
-                                      //     setBonusAmount(data.total_bonus);
-                                      //     // setTotalBonus(data.total_bonus); // Uncomment if you have another state to track this
-                                      //
-                                      // } catch (err) {
-                                      //     // You can optionally set an error state here to show a message in the UI
-                                      //     // setError(err.message);
-                                      //     console.error("Error fetching referral bonus:", err);
-                                      // }
+//                                       try {
+//                                           // Retrieve email from localStorage
+//                                           const email = localStorage.getItem("userEmail");
+//                                           const referrerId = localStorage.getItem("referrerId");
+//
+// // Ensure at least email is present
+//                                           if (!email) {
+//                                               throw new Error("Email is required");
+//                                           }
+//
+// // Build the query string
+//                                           const queryParams = new URLSearchParams({ email });
+//                                           if (referrerId) queryParams.append("referrerId", referrerId);
+//
+// // Fetch the data
+//                                           const response = await fetch(`https://billions-backend-1.onrender.com/getReferBonus?${queryParams.toString()}`);
+//
+//                                           // Check if the response is not OK
+//                                           if (!response.ok) {
+//                                               throw new Error("Failed to fetch referral bonuses");
+//                                           }
+//
+//                                           // Parse the response JSON
+//                                           const data = await response.json();
+//                                           console.log("Refer bonus data:", data);
+//
+//                                           // Update the state with the total bonus
+//                                           setBonusAmount(data.total_bonus);
+//                                           // setTotalBonus(data.total_bonus); // Uncomment if you have another state to track this
+//
+//                                       } catch (err) {
+//                                           // You can optionally set an error state here to show a message in the UI
+//                                           // setError(err.message);
+//                                           console.error("Error fetching referral bonus:", err);
+//                                       }
 
 
 
@@ -273,21 +278,23 @@
                                       const userEmail = localStorage.getItem('userEmail');
 
                                       try {
-                                          const response = await fetch('https://billions-backend-1.onrender.com/checkReferralBonus', {
+                                          const referrerId = localStorage.getItem("referrerId")
+                                          const res = await fetch('https://billions-backend-1.onrender.com/checkReferralBonus', {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({ email: userEmail }),
+                                              body: JSON.stringify({ email: userEmail, referrerId: referrerId }),
                                           });
 
-                                          if (!response.ok) {
+                                          if (!res.ok) {
                                               throw new Error("Failed to fetch referral bonus.");
                                           }
 
                                           const data = await response.json();
 
-                                          if (data.bonus_amount && userEmail === data.referrer_email) {
+
+                                          if (data.bonus_amount && referralCode === data.referrerId) {
                                               setBonusAmount(data.bonus_amount);
                                           } else {
                                               console.error("No bonus available or an error occurred.", data);
