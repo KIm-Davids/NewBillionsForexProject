@@ -287,7 +287,7 @@
 
                                           const data = await response.json();
 
-                                          if (data.bonus_amount) {
+                                          if (data.bonus_amount && userEmail === data.referrer_email) {
                                               setBonusAmount(data.bonus_amount);
                                           } else {
                                               console.error("No bonus available or an error occurred.", data);
