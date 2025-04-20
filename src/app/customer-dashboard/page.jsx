@@ -231,7 +231,7 @@
                                           };
 
                                           // Make the POST request to your backend API
-                                          const res = await fetch('https://billions-backend-1.onrender.com/getReferrerBonusDetails', {
+                                          const res = await fetch('https://billions-backend-1.onrender.com/getReferBonus', {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
