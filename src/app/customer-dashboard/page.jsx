@@ -239,14 +239,14 @@
                                               body: JSON.stringify(requestBody),
                                           });
 
-                                          if (!res.ok) {
-                                              throw new Error("Failed to fetch referral bonus details.");
-                                          }
-
                                           // Parse the response
                                           const data = await res.json();
 
                                           console.log('Referral Bonuses:', data);
+
+                                          if (!res.ok) {
+                                              throw new Error("Failed to fetch referral bonus details.");
+                                          }
                                           // Handle the response
                                           if (data.bonuses) {
                                               console.log('Referral Bonuses:', data.bonuses);
