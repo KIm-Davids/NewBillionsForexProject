@@ -189,11 +189,7 @@
                                           const data = await response.json();
                                           console.log("refer bonus data", data)
 
-                                          if (typeof bonusAmount === 'number') {
-                                              setBonusAmount(data.bonuses);
-                                          } else {
-                                              console.log('bonusAmount is not a number');
-                                          }
+                                          setBonusAmount(data.total_bonus);
                                           // setTotalBonus(data.total_bonus);
                                       } catch (err) {
                                           // setError(err.message);
@@ -519,7 +515,7 @@
                               <p className="text-3xl">Referral Profit</p>
                           </CardHeader>
                           <CardContent>
-                              <p className="text-green-500 text-xl">${bonusAmount}</p>
+                              <p className="text-green-500 text-xl">${bonusAmount.toFixed(2)}</p>
                           </CardContent>
                           <CardContent>
                               <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
