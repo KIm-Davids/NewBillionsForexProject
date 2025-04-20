@@ -293,30 +293,32 @@
                                           }
 
                                       await fetchReferralCode();
-                                          try {
-                                              const userEmail = localStorage.getItem("userEmail");
-                                              const res = await fetch("https://billions-backend-1.onrender.com/getReferCount", {
-                                                  method: "POST",
-                                                  headers: {
-                                                      "Content-Type": "application/json",
-                                                  },
-                                                  body: JSON.stringify({email: userEmail}),
-                                              });
+                                      const referrerId = localStorage.getItem("referralCode");
 
+                                      try {
+                                          const res = await fetch('https://billions-backend-1.onrender.com/countReferrals', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({ referrerId: referrerId }),
+                                          });
 
-                                              const data = await res.json();
-
-                                              console.log(data);
-                                              if (!res.ok) {
-                                                  console.error("Error fetching referral count:", data.error);
-                                                  return;
-                                              }
-
-                                              setReferralCount(data.referral_count);
-                                          } catch (error) {
-                                              console.error("Error fetching referral count:", error);
+                                          if (!res.ok) {
+                                              throw new Error("Failed to fetch referral count.");
                                           }
 
+                                          const data = await res.json();
+                                          console.log("Referral Count Data:", data);
+
+                                          // Use the referral count from the response
+                                          if (data.referral_count !== undefined) {
+                                              setReferralCount(data.referral_count);  // Update the state with the referral count
+                                          }
+
+                                      } catch (error) {
+                                          console.error("Error fetching referral count:", error);
+                                      }
                                       const userEmail = localStorage.getItem('userEmail');
 
                                       try {
@@ -601,7 +603,7 @@
                                       <Copy size={14}/>
                                   </Button>
                               </div>
-                              {/*<p>You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far</p>*/}
+                              <p>You've referred {referralCount} user{referralCount !== 1 ? "s" : ""} so far</p>
                           </CardContent>
                       </Card>
                   </div>
