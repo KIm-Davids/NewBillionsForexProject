@@ -59,6 +59,7 @@ const Login = () => {
       };
     }
 
+    console.log(referral)
     localStorage.setItem("referrerId", referral)
 
     if (email === adminEmail && password === adminPassword) {
