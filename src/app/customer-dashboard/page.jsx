@@ -356,9 +356,9 @@
                                               body: JSON.stringify({email: userEmail}),
                                           })
                                               .then(async (res) => {
-                                                  const text = await res.text(); // <-- Get raw response text
-                                                  console.log("RAW RESPONSE:", text);
-                                                  return JSON.parse(text); // <-- Try parsing manually to pinpoint error
+                                                  const text = await res.text();
+                                                  console.log("RAW RESPONSE TEXT:", text); // 🔍 Look at this in the browser console
+                                                  return JSON.parse(text);
                                               })
                                               .then((data) => {
                                                   console.log("Parsed JSON:", data);
@@ -366,8 +366,7 @@
                                               .catch((err) => {
                                                   console.error("Error fetching daily profit:", err);
                                               });
-
-                                      } catch (error) {
+                                      }catch (error) {
                                         console.error("Something happened here", error)
                                       }
 
