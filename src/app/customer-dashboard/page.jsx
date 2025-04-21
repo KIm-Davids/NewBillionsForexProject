@@ -269,28 +269,28 @@
                                           }
                                       }
 
-                                          try {
+                                      try {
                                           const userEmail = localStorage.getItem('userEmail')
-                                              const response = await fetch("https://billions-backend-1.onrender.com/getReferrerCode", {
-                                                  method: "POST",
-                                                  headers: {
-                                                      "Content-Type": "application/json",
-                                                  },
-                                                  body: JSON.stringify({email: userEmail}),
-                                              });
+                                          const response = await fetch("https://billions-backend-1.onrender.com/getReferrerCode", {
+                                              method: "POST",
+                                              headers: {
+                                                  "Content-Type": "application/json",
+                                              },
+                                              body: JSON.stringify({email: userEmail}),
+                                          });
 
-                                              const data = await response.json();
+                                          const data = await response.json();
 
-                                              console.log(data)
-                                              if (response.ok && data.referral_code) {
-                                                  setReferralCode(data.referral_code);
-                                                  localStorage.setItem("referralCode", data.referral_code);
-                                              } else {
-                                                  console.warn("Referral code not found or error from backend:", data.error);
-                                              }
-                                          } catch (error) {
-                                              console.error("Failed to fetch referral code:", error);
+                                          console.log(data)
+                                          if (response.ok && data.referral_code) {
+                                              setReferralCode(data.referral_code);
+                                              localStorage.setItem("referralCode", data.referral_code);
+                                          } else {
+                                              console.warn("Referral code not found or error from backend:", data.error);
                                           }
+                                      } catch (error) {
+                                          console.error("Failed to fetch referral code:", error);
+                                      }
 
                                       await fetchReferralCode();
                                       const referrerId = localStorage.getItem("referralCode");
@@ -301,7 +301,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({ referrerId: referrerId }),
+                                              body: JSON.stringify({referrerId: referrerId}),
                                           });
 
                                           if (!res.ok) {
@@ -366,75 +366,74 @@
                                               .catch((err) => {
                                                   console.error("Error fetching daily profit:", err);
                                               });
-                                      }catch (error) {
-                                        console.error("Something happened here", error)
+                                      } catch (error) {
+                                          console.error("Something happened here", error)
                                       }
+
 
                                           //DAily Profit
-                                          try {
-                                              const userEmail = localStorage.getItem("userEmail");
+                                      try {
+                                          const userEmail = localStorage.getItem("userEmail");
 
-                                              const dailyResponse = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
-                                                  method: 'POST',
-                                                  headers: {
-                                                      'Content-Type': 'application/json',
-                                                  },
-                                                  body: JSON.stringify({email: userEmail}),
-                                              });
+                                          // Fetch daily profit
+                                          const dailyResponse = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({ email: userEmail }),
+                                          });
 
-                                              const dailyData = await dailyResponse.json();
-                                              console.log("Daily profit data:", dailyData);
+                                          const dailyData = await dailyResponse.json();
+                                          console.log("Daily profit data:", dailyData);
 
-                                              if (dailyResponse.ok) {
-                                                  const userProfitEntry = dailyData.entry;
+                                          if (dailyResponse.ok) {
+                                              const userProfitEntry = dailyData.entry;
 
-                                                  if (userProfitEntry) {
-                                                      setProfits(userProfitEntry.Amount);
-                                                      localStorage.setItem('userProfit', userProfitEntry.Amount);
-                                                  }
-                                                    if(userProfitEntry?.source === "daily profit") {
-                                                        setProfits(userProfitEntry.net_profit);
-                                                    }
-
-
-                                                      if (userProfitEntry?.source === "net profit calculation") {
-                                                          try {
-                                                              const netProfitResponse = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
-                                                                  method: 'POST',
-                                                                  headers: {
-                                                                      'Content-Type': 'application/json',
-                                                                  },
-                                                                  body: JSON.stringify({email: userEmail}),
-                                                              });
-
-                                                              const netProfitData = await netProfitResponse.json();
-                                                              console.log("Net profit response:", netProfitData);
-
-                                                              if (netProfitResponse.ok) {
-                                                                  setProfits(netProfitData.net_profit);
-                                                                  localStorage.setItem('userNetProfit', netProfitData.net_profit);
-                                                              } else {
-                                                                  console.error(netProfitData.error || 'Failed to fetch net profit');
-                                                              }
-                                                          } catch (err) {
-                                                              console.error("Error fetching net profit:", err);
-                                                          }
-                                                      }
-                                                  } else {
-                                                      setProfits(0);
-                                                  }
-                                              } else {
-                                                  console.error(dailyData.error || 'Failed to fetch daily profit');
+                                              if (userProfitEntry) {
+                                                  setProfits(userProfitEntry.Amount);
+                                                  localStorage.setItem('userProfit', userProfitEntry.Amount);
                                               }
-                                          } catch (err) {
-                                              console.error("Error fetching daily profit:", err);
+
+                                              // If the source is "daily profit", use net profit
+                                              if (userProfitEntry?.source === "daily profit") {
+                                                  setProfits(userProfitEntry.net_profit);
+                                              }
+
+                                              // If the source is "net profit calculation", fetch net profit
+                                              if (userProfitEntry?.source === "net profit calculation") {
+                                                  try {
+                                                      const netProfitResponse = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
+                                                          method: 'POST',
+                                                          headers: {
+                                                              'Content-Type': 'application/json',
+                                                          },
+                                                          body: JSON.stringify({ email: userEmail }),
+                                                      });
+
+                                                      const netProfitData = await netProfitResponse.json();
+                                                      console.log("Net profit response:", netProfitData);
+
+                                                      if (netProfitResponse.ok) {
+                                                          setProfits(netProfitData.net_profit);
+                                                          localStorage.setItem('userNetProfit', netProfitData.net_profit);
+                                                      } else {
+                                                          console.error(netProfitData.error || 'Failed to fetch net profit');
+                                                      }
+                                                  } catch (err) {
+                                                      console.error("Error fetching net profit:", err);
+                                                  }
+                                              }
+                                          } else {
+                                              console.error(dailyData.error || 'Failed to fetch daily profit');
                                           }
-                                      }catch (err) {
+                                      } catch (err) {
                                           console.error("Error fetching daily profit:", err);
                                       }
-                                          };
 
-                                          // const existingCode = localStorage.getItem("referralCode");
+
+
+                                      // const existingCode = localStorage.getItem("referralCode");
 
                                           const savedEmail = localStorage.getItem('userEmail');
                                           const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
