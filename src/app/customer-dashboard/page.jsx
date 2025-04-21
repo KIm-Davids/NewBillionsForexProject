@@ -353,7 +353,7 @@
                                               headers: {
                                                   "Content-Type": "application/json",
                                               },
-                                              body: JSON.stringify({ email: userEmail}),
+                                              body: JSON.stringify({email: userEmail}),
                                           })
                                               .then(async (res) => {
                                                   const text = await res.text(); // <-- Get raw response text
@@ -367,7 +367,9 @@
                                                   console.error("Error fetching daily profit:", err);
                                               });
 
-
+                                      } catch (error) {
+                                        console.error("Something happened here", error)
+                                      }
 
                                           //DAily Profit
                                       //     try {
