@@ -75,13 +75,16 @@ export const RecentActivitiesWithdraw = () => {
 
     const handleConfirm = async (email,  withdrawId) => {
         try {
-            await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {
+            const response = await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email,withdrawId: parseInt(withdrawId, 10), }),
             });
             console.log(email)
             console.log(withdrawId)
+
+            const data = response.json();
+            console.log(data)
 
             fetchWithdrawals(); // Reload the withdrawals after confirming
         } catch (error) {
