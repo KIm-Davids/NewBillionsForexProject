@@ -360,7 +360,7 @@
                                                   body: JSON.stringify({email: userEmail}),
                                               });
 
-                                              const dailyData = await dailyResponse.text();
+                                              const dailyData = await dailyResponse.json();
                                               console.log("Daily profit data:", dailyData);
 
                                               if (dailyResponse.ok) {
