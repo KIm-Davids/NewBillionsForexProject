@@ -358,7 +358,7 @@
                                               .then(async (res) => {
                                                   const text = await res.text();
                                                   console.log("RAW RESPONSE TEXT:", text); // 🔍 Look at this in the browser console
-                                                  return JSON.parse(text);
+                                                  // return JSON.parse(text);
                                               })
                                               .then((data) => {
                                                   console.log("Parsed JSON:", data);
