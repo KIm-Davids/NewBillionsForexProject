@@ -348,27 +348,27 @@
                                           // }
 
 
-                                          fetch("https://billions-backend-1.onrender.com/getDailyProfit", {
-                                              method: "POST",
-                                              headers: {
-                                                  "Content-Type": "application/json",
-                                              },
-                                              body: JSON.stringify({email: userEmail}),
-                                          })
-                                              .then(async (res) => {
-                                                  const text = await res.text();
-                                                  console.log("RAW RESPONSE TEXT:", text); // 🔍 Look at this in the browser console
-                                                  // return JSON.parse(text);
-                                              })
-                                              .then((data) => {
-                                                  console.log("Parsed JSON:", data);
-                                              })
-                                              .catch((err) => {
-                                                  console.error("Error fetching daily profit:", err);
-                                              });
-                                      } catch (error) {
-                                          console.error("Something happened here", error)
-                                      }
+                                      //     fetch("https://billions-backend-1.onrender.com/getDailyProfit", {
+                                      //         method: "POST",
+                                      //         headers: {
+                                      //             "Content-Type": "application/json",
+                                      //         },
+                                      //         body: JSON.stringify({email: userEmail}),
+                                      //     })
+                                      //         .then(async (res) => {
+                                      //             const text = await res.text();
+                                      //             console.log("RAW RESPONSE TEXT:", text); // 🔍 Look at this in the browser console
+                                      //             // return JSON.parse(text);
+                                      //         })
+                                      //         .then((data) => {
+                                      //             console.log("Parsed JSON:", data);
+                                      //         })
+                                      //         .catch((err) => {
+                                      //             console.error("Error fetching daily profit:", err);
+                                      //         });
+                                      // } catch (error) {
+                                      //     console.error("Something happened here", error)
+                                      // }
 
 
                                           //DAily Profit
