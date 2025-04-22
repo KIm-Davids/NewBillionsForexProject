@@ -189,6 +189,7 @@
                                           }
 
                                           const savedEmail = localStorage.getItem('userEmail')
+                                          console.log(savedEmail)
 
                                           // Make the POST request to your backend API
                                           const res = await fetch('https://billions-backend-1.onrender.com/getReferBonus', {
