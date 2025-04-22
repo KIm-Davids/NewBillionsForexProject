@@ -296,6 +296,11 @@
                                               throw new Error("Failed to fetch referral bonus.");
                                           }
 
+                                      }catch(error) {
+                                        console.error("Somethings up here", error)
+
+                                      }
+
                                           const data = await res.json();
 
 
