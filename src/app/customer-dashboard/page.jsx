@@ -376,8 +376,8 @@
                                                           console.log("Net profit response:", netProfitData);
 
                                                           if (netProfitResponse.ok) {
-                                                              setProfits(netProfitData.net_profit);
-                                                              localStorage.setItem('userNetProfit', netProfitData.net_profit);
+                                                              setProfits(netProfitData.daily_profit);
+                                                              localStorage.setItem('userNetProfit', netProfitData.daily_profit);
                                                           } else {
                                                               console.error(netProfitData.error || 'Failed to fetch net profit');
                                                           }
