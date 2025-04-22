@@ -449,11 +449,7 @@
                                       } finally {
                                           setLoading(false);
                                       }
-                                  } catch (error) {
-                                      console.error("Something happened here", error)
                                   }
-                              }
-
 
                               } // Trigger the fetchBalance function when clicked
 
