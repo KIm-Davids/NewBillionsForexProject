@@ -350,19 +350,19 @@
 
                                               if (dailyResponse.ok) {
                                                   const userProfitEntry = dailyData.entry;
-
-                                                  if (userProfitEntry) {
-                                                      setProfits(userProfitEntry.Amount);
-                                                      localStorage.setItem('userProfit', userProfitEntry.Amount);
-                                                  }
-
-                                                  // If the source is "daily profit", use net profit
-                                                  if (userProfitEntry?.source === "daily profit") {
-                                                      setProfits(userProfitEntry.net_profit);
-                                                  }
-
-                                                  // If the source is "net profit calculation", fetch net profit
-                                                  if (userProfitEntry?.source === "net profit calculation") {
+                                                  //
+                                                  // if (userProfitEntry) {
+                                                  //     setProfits(userProfitEntry.Amount);
+                                                  //     localStorage.setItem('userProfit', userProfitEntry.Amount);
+                                                  // }
+                                                  //
+                                                  // // If the source is "daily profit", use net profit
+                                                  // if (userProfitEntry?.source === "daily profit") {
+                                                  //     setProfits(userProfitEntry.net_profit);
+                                                  // }
+                                                  //
+                                                  // // If the source is "net profit calculation", fetch net profit
+                                                  // if (userProfitEntry?.source === "net profit calculation") {
                                                       try {
                                                           const netProfitResponse = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
                                                               method: 'POST',
@@ -385,9 +385,6 @@
                                                           console.error("Error fetching net profit:", err);
                                                       }
                                                   }
-                                              } else {
-                                                  console.error(dailyData.error || 'Failed to fetch daily profit');
-                                              }
                                           } catch (err) {
                                               console.error("Error fetching daily profit:", err);
                                           }
