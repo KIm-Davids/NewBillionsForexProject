@@ -190,7 +190,7 @@
 
                                           // Prepare the request body
                                           const requestBody = {
-                                              referrerId: referrerId
+                                              email: userEmail
                                           };
 
                                           // Make the POST request to your backend API
