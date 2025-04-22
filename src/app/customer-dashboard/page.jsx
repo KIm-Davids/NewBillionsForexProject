@@ -178,43 +178,6 @@
 
                                   try {
 
-
-//                                       try {
-//                                           // Retrieve email from localStorage
-//                                           const email = localStorage.getItem("userEmail");
-//                                           const referrerId = localStorage.getItem("referrerId");
-//
-// // Ensure at least email is present
-//                                           if (!email) {
-//                                               throw new Error("Email is required");
-//                                           }
-//
-// // Build the query string
-//                                           const queryParams = new URLSearchParams({ email });
-//                                           if (referrerId) queryParams.append("referrerId", referrerId);
-//
-// // Fetch the data
-//                                           const response = await fetch(`https://billions-backend-1.onrender.com/getReferBonus?${queryParams.toString()}`);
-//
-//                                           // Check if the response is not OK
-//                                           if (!response.ok) {
-//                                               throw new Error("Failed to fetch referral bonuses");
-//                                           }
-//
-//                                           // Parse the response JSON
-//                                           const data = await response.json();
-//                                           console.log("Refer bonus data:", data);
-//
-//                                           // Update the state with the total bonus
-//                                           setBonusAmount(data.total_bonus);
-//                                           // setTotalBonus(data.total_bonus); // Uncomment if you have another state to track this
-//
-//                                       } catch (err) {
-//                                           // You can optionally set an error state here to show a message in the UI
-//                                           // setError(err.message);
-//                                           console.error("Error fetching referral bonus:", err);
-//                                       }
-
                                       try {
                                           // Fetch the referral code from localStorage
                                           const referrerId = localStorage.getItem('referralCode');
@@ -293,7 +256,7 @@
                                       }
 
                                       await fetchReferralCode();
-                                      const referrerId = localStorage.getItem("referralCode");
+                                      const userEmail = localStorage.getItem("userEmail");
 
                                       try {
                                           const res = await fetch('https://billions-backend-1.onrender.com/getReferCount', {
@@ -301,7 +264,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({referrerId: referrerId}),
+                                              body: JSON.stringify({email: userEmail}),
                                           });
 
                                           if (!res.ok) {
@@ -434,22 +397,22 @@
 
                                           // const existingCode = localStorage.getItem("referralCode");
 
-                                          const savedEmail = localStorage.getItem('userEmail');
-                                          const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
-                                              method: "POST",
-                                              headers: {
-                                                  "Content-Type": "application/json",
-                                              },
-                                              body: JSON.stringify({email: savedEmail}),
-                                          });
-
-                                          const data = await response.json();
-
-                                          if (response.ok) {
-                                              setWithdrawDate(data.withdraw_date); // Format: YYYY-MM-DD
-                                          } else {
-                                              console.error("Error fetching withdraw date:", data.error);
-                                          }
+                                          // const savedEmail = localStorage.getItem('userEmail');
+                                          // const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
+                                          //     method: "POST",
+                                          //     headers: {
+                                          //         "Content-Type": "application/json",
+                                          //     },
+                                          //     body: JSON.stringify({email: savedEmail}),
+                                          // });
+                                          //
+                                          // const data = await response.json();
+                                          //
+                                          // if (response.ok) {
+                                          //     setWithdrawDate(data.withdraw_date); // Format: YYYY-MM-DD
+                                          // } else {
+                                          //     console.error("Error fetching withdraw date:", data.error);
+                                          // }
 
                                           // Function to generate a random referral code
                                           const generateReferralCode = () => {
