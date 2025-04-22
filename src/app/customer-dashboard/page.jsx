@@ -188,10 +188,7 @@
                                               return;
                                           }
 
-                                          // Prepare the request body
-                                          const requestBody = {
-                                              email: userEmail
-                                          };
+                                          const savedEmail = localStorage.getItem('userEmail')
 
                                           // Make the POST request to your backend API
                                           const res = await fetch('https://billions-backend-1.onrender.com/getReferBonus', {
@@ -199,7 +196,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify(requestBody),
+                                              body: JSON.stringify({email: savedEmail}),
                                           });
 
                                           // Parse the response
