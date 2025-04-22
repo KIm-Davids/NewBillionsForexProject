@@ -188,7 +188,7 @@
                                               return;
                                           }
 
-                                          const savedEmail = localStorage.getItem('userEmail')
+                                          const referralCode = localStorage.getItem('referralCode')
                                           console.log(savedEmail)
 
                                           // Make the POST request to your backend API
@@ -197,7 +197,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({email: savedEmail}),
+                                              body: JSON.stringify({refer_id: referralCode}),
                                           });
 
                                           // Parse the response
