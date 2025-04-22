@@ -256,7 +256,7 @@
                                       }
 
                                       await fetchReferralCode();
-                                      const userEmail = localStorage.getItem("userEmail");
+                                      let theUserEmail = localStorage.getItem("userEmail");
 
                                       try {
                                           const res = await fetch('https://billions-backend-1.onrender.com/getReferCount', {
@@ -264,7 +264,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({email: userEmail}),
+                                              body: JSON.stringify({email: theUserEmail}),
                                           });
 
                                           if (!res.ok) {
