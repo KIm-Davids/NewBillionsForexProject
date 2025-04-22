@@ -189,7 +189,7 @@
                                           }
 
                                           const referralCode = localStorage.getItem('referralCode')
-                                          console.log(savedEmail)
+                                          console.log(referralCode)
 
                                           // Make the POST request to your backend API
                                           const res = await fetch('https://billions-backend-1.onrender.com/getReferBonus', {
