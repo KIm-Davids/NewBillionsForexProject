@@ -282,21 +282,21 @@
                                       }
                                       const userEmail = localStorage.getItem('userEmail');
 
-                                      // try {
-                                      //     const referrerId = localStorage.getItem("referrerId")
-                                      //     const res = await fetch('https://billions-backend-1.onrender.com/checkReferralBonus', {
-                                      //         method: 'POST',
-                                      //         headers: {
-                                      //             'Content-Type': 'application/json',
-                                      //         },
-                                      //         body: JSON.stringify({email: userEmail, referrerId: referrerId}),
-                                      //     });
-                                      //
-                                      //     if (!res.ok) {
-                                      //         throw new Error("Failed to fetch referral bonus.");
-                                      //     }
+                                      try {
+                                          const referrerId = localStorage.getItem("referrerId")
+                                          const res = await fetch('https://billions-backend-1.onrender.com/getWithdrawProfit', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({email: userEmail, amount: withdrawAmount}),
+                                          });
 
-                                          // const data = await res.json();
+                                          if (!res.ok) {
+                                              throw new Error("Failed to fetch referral bonus.");
+                                          }
+
+                                          const data = await res.json();
 
 
                                           //     if (data.bonus_amount) {
