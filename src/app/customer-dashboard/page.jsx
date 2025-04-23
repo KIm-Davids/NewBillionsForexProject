@@ -285,6 +285,8 @@
                                           const amount = parseFloat(withdrawAmount);
                                           const userEmail = localStorage.getItem('userEmail');
                                           const referrerId = localStorage.getItem("referrerId")
+                                          console.log("Net Profit Data:", email);
+                                          console.log("Net Profit Data:", amount);
                                           const res = await fetch('https://billions-backend-1.onrender.com/getWithdrawProfit', {
                                               method: 'POST',
                                               headers: {
@@ -296,8 +298,7 @@
 
                                           const data = await res.json();
                                           console.log("Net Profit Data:", data);
-                                          console.log("Net Profit Data:", email);
-                                          console.log("Net Profit Data:", amount);
+
 
                                           // Use the referral count from the response
                                           if (data.withdrawal !== undefined) {
