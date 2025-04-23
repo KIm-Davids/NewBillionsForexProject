@@ -179,6 +179,44 @@
                                   try {
 
                                       try {
+                                          const amount = parseFloat(withdrawAmount);
+                                          const userEmail = localStorage.getItem('userEmail');
+
+                                          if (!userEmail || isNaN(amount) || amount <= 0) {
+                                              console.error("Invalid email or amount", { userEmail, amount });
+                                              return;
+                                          }
+
+                                          console.log("Sending withdrawal request:", {
+                                              email: userEmail,
+                                              amount: amount,
+                                          });
+
+                                          const res = await fetch('https://billions-backend-1.onrender.com/getWithdrawProfit', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({ email: userEmail, amount: amount }),
+                                          });
+
+                                          const data = await res.json();
+                                          console.log("Net Profit Data:", data);
+
+                                          if (data.withdrawal !== undefined) {
+                                              setProfits(data.withdrawal);
+                                          }
+
+                                          if (!res.ok) {
+                                              throw new Error("Failed to fetch referral bonus.");
+                                          }
+                                      } catch (error) {
+                                          console.error("Somethings up here", error);
+                                      }
+
+
+
+                                      try {
                                           // Fetch the referral code from localStorage
                                           const referrerId = localStorage.getItem('referralCode');
 
@@ -281,41 +319,6 @@
                                           console.error("Error fetching referral count:", error);
                                       }
 
-                                      try {
-                                          const amount = parseFloat(withdrawAmount);
-                                          const userEmail = localStorage.getItem('userEmail');
-
-                                          if (!userEmail || isNaN(amount) || amount <= 0) {
-                                              console.error("Invalid email or amount", { userEmail, amount });
-                                              return;
-                                          }
-
-                                          console.log("Sending withdrawal request:", {
-                                              email: userEmail,
-                                              amount: amount,
-                                          });
-
-                                          const res = await fetch('https://billions-backend-1.onrender.com/getWithdrawProfit', {
-                                              method: 'POST',
-                                              headers: {
-                                                  'Content-Type': 'application/json',
-                                              },
-                                              body: JSON.stringify({ email: userEmail, amount: amount }),
-                                          });
-
-                                          const data = await res.json();
-                                          console.log("Net Profit Data:", data);
-
-                                          if (data.withdrawal !== undefined) {
-                                              setProfits(data.withdrawal);
-                                          }
-
-                                          if (!res.ok) {
-                                              throw new Error("Failed to fetch referral bonus.");
-                                          }
-                                      } catch (error) {
-                                          console.error("Somethings up here", error);
-                                      }
 
 
                                       // const data = await res.json();
