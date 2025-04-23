@@ -189,6 +189,8 @@
                                               body: JSON.stringify({ email: userEmail }),
                                           });
 
+                                          console.log(userEmail)
+
                                           const data = await response.json();
                                           console.log("About referrer here", data)
 
