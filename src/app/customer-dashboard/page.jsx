@@ -226,7 +226,7 @@
                                               return;
                                           }
 
-                                          const referralCode = localStorage.getItem('referralCode')
+                                          const userEmail = localStorage.getItem('userEmail')
                                           console.log(referralCode)
 
                                           // Make the POST request to your backend API
@@ -235,7 +235,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({refer_id: referralCode}),
+                                              body: JSON.stringify({email: userEmail}),
                                           });
 
                                           // Parse the response
@@ -422,15 +422,6 @@
                                               return Math.random().toString(36).substring(2, 8).toUpperCase(); // e.g., "A1B2C3"
                                           };
 
-                                          // const existingCode = localStorage.getItem("referralCode");
-
-                                          // if (!existingCode) {
-                                          //     const newCode = generateReferralCode();
-                                          //     localStorage.setItem("referralCode", newCode);
-                                          //     setReferralCode(newCode);
-                                          // } else {
-                                          //     setReferralCode(existingCode);
-                                          // }
 
                                           if (typeof window !== 'undefined') {
                                               const savedEmail = localStorage.getItem('userEmail');
