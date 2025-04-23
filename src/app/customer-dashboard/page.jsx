@@ -55,7 +55,7 @@
       const [fetchedPackage, setFetchedPackage] = useState("");
 
       const [profits, setProfits] = useState(0);
-      const [withdrawAmount, setWithdrawAmount] = useState("");
+      const [withdrawAmount, setWithdrawAmount] = useState(0);
       const [withdrawName, setWithdrawName] = useState("");
       const [withdrawWallet, setWithdrawWallet] = useState("");
       const [withdrawDescription, setWithdrawDescription] = useState("");
