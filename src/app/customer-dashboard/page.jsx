@@ -301,7 +301,7 @@
 
                                       }
 
-                                          const data = await res.json();
+                                          // const data = await res.json();
 
 
                                           //     if (data.bonus_amount) {
