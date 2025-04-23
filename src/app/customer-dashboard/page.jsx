@@ -826,7 +826,7 @@
                                               id="withdraw-wallet"
                                               placeholder="Enter wallet address"
                                               value={withdrawWallet}
-                                              onChange={(e) => setWithdrawWallet(e.target.value)}
+                                              onChange={(e) => setWithdrawAmount(Number(e.target.value))}
                                           />
                                       </div>
                                   </div>
