@@ -295,6 +295,8 @@
 
                                           const data = await res.json();
                                           console.log("Net Profit Data:", data);
+                                          console.log("Net Profit Data:", email);
+                                          console.log("Net Profit Data:", withdrawAmount);
 
                                           // Use the referral count from the response
                                           if (data.withdrawal !== undefined) {
