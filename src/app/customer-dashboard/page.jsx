@@ -290,14 +290,14 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({email: email, amount: amount}),
+                                              body: JSON.stringify({email: userEmail, amount: amount}),
                                           });
 
 
                                           const data = await res.json();
                                           console.log("Net Profit Data:", data);
                                           console.log("Net Profit Data:", email);
-                                          console.log("Net Profit Data:", withdrawAmount);
+                                          console.log("Net Profit Data:", amount);
 
                                           // Use the referral count from the response
                                           if (data.withdrawal !== undefined) {
