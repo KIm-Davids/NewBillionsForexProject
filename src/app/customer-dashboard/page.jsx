@@ -178,7 +178,30 @@
 
                                   try {
 
+
                                       try {
+                                          const userEmail = localStorage.getItem('userEmail')
+                                          const response = await fetch('https://billions-backend-1.onrender.com/funcReferrerBonus', {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({ email: userEmail }),
+                                          });
+
+                                          const data = await response.json();
+
+                                          if (!response.ok) {
+                                              throw new Error(data.error || 'Failed to fetch bonus');
+                                          }
+                                          setBonusAmount(data.total_bonus);
+                                      } catch (err) {
+                                          conosle.error("Check here", err)
+                                      }
+
+
+
+                                  try {
                                           const amount = parseFloat(withdrawAmount);
                                           const userEmail = localStorage.getItem('userEmail');
 
