@@ -181,7 +181,7 @@
 
                                       try {
                                           const userEmail = localStorage.getItem('userEmail')
-                                          const response = await fetch('https://billions-backend-1.onrender.com/funcReferrerBonus', {
+                                          const response = await fetch('https://billions-backend-1.onrender.com/fundReferrer', {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
