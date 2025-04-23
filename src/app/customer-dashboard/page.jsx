@@ -282,6 +282,7 @@
                                       }
 
                                       try {
+                                          const amount = parseFloat(withdrawAmount);
                                           const userEmail = localStorage.getItem('userEmail');
                                           const referrerId = localStorage.getItem("referrerId")
                                           const res = await fetch('https://billions-backend-1.onrender.com/getWithdrawProfit', {
@@ -289,7 +290,7 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({email: email, amount: withdrawAmount}),
+                                              body: JSON.stringify({email: email, amount: amount}),
                                           });
 
 
