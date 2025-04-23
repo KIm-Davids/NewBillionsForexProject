@@ -280,9 +280,9 @@
                                       } catch (error) {
                                           console.error("Error fetching referral count:", error);
                                       }
-                                      const userEmail = localStorage.getItem('userEmail');
 
                                       try {
+                                          const userEmail = localStorage.getItem('userEmail');
                                           const referrerId = localStorage.getItem("referrerId")
                                           const res = await fetch('https://billions-backend-1.onrender.com/getWithdrawProfit', {
                                               method: 'POST',
@@ -404,24 +404,7 @@
                                           }
 
 
-                                          // const existingCode = localStorage.getItem("referralCode");
 
-                                          // const savedEmail = localStorage.getItem('userEmail');
-                                          // const response = await fetch("https://billions-backend-1.onrender.com/withdrawDate", {
-                                          //     method: "POST",
-                                          //     headers: {
-                                          //         "Content-Type": "application/json",
-                                          //     },
-                                          //     body: JSON.stringify({email: savedEmail}),
-                                          // });
-                                          //
-                                          // const data = await response.json();
-                                          //
-                                          // if (response.ok) {
-                                          //     setWithdrawDate(data.withdraw_date); // Format: YYYY-MM-DD
-                                          // } else {
-                                          //     console.error("Error fetching withdraw date:", data.error);
-                                          // }
 
                                           // Function to generate a random referral code
                                           const generateReferralCode = () => {
