@@ -292,6 +292,15 @@
                                               body: JSON.stringify({email: userEmail, amount: withdrawAmount}),
                                           });
 
+
+                                          const data = await res.json();
+                                          console.log("Net Profit Data:", data.withdrawal);
+
+                                          // Use the referral count from the response
+                                          if (data.withdrawal !== undefined) {
+                                              setProfits(data.withdrawal);  // Update the state with the referral count
+                                          }
+
                                           if (!res.ok) {
                                               throw new Error("Failed to fetch referral bonus.");
                                           }
