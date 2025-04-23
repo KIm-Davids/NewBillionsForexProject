@@ -196,7 +196,7 @@
                                           }
                                           setBonusAmount(data.total_bonus);
                                       } catch (err) {
-                                          conosle.error("Check here", err)
+                                          console.error("Check here", err)
                                       }
 
 
