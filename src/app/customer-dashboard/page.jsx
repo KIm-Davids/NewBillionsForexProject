@@ -182,7 +182,7 @@
                                           const amount = parseFloat(withdrawAmount);
                                           const userEmail = localStorage.getItem('userEmail');
 
-                                          if (!userEmail || isNaN(amount) || amount <= 0) {
+                                          if (!userEmail || isNaN(amount) || amount < 0) {
                                               console.error("Invalid email or amount", { userEmail, amount });
                                               return;
                                           }
