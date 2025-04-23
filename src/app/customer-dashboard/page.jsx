@@ -190,6 +190,8 @@
                                           });
 
                                           const data = await response.json();
+                                          console.log("About referrer here", data)
+
 
                                           if (!response.ok) {
                                               throw new Error(data.error || 'Failed to fetch bonus');
