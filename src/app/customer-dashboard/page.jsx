@@ -800,7 +800,7 @@
                                               placeholder="0.00"
                                               className="pl-9"
                                               value={withdrawAmount}
-                                              onChange={(e) => setWithdrawAmount(e.target.value)}
+                                              onChange={(e) => setWithdrawAmount(Number(e.target.value))}
                                           />
                                       </div>
                                   </div>
@@ -826,7 +826,7 @@
                                               id="withdraw-wallet"
                                               placeholder="Enter wallet address"
                                               value={withdrawWallet}
-                                              onChange={(e) => setWithdrawAmount(Number(e.target.value))}
+                                              onChange={(e) => setWithdrawWallet(e.target.value)}
                                           />
                                       </div>
                                   </div>
