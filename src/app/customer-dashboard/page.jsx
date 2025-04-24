@@ -88,18 +88,63 @@
     const fourthWalletName = "USDC SOL"
 
 
-
       useEffect(() => {
+          const fetchBalanceAndProfits = async () => {
+              try {
+                  setLoading(true);
+                  const savedEmail = localStorage.getItem('userEmail');
+
+                  if (!savedEmail) {
+                      console.error("No email found in localStorage");
+                      return;
+                  }
+
+                  const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({email: savedEmail}),
+                  });
+
+                  if (!response.ok) {
+                      throw new Error('Failed to fetch user info');
+                  }
+
+                  const balanceData = await response.json();
+                  console.log("User Info Response:", balanceData);
+
+                  if (balanceData.balance) {
+                      setBalance(parseFloat(balanceData.balance).toFixed(2));
+                  }
+                  if (balanceData.packages) {
+                      setFetchedPackage(balanceData.packages);
+                  }
+                  setLastUpdated(new Date().toLocaleString());
+              } catch (err) {
+                  console.error("Failed to fetch balance", err);
+              } finally {
+                  setLoading(false);
+              }
+          };
+
           setIsClient(true);
+          fetchBalanceAndProfits();
       }, []);
 
-      if (!isClient) {
-          return (
-              <div className="flex justify-center items-center h-screen">
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
-              </div>
-          );
-      }
+
+
+      // useEffect(() => {
+      //     setIsClient(true);
+      // }, []);
+      //
+      // if (!isClient) {
+      //     return (
+      //         <div className="flex justify-center items-center h-screen">
+      //             <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+      //         </div>
+      //     );
+      // }
 
 // Correct placement of the useEffect hook
       const Dashboard = () => {
@@ -467,9 +512,9 @@
                                               const balanceData = await response.json();
                                               console.log("User Info Response:", balanceData.packages);
                                               setBalance(parseFloat(balanceData.balance).toFixed(2));
+
                                               setFetchedPackage(balanceData.packages);
                                               setLastUpdated(new Date().toLocaleString()); // You can set the current time as the last updated
-                                              // setReferralCode(balanceData.referralCode)
                                           }
 
                                       } catch (err) {
