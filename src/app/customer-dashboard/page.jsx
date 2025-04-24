@@ -430,8 +430,9 @@
                                                           console.log("Net profit response:", netProfitData);
 
                                                           if (netProfitResponse.ok) {
-                                                              setProfits(netProfitData.daily_profit);
-                                                              // localStorage.setItem('userNetProfit', netProfitData.daily_profit);
+                                                              const formattedProfit = parseFloat(netProfitData.daily_profit).toFixed(2);
+                                                              setProfits(parseFloat(formattedProfit));
+                                                              // localStorage.setItem('userNetProfit', formattedProfit);
                                                           } else {
                                                               console.error(netProfitData.error || 'Failed to fetch net profit');
                                                           }
