@@ -98,7 +98,6 @@
                       console.error("No email found in localStorage");
                       return;
                   }
-
                   const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
                       method: 'POST',
                       headers: {
@@ -131,6 +130,43 @@
           setIsClient(true);
           fetchBalanceAndProfits();
       }, []);
+
+
+      useEffect(() => {
+          const fetchReferralCode = async () => {
+              try {
+                  const userEmail = localStorage.getItem('userEmail');
+                  if (!userEmail) {
+                      console.error("No user email found in localStorage");
+                      return;
+                  }
+
+                  const response = await fetch("https://billions-backend-1.onrender.com/getReferrerCode", {
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({email: userEmail}),
+                  });
+
+                  const data = await response.json();
+                  console.log("Referral code response:", data);
+
+                  if (response.ok && data.referral_code) {
+                      setReferralCode(data.referral_code);
+                      localStorage.setItem("referralCode", data.referral_code);
+                  } else {
+                      console.warn("Referral code not found or error from backend:", data.error);
+                  }
+              } catch (error) {
+                  console.error("Failed to fetch referral code:", error);
+              }
+          };
+
+          fetchReferralCode();
+      }, []);
+
+
 
 
 
@@ -644,17 +680,15 @@
                           </CardContent>
                           <CardContent>
                               <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                                  <code className="text-sm font-mono">{referralCode ? (
-                                      <code className="text-sm font-mono">{referralCode}</code>
-                                  ) : (
-                                      <span className="text-sm text-muted">Loading code...</span>
-                                  )}</code>
+                                  <code className="text-sm font-mono">
+                                      {referralCode || "Loading code..."}
+                                  </code>
+
                                   <Button
                                       variant="ghost"
                                       size="icon"
-                                      onClick={() =>
-                                          copyToClipboard(referralCode, "Referral code copied to clipboard")
-                                      }
+                                      onClick={() => copyToClipboard(referralCode, "Referral code copied to clipboard")}
+                                      disabled={!referralCode}
                                   >
                                       <Copy size={14}/>
                                   </Button>
