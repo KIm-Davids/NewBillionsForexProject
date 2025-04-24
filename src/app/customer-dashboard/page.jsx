@@ -230,9 +230,11 @@
                                           const data = await res.json();
                                           console.log("Net Profit Data:", data);
 
-                                          if (data.withdrawal !== undefined) {
-                                              setProfits(data.withdrawal);
-                                          }
+                                      if (data.withdrawal !== undefined) {
+                                          const formattedWithdrawal = parseFloat(data.withdrawal).toFixed(2);
+                                          setProfits(formattedWithdrawal);
+                                      }
+
 
                                           if (!res.ok) {
                                               throw new Error("Failed to fetch referral bonus.");
