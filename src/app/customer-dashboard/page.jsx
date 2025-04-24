@@ -1044,6 +1044,10 @@
                                   >
                                       Withdraw from Profits
                                   </Button>
+                                  <Button className="w-full border-green-500 border hover:bg-white/10"
+                                  >
+                                      Withdraw from Referral Profits
+                                  </Button>
                               </CardFooter>
 
                           </Card>
