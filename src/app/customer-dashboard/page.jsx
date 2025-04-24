@@ -278,7 +278,6 @@
                                           // Handle the response
                                           if (data.bonus_amount) {
                                               console.log('Referral Bonuses:', data.bonus_amount);
-                                              setBonusAmount(data.bonus_amount)
                                               // Here you can display the bonuses or use them in the UI
                                           } else {
                                               console.error("No bonuses found or an error occurred.", data);
