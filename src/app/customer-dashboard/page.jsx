@@ -1044,7 +1044,7 @@
                                   >
                                       Withdraw from Profits
                                   </Button>
-                                  <Button className="w-full border-green-500 border hover:bg-white/10"
+                                  <Button className="w-full border-cyan-700 border hover:bg-white/10"
                                   >
                                       Withdraw from Referral Profits
                                   </Button>
