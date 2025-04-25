@@ -784,10 +784,7 @@
                                               className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                               required
                                           >
-                                              <option value="">-- Choose a package --</option>
-                                              <option value="Test package">Test package</option>
                                               <option value="Pro package">Pro package</option>
-                                              <option value="Premium package">Premium package</option>
                                           </select>
                                       </div>
                                   </div>
