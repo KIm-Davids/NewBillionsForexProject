@@ -821,7 +821,7 @@
                               )}
                               <CardFooter>
                                   <Button
-                                      disabled={!packageType || !isAmountValid}
+                                      // disabled={!packageType || !isAmountValid}
                                       className="w-full border border-green-500 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                                       onClick={async () => {
                                           const amountValue = parseFloat(depositAmount);
@@ -831,10 +831,10 @@
                                           //     return;
                                           // }
 
-                                          if (!isAmountValid) {
-                                              setResponseMessage(`❌ Amount must be at least $100`);
-                                              return;
-                                          }
+                                          // if (!isAmountValid) {
+                                          //     setResponseMessage(`❌ Amount must be at least $100`);
+                                          //     return;
+                                          // }
 
                                           try {
                                               console.log(email)
