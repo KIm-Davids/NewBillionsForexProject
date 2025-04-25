@@ -775,18 +775,18 @@
 
                                   {/* Package Type */}
                                   <div className="space-y-2">
-                                      <Label htmlFor="withdraw-description">Select Package</Label>
-                                      <div className="relative w-72">
-                                          <select
-                                              id="packageType"
-                                              value={packageType}
-                                              onChange={(e) => setPackageType(e.target.value)}
-                                              className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                              required
-                                          >
-                                              <option value="Pro package">Pro package</option>
-                                          </select>
-                                      </div>
+                                      <Label htmlFor="withdraw-description">For every deposit you gain 1% profit everyday</Label>
+                                      {/*<div className="relative w-72">*/}
+                                      {/*    <select*/}
+                                      {/*        id="packageType"*/}
+                                      {/*        value={packageType}*/}
+                                      {/*        onChange={(e) => setPackageType(e.target.value)}*/}
+                                      {/*        className="w-full p-2 rounded-lg bg-grey text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"*/}
+                                      {/*        required*/}
+                                      {/*    >*/}
+                                      {/*        <option value="Pro package">Pro package</option>*/}
+                                      {/*    </select>*/}
+                                      {/*</div>*/}
                                   </div>
 
                                   {/*<div className="space-y-2">*/}
