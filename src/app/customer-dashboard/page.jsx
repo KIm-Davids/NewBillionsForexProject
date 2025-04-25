@@ -61,7 +61,7 @@
       const [withdrawDescription, setWithdrawDescription] = useState("");
       const [availableBalance, setAvailableBalance] = useState(2000);
       const [lastUpdated, setLastUpdated] = useState("");
-      const [packageType, setPackageType] = useState("");
+      const [packageType, setPackageType] = useState("Pro package");
       const [responseMessage, setResponseMessage] = useState("");
       const [walletType, setWalletType] = useState("");
       const [isClient, setIsClient] = useState(false);
