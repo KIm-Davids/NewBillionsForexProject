@@ -826,10 +826,10 @@
                                       onClick={async () => {
                                           const amountValue = parseFloat(depositAmount);
 
-                                          if (!packageType) {
-                                              setResponseMessage("❌ Please select a package.");
-                                              return;
-                                          }
+                                          // if (!packageType) {
+                                          //     setResponseMessage("❌ Please select a package.");
+                                          //     return;
+                                          // }
 
                                           if (!isAmountValid) {
                                               setResponseMessage(`❌ Amount must be at least $100`);
