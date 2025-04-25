@@ -822,6 +822,7 @@
                               <CardFooter>
                                   <Button
                                       // disabled={!packageType || !isAmountValid}
+                                      disabled={!email || !depositAmount || !hash || parseFloat(depositAmount) < 100}
                                       className="w-full border border-green-500 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                                       onClick={async () => {
                                           const amountValue = parseFloat(depositAmount);
