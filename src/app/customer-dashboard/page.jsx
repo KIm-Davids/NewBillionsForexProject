@@ -71,6 +71,7 @@
       const [userId, setUserId] = useState(null);
       const [withdrawDate, setWithdrawDate] = useState("");
       const [bonusAmount, setBonusAmount] = useState(0);
+      const [isConfirmed, setIsConfirmed] = useState(false);
 
 
       const [referralCount, setReferralCount] = useState(0);
@@ -165,6 +166,29 @@
 
           fetchReferralCode();
       }, []);
+
+
+      useEffect(() => {
+          const checkDepositStatus = async () => {
+              if (!email || !hash) return;
+
+              try {
+                  const res = await fetch(`https://billions-backend-1.onrender.com/withdrawProfit?email=${email}&hash=${hash}`);
+                  const data = await res.json();
+
+                  if (data.status === "confirmed") {
+                      setIsConfirmed(true);
+                  } else {
+                      setIsConfirmed(false);
+                  }
+              } catch (err) {
+                  console.error("Failed to fetch deposit status", err);
+              }
+          };
+
+          checkDepositStatus();
+      }, [email, hash]);
+
 
 
 
@@ -1055,6 +1079,7 @@
                                       Withdraw from Balance
                                   </Button>
 
+                                  {isConfirmed && (
                                   <Button
                                       className="w-full border-green-500 border hover:bg-white/10"
                                       onClick={async () => {
@@ -1121,6 +1146,7 @@
                                   >
                                       Withdraw from Profits
                                   </Button>
+                                  )}
                                   <Button className="w-full border-cyan-700 border hover:bg-white/10"
                                   >
                                       Withdraw from Referral Profits
