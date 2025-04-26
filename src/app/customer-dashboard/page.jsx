@@ -1104,24 +1104,40 @@
                                                   amount,
                                                   description: withdrawDescription
                                               });
+                                              useEffect(() => {
+                                                  const checkDepositStatus = async () => {
+                                                      if (!email || !hash) return;
 
-                                              const response = await fetch("https://billions-backend-1.onrender.com/withdrawProfit", {
-                                                  method: "POST",
-                                                  credentials: 'include',
-                                                  headers: {
-                                                      "Content-Type": "application/json",
-                                                  },
-                                                  body: JSON.stringify({
-                                                      withdrawAddress: withdrawWallet,
-                                                      email: email,
-                                                      walletType: walletType,
-                                                      status: 'pending',
-                                                      amount: amount,
-                                                      description: withdrawDescription,
-                                                  }),
-                                              });
+                                                      try {
+                                                          const res = await fetch("https://billions-backend-1.onrender.com/check-deposit", {
+                                                              method: "POST",
+                                                              credentials: 'include',
+                                                              headers: {
+                                                                  "Content-Type": "application/json",
+                                                              },
+                                                              body: JSON.stringify({ email, hash }),
+                                                          });
+
+                                                          const data = await res.json();
+
+                                                          if (res.ok && data.status === "confirmed") {
+                                                              setIsConfirmed(true);
+                                                          } else {
+                                                              setIsConfirmed(false);
+                                                          }
+                                                      } catch (err) {
+                                                          console.error("Error checking deposit status:", err);
+                                                          setIsConfirmed(false);
+                                                      }
+                                                  };
+
+                                                  checkDepositStatus();
+                                              }, [email, hash]);
+
 
                                               let data = null;
+                                              setResponseMessage("Transaction Processing ...");
+
                                               if (response.ok) {
                                                   try {
                                                       data = await response.json();
