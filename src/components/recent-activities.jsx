@@ -6,12 +6,16 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 
 export const RecentActivities = () => {
+
+  const API_URL = 'http://localhost:8080';
+  // const API_URL = 'https://billions-backend-1.onrender.com';
+
   const [deposits, setDeposits] = useState([]);
 
   const fetchDeposits = async () => {
     try {
       const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
-      const res = await fetch(`https://billions-backend-1.onrender.com/fetchDeposits?email=${encodedEmail}`);
+      const res = await fetch(`${API_URL}/fetchDeposits?email=${encodedEmail}`);
       const data = await res.json();
 
       if (Array.isArray(data.deposits)) {
@@ -33,7 +37,7 @@ export const RecentActivities = () => {
 
   const handleConfirm = async (email, hash) => {
     try {
-      await fetch('https://billions-backend-1.onrender.com/confirmDeposits', {
+      await fetch(`${API_URL}/confirmDeposits`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, hash: hash }),
@@ -46,7 +50,7 @@ export const RecentActivities = () => {
 
   const handleReject = async (email, hash) => {
     try {
-      await fetch('https://billions-backend-1.onrender.com/rejectDeposits', {
+      await fetch(`${API_URL}/rejectDeposits`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, hash: hash }),

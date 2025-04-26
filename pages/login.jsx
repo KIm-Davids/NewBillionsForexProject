@@ -43,8 +43,10 @@ const Login = () => {
     e.preventDefault();
 
 
-    const API_URL = 'https://billions-backend-1.onrender.com';
+    // const API_URL = 'https://billions-backend-1.onrender.com';
+    const API_URL = 'http://localhost:8080';
     const endpoint = isLoginMode ? '/login' : '/register/client';
+
     let payload;
 
     if (isLoginMode) {

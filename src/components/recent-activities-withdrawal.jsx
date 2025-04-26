@@ -8,10 +8,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 export const RecentActivitiesWithdraw = () => {
     const [withdrawals, setWithdrawals] = useState([]);
 
+
+    const API_URL = 'http://localhost:8080';
+    // const API_URL = 'https://billions-backend-1.onrender.com';
+
+
     const fetchWithdrawals = async () => {
         try {
             const encodedEmail = encodeURIComponent("admin10k4u1234@gmail.com");
-            const response = await fetch(`https://billions-backend-1.onrender.com/getAllWithdrawProfit?email=${encodedEmail}`);
+            const response = await fetch(`${API_URL}/getAllWithdrawProfit?email=${encodedEmail}`);
             const data = await response.json();
             console.log("Withdrawals:", data.withdrawals);
 
@@ -75,7 +80,7 @@ export const RecentActivitiesWithdraw = () => {
 
     const handleConfirm = async (email,  withdrawId) => {
         try {
-            const response = await fetch('https://billions-backend-1.onrender.com/confirmDailyProfit', {
+            const response = await fetch(`${API_URL}/confirmDailyProfit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email,withdrawId: parseInt(withdrawId, 10), }),
@@ -94,7 +99,7 @@ export const RecentActivitiesWithdraw = () => {
 
     const handleRejectWithdraw = async (email,  withdrawId) => {
         try {
-            await fetch('https://billions-backend-1.onrender.com/rejectWithdraw', {
+            await fetch(`${API_URL}/rejectWithdraw`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({email: email, withdrawId: parseInt(withdrawId, 10),  }),

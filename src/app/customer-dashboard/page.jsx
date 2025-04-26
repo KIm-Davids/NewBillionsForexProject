@@ -89,6 +89,10 @@
     const fourthWalletName = "USDC SOL"
 
 
+    const API_URL = 'http://localhost:8080';
+    // const API_URL = 'https://billions-backend-1.onrender.com';
+
+
       useEffect(() => {
           const fetchBalanceAndProfits = async () => {
               try {
@@ -99,7 +103,7 @@
                       console.error("No email found in localStorage");
                       return;
                   }
-                  const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
+                  const response = await fetch(`${API_URL}/getUserInfo`, {
                       method: 'POST',
                       headers: {
                           'Content-Type': 'application/json',
@@ -142,7 +146,7 @@
                       return;
                   }
 
-                  const response = await fetch("https://billions-backend-1.onrender.com/getReferrerCode", {
+                  const response = await fetch(`${API_URL}/getReferrerCode`, {
                       method: "POST",
                       headers: {
                           "Content-Type": "application/json",
@@ -173,7 +177,40 @@
               if (!email || !hash) return;
 
               try {
-                  const res = await fetch(`https://billions-backend-1.onrender.com/withdrawProfit?email=${email}&hash=${hash}`);
+                  const res = await fetch(`${API_URL}/check-deposit`, {
+                      method: "POST",
+                      credentials: 'include',
+                      headers: {
+                          "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({ email, hash }),
+                  });
+
+                  const data = await res.json();
+
+                  if (res.ok && data.status === "confirmed") {
+                      setIsConfirmed(true);
+                  } else {
+                      setIsConfirmed(false);
+                  }
+              } catch (err) {
+                  console.error("Error checking deposit status:", err);
+                  setIsConfirmed(false);
+              }
+          };
+
+          checkDepositStatus();
+      }, [email, hash]);
+
+
+
+
+      useEffect(() => {
+          const checkDepositStatus = async () => {
+              if (!email || !hash) return;
+
+              try {
+                  const res = await fetch(`${API_URL}/withdrawProfit?email=${email}&hash=${hash}`);
                   const data = await res.json();
 
                   if (data.status === "confirmed") {
@@ -286,7 +323,7 @@
 
                                       try {
                                           const userEmail = localStorage.getItem('userEmail')
-                                          const response = await fetch('https://billions-backend-1.onrender.com/fundReferrer', {
+                                          const response = await fetch(`${API_URL}/fundReferrer`, {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
@@ -324,7 +361,7 @@
                                               amount: amount,
                                           });
 
-                                          const res = await fetch('https://billions-backend-1.onrender.com/getWithdrawProfit', {
+                                          const res = await fetch(`${API_URL}/getWithdrawProfit`, {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
@@ -364,7 +401,7 @@
                                           console.log(referralCode)
 
                                           // Make the POST request to your backend API
-                                          const res = await fetch('https://billions-backend-1.onrender.com/getReferBonus', {
+                                          const res = await fetch(`${API_URL}/getReferBonus`, {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
@@ -403,7 +440,7 @@
 
                                       try {
                                           const userEmail = localStorage.getItem('userEmail')
-                                          const response = await fetch("https://billions-backend-1.onrender.com/getReferrerCode", {
+                                          const response = await fetch(`${API_URL}/getReferrerCode`, {
                                               method: "POST",
                                               headers: {
                                                   "Content-Type": "application/json",
@@ -428,7 +465,7 @@
                                       let theUserEmail = localStorage.getItem("userEmail");
 
                                       try {
-                                          const res = await fetch('https://billions-backend-1.onrender.com/getReferCount', {
+                                          const res = await fetch(`${API_URL}/getReferCount`, {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
@@ -495,7 +532,7 @@
                                               const userEmail = localStorage.getItem("userEmail");
 
                                               // Fetch daily profit
-                                              const dailyResponse = await fetch('https://billions-backend-1.onrender.com/getDailyProfit', {
+                                              const dailyResponse = await fetch(`${API_URL}/getDailyProfit`, {
                                                   method: 'POST',
                                                   headers: {
                                                       'Content-Type': 'application/json',
@@ -522,7 +559,7 @@
                                                   // // If the source is "net profit calculation", fetch net profit
                                                   // if (userProfitEntry?.source === "net profit calculation") {
                                                       try {
-                                                          const netProfitResponse = await fetch('https://billions-backend-1.onrender.com/getNetProfit', {
+                                                          const netProfitResponse = await fetch(`${API_URL}/getNetProfit`, {
                                                               method: 'POST',
                                                               headers: {
                                                                   'Content-Type': 'application/json',
@@ -560,7 +597,7 @@
                                           if (typeof window !== 'undefined') {
                                               const savedEmail = localStorage.getItem('userEmail');
                                               // localStorage.setItem('referralCode', referralCode);
-                                              const response = await fetch('https://billions-backend-1.onrender.com/getUserInfo', {
+                                              const response = await fetch(`${API_URL}/getUserInfo`, {
                                                   method: 'POST',
                                                   // credentials: "include",
                                                   headers: {
@@ -863,7 +900,7 @@
 
                                           try {
                                               console.log(email)
-                                              const response = await fetch("https://billions-backend-1.onrender.com/deposit", {
+                                              const response = await fetch(`${API_URL}/deposit`, {
                                                   method: "POST",
                                                   credentials: 'include',
                                                   headers: {
@@ -1035,7 +1072,7 @@
                                           }
                                           try {
                                               // const userEmail = localStorage.getItem("userEmail")
-                                              const response = await fetch("https://billions-backend-1.onrender.com/withdrawBalance", {
+                                              const response = await fetch(`${API_URL}/withdrawBalance`, {
                                                   method: "POST",
                                                   credentials: 'include',
                                                   headers: {
@@ -1079,7 +1116,7 @@
                                       Withdraw from Balance
                                   </Button>
 
-                                  {isConfirmed && (
+                                  {/*{isConfirmed && (*/}
                                   <Button
                                       className="w-full border-green-500 border hover:bg-white/10"
                                       onClick={async () => {
@@ -1104,65 +1141,71 @@
                                                   amount,
                                                   description: withdrawDescription
                                               });
-                                              useEffect(() => {
-                                                  const checkDepositStatus = async () => {
-                                                      if (!email || !hash) return;
+                                              // useEffect(() => {
+                                              // const checkDepositStatus = async () => {
+                                                  if (!email || !hash) return;
 
-                                                      try {
-                                                          const res = await fetch("https://billions-backend-1.onrender.com/check-deposit", {
-                                                              method: "POST",
-                                                              credentials: 'include',
-                                                              headers: {
-                                                                  "Content-Type": "application/json",
-                                                              },
-                                                              body: JSON.stringify({ email, hash }),
-                                                          });
-
-                                                          const data = await res.json();
-
-                                                          if (res.ok && data.status === "confirmed") {
-                                                              setIsConfirmed(true);
-                                                          } else {
-                                                              setIsConfirmed(false);
-                                                          }
-                                                      } catch (err) {
-                                                          console.error("Error checking deposit status:", err);
-                                                          setIsConfirmed(false);
-                                                      }
-                                                  };
-
-                                                  checkDepositStatus();
-                                              }, [email, hash]);
-
-
-                                              let data = null;
-                                              setResponseMessage("Transaction Processing ...");
-
-                                              if (response.ok) {
                                                   try {
-                                                      data = await response.json();
-                                                      console.log("Server response:", data);
+                                                      // const res = await fetch("https://billions-backend-1.onrender.com/check-deposit", {
+                                                      const res = await fetch(`${API_URL}/withdrawProfit`, {
+                                                          method: "POST",
+                                                          credentials: 'include',
+                                                          headers: {
+                                                              "Content-Type": "application/json",
+                                                          },
+                                                          body: JSON.stringify({email, hash}),
+                                                      });
 
-                                                      setResponseMessage("✅ Transaction request sent successfully!");
-                                                      // setProfits(prev => prev - amount);
-                                                  } catch (err) {
-                                                      console.error("Failed to parse JSON:", err);
-                                                      setResponseMessage("❌ Error: Invalid response format.");
-                                                      return;
+                                                      // const data = await res.json();
+
+                                                      //     console.log("withdraw response: ", data)
+                                                      //     if (res.ok && data.status === "confirmed") {
+                                                      //         setIsConfirmed(true);
+                                                      //     } else {
+                                                      //         setIsConfirmed(false);
+                                                      //     }
+                                                      // } catch (err) {
+                                                      //     console.error("Error checking deposit status:", err);
+                                                      //     setIsConfirmed(false);
+                                                      // }
+
+                                                      //
+                                                      //     checkDepositStatus();
+                                                      // }, [email, hash]);
+
+
+                                                      let data = null;
+                                                      setResponseMessage("Transaction Processing ...");
+
+                                                      if (res.ok) {
+                                                          try {
+                                                              data = await response.json();
+                                                              console.log("Server response:", data);
+
+                                                              setResponseMessage("✅ Transaction request sent successfully!");
+                                                              // setProfits(prev => prev - amount);
+                                                          } catch (err) {
+                                                              console.error("Failed to parse JSON:", err);
+                                                              setResponseMessage("❌ Error: Invalid response format.");
+                                                              return;
+                                                          }
+                                                      } else {
+                                                          const errorMessage = data?.error || "Something went wrong.";
+                                                          setResponseMessage(`❌ ${errorMessage}`);
+                                                      }
+                                                  } catch (error) {
+                                                      console.error("Request error:", error);
+                                                      setResponseMessage("❌ Network error. Please try again.");
                                                   }
-                                              } else {
-                                                  const errorMessage = data?.error || "Something went wrong.";
-                                                  setResponseMessage(`❌ ${errorMessage}`);
-                                              }
                                           } catch (error) {
-                                              console.error("Request error:", error);
-                                              setResponseMessage("❌ Network error. Please try again.");
+                                              console.log("Withdraw error here:", error)
                                           }
                                       }}
+
                                   >
                                       Withdraw from Profits
                                   </Button>
-                                  )}
+                                   {/*)}*/}
                                   <Button className="w-full border-cyan-700 border hover:bg-white/10"
                                   >
                                       Withdraw from Referral Profits
