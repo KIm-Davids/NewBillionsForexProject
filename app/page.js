@@ -16,7 +16,7 @@ const Page = () => (
         <FeatureSection />
       </section>
       <WorkFlow />
-      <Pricing />
+      {/*<Pricing />*/}
       <Login />
       <section id="testimonial-section">
         <Testimonials />

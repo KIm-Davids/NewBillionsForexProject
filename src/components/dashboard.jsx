@@ -14,6 +14,7 @@ import { UserStats } from './user-stats';
 import { RecentActivities } from './recent-activities';
 import {FaSyncAlt} from "react-icons/fa";
 import { RecentActivitiesWithdraw } from './recent-activities-withdrawal';
+import { RecentActivitiesReferral } from './recent-activities-referrals';
 
 export const Dashboard = () => {
   const { theme, setTheme } = useTheme();
@@ -145,11 +146,11 @@ export const Dashboard = () => {
 
             <Card>
                   <CardHeader>
-                    <CardTitle>User Balance withdrawal</CardTitle>
-                    <CardDescription>Monitor recent user withdrawals their balance</CardDescription>
+                    <CardTitle>User Refer withdrawal</CardTitle>
+                    <CardDescription>Monitor recent user referral withdrawals</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <RecentActivitiesWithdraw />
+                    <RecentActivitiesReferral />
                   </CardContent>
                 </Card>
           </TabsContent>

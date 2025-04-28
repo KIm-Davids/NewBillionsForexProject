@@ -72,6 +72,11 @@
       const [withdrawDate, setWithdrawDate] = useState("");
       const [bonusAmount, setBonusAmount] = useState(0);
       const [isConfirmed, setIsConfirmed] = useState(false);
+      const [isCooldown, setIsCooldown] = useState(false);
+      const [dailyProfit, setDailyProfit] = useState(0);
+      const [pendingWithdrawals, setPendingWithdrawals] = useState(0);
+      const [referralAmount, setReferralAmount] = useState(0);
+
 
 
       const [referralCount, setReferralCount] = useState(0);
@@ -322,16 +327,17 @@
 
 
                                       try {
-                                          const userEmail = localStorage.getItem('userEmail')
+                                          const referrerId = localStorage.getItem('referralCode')
+                                          const userEmail = localStorage.getItem("userEmail");
                                           const response = await fetch(`${API_URL}/fundReferrer`, {
                                               method: 'POST',
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({ email: userEmail }),
+                                              body: JSON.stringify({email: userEmail, referrerId: referrerId}),
                                           });
 
-                                          console.log(userEmail)
+                                          console.log(referrerId)
 
                                           const data = await response.json();
                                           console.log("About referrer here", data)
@@ -346,13 +352,12 @@
                                       }
 
 
-
-                                  try {
+                                      try {
                                           const amount = parseFloat(withdrawAmount);
                                           const userEmail = localStorage.getItem('userEmail');
 
                                           if (!userEmail || isNaN(amount) || amount < 0) {
-                                              console.error("Invalid email or amount", { userEmail, amount });
+                                              console.error("Invalid email or amount", {userEmail, amount});
                                               return;
                                           }
 
@@ -366,16 +371,16 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({ email: userEmail, amount: amount }),
+                                              body: JSON.stringify({email: userEmail, amount: amount}),
                                           });
 
                                           const data = await res.json();
                                           console.log("Net Profit Data:", data);
 
-                                      if (data.withdrawal !== undefined) {
-                                          const formattedWithdrawal = parseFloat(data.withdrawal).toFixed(2);
-                                          setProfits(formattedWithdrawal);
-                                      }
+                                          if (data.withdrawal !== undefined) {
+                                              const formattedWithdrawal = parseFloat(data.withdrawal).toFixed(2);
+                                              // setProfits(formattedWithdrawal);
+                                          }
 
 
                                           if (!res.ok) {
@@ -384,7 +389,6 @@
                                       } catch (error) {
                                           console.error("Somethings up here", error);
                                       }
-
 
 
                                       try {
@@ -406,20 +410,25 @@
                                               headers: {
                                                   'Content-Type': 'application/json',
                                               },
-                                              body: JSON.stringify({email: userEmail}),
+                                              body: JSON.stringify({
+                                                  email: userEmail,
+                                                  referralId: referrerId
+
+                                              }),
                                           });
 
                                           // Parse the response
                                           const data = await res.json();
 
-                                          console.log('Referral Bonuses:', data);
+                                          console.log('Referral Bonuses Data:', data);
 
                                           if (!res.ok) {
                                               throw new Error("Failed to fetch referral bonus details.");
                                           }
                                           // Handle the response
-                                          if (data.bonus_amount) {
-                                              console.log('Referral Bonuses:', data.bonus_amount);
+                                          if (data.Referrer_Bonus) {
+                                              console.log('Referral Bonuses:', data.Referrer_Bonus);
+                                              // setBonusAmount(data.Referrer_Bonus)
                                               // Here you can display the bonuses or use them in the UI
                                           } else {
                                               console.error("No bonuses found or an error occurred.", data);
@@ -490,102 +499,123 @@
                                       }
 
 
+                                      //DAily Profit
+                                      try {
+                                          const userEmail = localStorage.getItem("userEmail");
 
-                                      // const data = await res.json();
+                                          // Fetch daily profit
+                                          const dailyResponse = await fetch(`${API_URL}/getDailyProfit`, {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({email: userEmail}),
+                                          });
 
+                                          const dailyData = await dailyResponse.json();
+                                          console.log("Daily profit data:", dailyData);
 
-                                          //     if (data.bonus_amount) {
-                                          //         setBonusAmount(data.bonus_amount);
-                                          //     } else {
-                                          //         console.error("No bonus available or an error occurred.", data);
-                                          //     }
-                                          // } catch (error) {
-                                          //     console.error("Failed to fetch referral bonus. Please try again later.");
-                                          // }
+                                          if (dailyData) {
+                                              console.log("About daily data:", dailyData)
 
-
-                                          //     fetch("https://billions-backend-1.onrender.com/getDailyProfit", {
-                                          //         method: "POST",
-                                          //         headers: {
-                                          //             "Content-Type": "application/json",
-                                          //         },
-                                          //         body: JSON.stringify({email: userEmail}),
-                                          //     })
-                                          //         .then(async (res) => {
-                                          //             const text = await res.text();
-                                          //             console.log("RAW RESPONSE TEXT:", text); // 🔍 Look at this in the browser console
-                                          //             // return JSON.parse(text);
-                                          //         })
-                                          //         .then((data) => {
-                                          //             console.log("Parsed JSON:", data);
-                                          //         })
-                                          //         .catch((err) => {
-                                          //             console.error("Error fetching daily profit:", err);
-                                          //         });
-                                          // } catch (error) {
-                                          //     console.error("Something happened here", error)
-                                          // }
-
-
-                                          //DAily Profit
-                                          try {
-                                              const userEmail = localStorage.getItem("userEmail");
-
-                                              // Fetch daily profit
-                                              const dailyResponse = await fetch(`${API_URL}/getDailyProfit`, {
-                                                  method: 'POST',
-                                                  headers: {
-                                                      'Content-Type': 'application/json',
-                                                  },
-                                                  body: JSON.stringify({email: userEmail}),
-                                              });
-
-                                              const dailyData = await dailyResponse.json();
-                                              console.log("Daily profit data:", dailyData);
-
-                                              if (dailyResponse.ok) {
-                                                  const userProfitEntry = dailyData.entry;
-                                                  //
-                                                  // if (userProfitEntry) {
-                                                  //     setProfits(userProfitEntry.Amount);
-                                                  //     localStorage.setItem('userProfit', userProfitEntry.Amount);
-                                                  // }
-                                                  //
-                                                  // // If the source is "daily profit", use net profit
-                                                  // if (userProfitEntry?.source === "daily profit") {
-                                                  //     setProfits(userProfitEntry.net_profit);
-                                                  // }
-                                                  //
-                                                  // // If the source is "net profit calculation", fetch net profit
-                                                  // if (userProfitEntry?.source === "net profit calculation") {
-                                                      try {
-                                                          const netProfitResponse = await fetch(`${API_URL}/getNetProfit`, {
-                                                              method: 'POST',
-                                                              headers: {
-                                                                  'Content-Type': 'application/json',
-                                                              },
-                                                              body: JSON.stringify({email: userEmail}),
-                                                          });
-
-                                                          const netProfitData = await netProfitResponse.json();
-                                                          console.log("Net profit response:", netProfitData);
-
-                                                          if (netProfitResponse.ok) {
-                                                              const formattedProfit = parseFloat(netProfitData.daily_profit).toFixed(2);
-                                                              setProfits(parseFloat(formattedProfit));
-                                                              // localStorage.setItem('userNetProfit', formattedProfit);
-                                                          } else {
-                                                              console.error(netProfitData.error || 'Failed to fetch net profit');
-                                                          }
-                                                      } catch (err) {
-                                                          console.error("Error fetching net profit:", err);
-                                                      }
-                                                  }
-                                          } catch (err) {
-                                              console.error("Error fetching daily profit:", err);
                                           }
 
+                                      } catch (err) {
+                                          console.error("Something happened about profits:", err)
+                                      }
 
+
+                                              try {
+                                                  const userEmail = localStorage.getItem("userEmail");
+
+                                                  // Fetch daily profit
+                                                  const dailyResponse = await fetch(`${API_URL}/getNetProfit`, {
+                                                      method: 'POST',
+                                                      headers: {
+                                                          'Content-Type': 'application/json',
+                                                      },
+                                                      body: JSON.stringify({email: userEmail}),
+                                                  });
+
+                                                  const profitData = await dailyResponse.json();
+                                                  console.log("About profit here", profitData)
+
+                                                  if (dailyResponse.ok) {
+                                                      // setDailyProfit(parseFloat(profitData.daily_profit).toFixed(2));
+                                                      // setNetProfit(parseFloat(profitData.net_profit).toFixed(2));
+                                                      // setPendingWithdrawals(parseFloat(profitData.pending_withdrawals).toFixed(2));
+                                                      // setProfits(parseFloat(profitData.net_profit).toFixed(2)); // Postavljamo glavni profits display na net_profit
+                                                      setProfits(profitData.daily_profit);
+                                                  }
+                                              } catch (err) {
+                                                  console.error("Error fetching daily profit:", err);
+                                              }
+
+
+                                      try {
+                                          const userEmail = localStorage.getItem("userEmail");
+
+                                          // Fetch daily profit
+                                          const dailyResponse = await fetch(`${API_URL}/getNetProfit`, {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({email: userEmail}),
+                                          });
+
+                                          const profitData = await dailyResponse.json();
+                                          console.log("About daily profit here:", profitData)
+
+                                          if (dailyResponse.ok) {
+                                              setDailyProfit(profitData.daily_profit);
+                                          }
+                                      } catch (err) {
+                                          console.error("Error fetching daily profit:", err);
+                                      }
+
+
+                                      try {
+                                          const userEmail = localStorage.getItem("userEmail");
+
+                                          if (!userEmail) {
+                                              console.error("User email is missing in localStorage");
+                                              return;
+                                          }
+
+                                          const dailyResponse = await fetch(`${API_URL}/fetch-pending-withdrawals`, {
+                                              method: 'POST',
+                                              headers: {
+                                                  'Content-Type': 'application/json',
+                                              },
+                                              body: JSON.stringify({ email: userEmail }),
+                                          });
+
+                                          if (!dailyResponse.ok) {
+                                              const errorText = await dailyResponse.text();
+                                              console.error("Server responded with error:", errorText);
+                                              return;
+                                          }
+
+                                          const profitData = await dailyResponse.json();
+                                          console.log("Pending withdraw profit details:", profitData);
+
+                                          if(profitData.final_withdrawable) {
+                                              setPendingWithdrawals(profitData.final_withdrawable);
+                                          }
+
+                                      } catch (err) {
+                                          console.error("Error fetching daily profit:", err);
+                                      }
+
+
+
+
+
+
+
+
+                                      // }
 
 
                                           // Function to generate a random referral code
@@ -652,10 +682,11 @@
                           <CardHeader className="pb-2">
                               <CardDescription>Profits</CardDescription>
                               <CardTitle className="text-3xl font-bold text-green-600">${profits}</CardTitle>
+                              {/*<div className="text-l font-bold text-yellow-600">pending withdrawals -${pendingWithdrawals}</div>*/}
 
                           </CardHeader>
                           <CardContent>
-                              {/*<Badge go o*/}
+                          {/*<Badge go o*/}
                               {/*       variant="outline"*/}
                               {/*       className="bg-green-50 text-green-700 hover:bg-green-50 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-950"*/}
                               {/*>*/}
@@ -971,6 +1002,7 @@
                                               id="withdraw-name"
                                               placeholder="Your email"
                                               value={email}
+                                              required
                                               onChange={(e) => setEmail(e.target.value)}
                                           />
                                       </div>
@@ -984,6 +1016,7 @@
                                               id="withdraw-wallet"
                                               placeholder="Enter wallet address"
                                               value={withdrawWallet}
+                                              required
                                               onChange={(e) => setWithdrawWallet(e.target.value)}
                                           />
                                       </div>
@@ -1057,9 +1090,15 @@
                               <CardFooter>
                                   <Button
                                       className="w-full border-yellow-500 border hover:bg-white/10"
+                                      disabled={
+                                          !email || !withdrawAmount || !withdrawWallet || parseFloat(withdrawAmount) < 50 || isCooldown
+                                      }
                                       onClick={async () => {
+
+
                                           console.log('Withdraw from Balance button clicked');
                                           const amount = parseFloat(withdrawAmount);
+                                          // setProfits(prev => prev - amount);
 
                                           if (isNaN(amount) || amount <= 0) {
                                               setResponseMessage("❌ Please enter a valid amount.");
@@ -1097,7 +1136,6 @@
                                                   try {
                                                       console.log("Server response:", data);
                                                       setResponseMessage("✅ Transaction request sent successfully!");
-                                                      // setBalance(prev => prev - amount);
                                                   } catch (err) {
                                                       console.error("Failed to parse JSON:", err);
                                                       setResponseMessage("❌ Error: Invalid response format.");
@@ -1119,9 +1157,26 @@
                                   {/*{isConfirmed && (*/}
                                   <Button
                                       className="w-full border-green-500 border hover:bg-white/10"
+                                      disabled={
+                                          !email || !withdrawAmount || !withdrawWallet || parseFloat(withdrawAmount) < 10 || isCooldown
+                                      }
+
                                       onClick={async () => {
-                                          console.log('Withdraw from Profits button clicked');
+
                                           const amount = parseFloat(withdrawAmount);
+                                          await fetch(`${API_URL}/saveWithdrawnAmount`, {
+                                              method: "POST",
+                                              headers: {
+                                                  "Content-Type": "application/json",
+                                              },
+                                              body: JSON.stringify({
+                                                  email: email,
+                                                  deductedProfit: profits - amount, // the new profits value
+                                              }),
+                                          });
+
+                                          console.log('Withdraw from Profits button clicked');
+                                          // const amount = parseFloat(withdrawAmount);
 
                                           if (isNaN(amount) || amount <= 0) {
                                               setResponseMessage("❌ Please enter a valid amount.");
@@ -1132,8 +1187,12 @@
                                               setResponseMessage("❌ You don't have enough profits for this withdrawal.");
                                               return;
                                           }
-                                          try {
 
+                                          if(amount < 10) {
+                                              setResponseMessage("❌ Minimum profit withdrawal is $10.00")
+                                          }
+
+                                          try {
                                               console.log({
                                                   email,
                                                   walletType,
@@ -1143,8 +1202,9 @@
                                               });
                                               // useEffect(() => {
                                               // const checkDepositStatus = async () => {
-                                                  if (!email || !hash) return;
+                                              //     if (!email || !hash) return;
 
+                                              if(amount >= 10) {
                                                   try {
                                                       // const res = await fetch("https://billions-backend-1.onrender.com/check-deposit", {
                                                       const res = await fetch(`${API_URL}/withdrawProfit`, {
@@ -1153,25 +1213,16 @@
                                                           headers: {
                                                               "Content-Type": "application/json",
                                                           },
-                                                          body: JSON.stringify({email, hash}),
+                                                          body: JSON.stringify({
+                                                              email,
+                                                              walletType: walletType,
+                                                              withdrawAddress: withdrawWallet,
+                                                              amount: withdrawAmount,
+                                                              status: "pending",
+                                                              description: withdrawDescription,
+                                                              source: "daily profit"
+                                                          }),
                                                       });
-
-                                                      // const data = await res.json();
-
-                                                      //     console.log("withdraw response: ", data)
-                                                      //     if (res.ok && data.status === "confirmed") {
-                                                      //         setIsConfirmed(true);
-                                                      //     } else {
-                                                      //         setIsConfirmed(false);
-                                                      //     }
-                                                      // } catch (err) {
-                                                      //     console.error("Error checking deposit status:", err);
-                                                      //     setIsConfirmed(false);
-                                                      // }
-
-                                                      //
-                                                      //     checkDepositStatus();
-                                                      // }, [email, hash]);
 
 
                                                       let data = null;
@@ -1179,11 +1230,17 @@
 
                                                       if (res.ok) {
                                                           try {
-                                                              data = await response.json();
+                                                              data = await res.json();
                                                               console.log("Server response:", data);
 
                                                               setResponseMessage("✅ Transaction request sent successfully!");
-                                                              // setProfits(prev => prev - amount);
+                                                              setProfits(prev => prev - amount);
+
+                                                              // Start 30-second cooldown
+                                                              setIsCooldown(true);
+                                                              setTimeout(() => {
+                                                                  setIsCooldown(false);
+                                                              }, 30000); // 30 seconds = 30,000 milliseconds
                                                           } catch (err) {
                                                               console.error("Failed to parse JSON:", err);
                                                               setResponseMessage("❌ Error: Invalid response format.");
@@ -1197,16 +1254,120 @@
                                                       console.error("Request error:", error);
                                                       setResponseMessage("❌ Network error. Please try again.");
                                                   }
+                                              }
+                                              //outside try and catch
                                           } catch (error) {
                                               console.log("Withdraw error here:", error)
                                           }
                                       }}
-
                                   >
-                                      Withdraw from Profits
+                                      {isCooldown ? "Please wait..." : "Withdraw from Profits"}
                                   </Button>
                                    {/*)}*/}
+                                  {/*Referral Section*/}
                                   <Button className="w-full border-cyan-700 border hover:bg-white/10"
+                                          disabled={
+                                              !email || !withdrawAmount || !withdrawWallet || parseFloat(withdrawAmount) < 50 || isCooldown
+                                          }
+
+
+                                          onClick={async () => {
+                                              const amount = parseFloat(withdrawAmount);
+
+                                              await fetch(`${API_URL}/withdrawReferBonus`, {
+                                                  method: "POST",
+                                                  headers: {
+                                                      "Content-Type": "application/json",
+                                                  },
+                                                  body: JSON.stringify({
+                                                      email: email,
+                                                      deductedBonus: bonusAmount - amount, // 👈 new bonus after withdrawal
+                                                  }),
+                                              });
+
+                                              if (isNaN(amount) || amount <= 0) {
+                                                  setResponseMessage("❌ Please enter a valid amount.");
+                                                  return;
+                                              }
+
+                                              if (amount > bonusAmount) {
+                                                  setResponseMessage("❌ You don't have enough profits for this withdrawal.");
+                                                  return;
+                                              }
+
+                                              if(amount < 50) {
+                                                  setResponseMessage("❌ Minimum profit withdrawal is $50.00")
+                                              }
+
+                                              try {
+                                                  console.log({
+                                                      email,
+                                                      walletType,
+                                                      status: 'pending',
+                                                      amount,
+                                                      description: withdrawDescription
+                                                  });
+                                                  // useEffect(() => {
+                                                  // const checkDepositStatus = async () => {
+                                                  //     if (!email || !hash) return;
+
+                                                  if(amount >= 50) {
+                                                      try {
+                                                          // const res = await fetch("https://billions-backend-1.onrender.com/check-deposit", {
+                                                          const res = await fetch(`${API_URL}/processReferBonusWithdrawal`, {
+                                                              method: "POST",
+                                                              credentials: 'include',
+                                                              headers: {
+                                                                  "Content-Type": "application/json",
+                                                              },
+                                                              body: JSON.stringify({
+                                                                  email,
+                                                                  walletType: walletType,
+                                                                  withdrawAddress: withdrawWallet,
+                                                                  amount: amount,
+                                                                  status: "pending",
+                                                                  description: withdrawDescription,
+                                                                  source: "referral"
+                                                              }),
+                                                          });
+
+
+                                                          let data = null;
+                                                          setResponseMessage("Transaction Processing ...");
+
+                                                          if (res.ok) {
+                                                              try {
+                                                                  data = await res.json();
+                                                                  console.log("Server response:", data);
+
+                                                                  setResponseMessage("✅ Transaction request sent successfully!");
+                                                                  setBonusAmount(prev => prev - amount);
+
+                                                                  // Start 30-second cooldown
+                                                                  setIsCooldown(true);
+                                                                  setTimeout(() => {
+                                                                      setIsCooldown(false);
+                                                                  }, 30000); // 30 seconds = 30,000 milliseconds
+                                                              } catch (err) {
+                                                                  console.error("Failed to parse JSON:", err);
+                                                                  setResponseMessage("❌ Error: Invalid response format.");
+                                                                  return;
+                                                              }
+                                                          } else {
+                                                              const errorMessage = data?.error || "Something went wrong.";
+                                                              setResponseMessage(`❌ ${errorMessage}`);
+                                                          }
+                                                      } catch (error) {
+                                                          console.error("Request error:", error);
+                                                          setResponseMessage("❌ Network error. Please try again.");
+                                                      }
+                                                  }
+                                                  //outside try and catch
+                                              } catch (error) {
+                                                  console.log("Withdraw error here:", error)
+                                              }
+                                          }
+                                          }
                                   >
                                       Withdraw from Referral Profits
                                   </Button>
