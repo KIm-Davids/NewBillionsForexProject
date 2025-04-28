@@ -7,8 +7,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 
 export const RecentActivities = () => {
 
-  const API_URL = 'http://localhost:8080';
-  // const API_URL = 'https://billions-backend-1.onrender.com';
+  // const API_URL = 'http://localhost:8080';
+  const API_URL = 'https://billions-backend-1.onrender.com';
 
   const [deposits, setDeposits] = useState([]);
 
