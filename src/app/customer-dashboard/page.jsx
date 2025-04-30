@@ -545,7 +545,11 @@
 
                                                   if (dailyResponse.ok) {
 
-                                                      setProfits(profitData.daily_profit);
+                                                      if(profitData.daily_profit < 0) {
+                                                        setProfits(0)
+                                                      }else {
+                                                          setProfits(profitData.daily_profit);
+                                                      }
                                                   }
                                               } catch (err) {
                                                   console.error("Error fetching daily profit:", err);
@@ -1234,7 +1238,9 @@
                                                               console.log("Server response:", data);
 
                                                               setResponseMessage("✅ Transaction request sent successfully!");
-                                                              setProfits(prev => prev - amount);
+                                                              if(profits > 0) {
+                                                                  setProfits(prev => prev - amount);
+                                                              }
 
                                                               // Start 30-second cooldown
                                                               setIsCooldown(true);
