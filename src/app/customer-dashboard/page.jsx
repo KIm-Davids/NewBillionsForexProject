@@ -418,7 +418,7 @@
                                               }),
                                           });
 
-                                          console.log(res)
+                                          // console.log(res)
 
                                           // Parse the response
                                           const data = await res.json();
@@ -1281,7 +1281,7 @@
                                                   },
                                                   body: JSON.stringify({
                                                       email: email,
-                                                      deductedBonus: bonusAmount - amount, // 👈 new bonus after withdrawal
+                                                      deductedBonus: bonusAmount, // 👈 new bonus after withdrawal
                                                   }),
                                               });
 
