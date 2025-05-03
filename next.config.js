@@ -9,7 +9,7 @@
 // module.exports = nextConfig;
 
 
-next.config.js
+// next.config.js
 module.exports = {
   async redirects() {
     return [
