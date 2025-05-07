@@ -106,7 +106,7 @@
                   const savedEmail = localStorage.getItem('userEmail');
 
                   if (!savedEmail) {
-                      console.error("No email found in localStorage");
+                      // console.error("No email found in localStorage");
                       return;
                   }
                   const response = await fetch(`${API_URL}/getUserInfo`, {
@@ -122,7 +122,7 @@
                   }
 
                   const balanceData = await response.json();
-                  console.log("User Info Response:", balanceData);
+                  // console.log("User Info Response:", balanceData);
 
                   if (balanceData.balance) {
                       setBalance(parseFloat(balanceData.balance).toFixed(2));
@@ -132,7 +132,7 @@
                   }
                   setLastUpdated(new Date().toLocaleString());
               } catch (err) {
-                  console.error("Failed to fetch balance", err);
+                  // console.error("Failed to fetch balance", err);
               } finally {
                   setLoading(false);
               }
@@ -148,7 +148,7 @@
               try {
                   const userEmail = localStorage.getItem('userEmail');
                   if (!userEmail) {
-                      console.error("No user email found in localStorage");
+                      // console.error("No user email found in localStorage");
                       return;
                   }
 
@@ -161,16 +161,16 @@
                   });
 
                   const data = await response.json();
-                  console.log("Referral code response:", data);
+                  // console.log("Referral code response:", data);
 
                   if (response.ok && data.referral_code) {
                       setReferralCode(data.referral_code);
                       localStorage.setItem("referralCode", data.referral_code);
                   } else {
-                      console.warn("Referral code not found or error from backend:", data.error);
+                      // console.warn("Referral code not found or error from backend:", data.error);
                   }
               } catch (error) {
-                  console.error("Failed to fetch referral code:", error);
+                  // console.error("Failed to fetch referral code:", error);
               }
           };
 
@@ -200,7 +200,7 @@
                       setIsConfirmed(false);
                   }
               } catch (err) {
-                  console.error("Error checking deposit status:", err);
+                  // console.error("Error checking deposit status:", err);
                   setIsConfirmed(false);
               }
           };
@@ -225,7 +225,7 @@
                       setIsConfirmed(false);
                   }
               } catch (err) {
-                  console.error("Failed to fetch deposit status", err);
+                  // console.error("Failed to fetch deposit status", err);
               }
           };
 
@@ -280,7 +280,7 @@
               navigator.clipboard.writeText(text).then(() => {
                   alert(message);
               }).catch(err => {
-                  console.error("Failed to copy text: ", err);
+                  // console.error("Failed to copy text: ", err);
               });
           }
       };
@@ -338,10 +338,10 @@
                                               body: JSON.stringify({email: userEmail, referrerId: referrerId}),
                                           });
 
-                                          console.log(referrerId)
+                                          // console.log(referrerId)
 
                                           const data = await response.json();
-                                          console.log("About referrer here", data)
+                                          // console.log("About referrer here", data)
 
 
                                              if (!response.ok) {
@@ -349,7 +349,7 @@
                                           }
                                               setBonusAmount(data.total_bonus);
                                       } catch (err) {
-                                          console.error("Check here", err)
+                                          // console.error("Check here", err)
                                       }
 
 
@@ -358,14 +358,14 @@
                                           const userEmail = localStorage.getItem('userEmail');
 
                                           if (!userEmail || isNaN(amount) || amount < 0) {
-                                              console.error("Invalid email or amount", {userEmail, amount});
+                                              // console.error("Invalid email or amount", {userEmail, amount});
                                               return;
                                           }
 
-                                          console.log("Sending withdrawal request:", {
-                                              email: userEmail,
-                                              amount: amount,
-                                          });
+                                          // console.log("Sending withdrawal request:", {
+                                          //     email: userEmail,
+                                          //     amount: amount,
+                                          // });
 
                                           const res = await fetch(`${API_URL}/getWithdrawProfit`, {
                                               method: 'POST',
@@ -376,7 +376,7 @@
                                           });
 
                                           const data = await res.json();
-                                          console.log("Net Profit Data:", data);
+                                          // console.log("Net Profit Data:", data);
 
                                           if (data.withdrawal !== undefined) {
                                               const formattedWithdrawal = parseFloat(data.withdrawal).toFixed(2);
@@ -388,7 +388,7 @@
                                               throw new Error("Failed to fetch referral bonus.");
                                           }
                                       } catch (error) {
-                                          console.error("Somethings up here", error);
+                                          // console.error("Somethings up here", error);
                                       }
 
 
@@ -398,12 +398,12 @@
 
                                           // Check if the referral code exists in localStorage
                                           if (!referrerId) {
-                                              console.error("Referrer ID is missing from localStorage.");
+                                              // console.error("Referrer ID is missing from localStorage.");
                                               return;
                                           }
 
                                           const userEmail = localStorage.getItem('userEmail')
-                                          console.log(referralCode)
+                                          // console.log(referralCode)
 
                                           // Make the POST request to your backend API
                                           const res = await fetch(`${API_URL}/getReferBonus`, {
@@ -423,21 +423,21 @@
                                           // Parse the response
                                           const data = await res.json();
 
-                                          console.log('Referral Bonuses Data:', data);
+                                          // console.log('Referral Bonuses Data:', data);
 
                                           if (!res.ok) {
                                               throw new Error("Failed to fetch referral bonus details.");
                                           }
                                           // Handle the response
                                           if (data.Referrer_Bonus) {
-                                              console.log('Referral Bonuses:', data.Referrer_Bonus);
+                                              // console.log('Referral Bonuses:', data.Referrer_Bonus);
                                               // setBonusAmount(data.Referrer_Bonus)
                                               // Here you can display the bonuses or use them in the UI
                                           } else {
-                                              console.error("No bonuses found or an error occurred.", data);
+                                              // console.error("No bonuses found or an error occurred.", data);
                                           }
                                       } catch (error) {
-                                          console.error("Error fetching referral bonuses:", error);
+                                          // console.error("Error fetching referral bonuses:", error);
                                       }
 
 
@@ -445,7 +445,7 @@
                                           const email = localStorage.getItem("userEmail");
 
                                           if (!email) {
-                                              console.error("No user email found in localStorage.");
+                                              // console.error("No user email found in localStorage.");
                                               return;
                                           }
                                       }
@@ -462,15 +462,15 @@
 
                                           const data = await response.json();
 
-                                          console.log(data)
+                                          // console.log(data)
                                           if (response.ok && data.referral_code) {
                                               setReferralCode(data.referral_code);
                                               localStorage.setItem("referralCode", data.referral_code);
                                           } else {
-                                              console.warn("Referral code not found or error from backend:", data.error);
+                                              // console.warn("Referral code not found or error from backend:", data.error);
                                           }
                                       } catch (error) {
-                                          console.error("Failed to fetch referral code:", error);
+                                          // console.error("Failed to fetch referral code:", error);
                                       }
 
                                       await fetchReferralCode();
@@ -490,7 +490,7 @@
                                           }
 
                                           const data = await res.json();
-                                          console.log("Referral Count Data:", data);
+                                          // console.log("Referral Count Data:", data);
 
                                           // Use the referral count from the response
                                           if (data.referral_count !== undefined) {
@@ -498,7 +498,7 @@
                                           }
 
                                       } catch (error) {
-                                          console.error("Error fetching referral count:", error);
+                                          // console.error("Error fetching referral count:", error);
                                       }
 
 
@@ -516,15 +516,15 @@
                                           });
 
                                           const dailyData = await dailyResponse.json();
-                                          console.log("Daily profit data:", dailyData);
+                                          // console.log("Daily profit data:", dailyData);
 
                                           if (dailyData) {
-                                              console.log("About daily data:", dailyData)
+                                              // console.log("About daily data:", dailyData)
 
                                           }
 
                                       } catch (err) {
-                                          console.error("Something happened about profits:", err)
+                                          // console.error("Something happened about profits:", err)
                                       }
 
 
@@ -545,14 +545,14 @@
 
                                                   if (dailyResponse.ok) {
 
-                                                      if(profitData.daily_profit < 0) {
+                                                      if(profitData.newProfit < 0) {
                                                         setProfits(0)
                                                       }else {
-                                                          setProfits(profitData.daily_profit);
+                                                          setProfits(profitData.newProfit);
                                                       }
                                                   }
                                               } catch (err) {
-                                                  console.error("Error fetching daily profit:", err);
+                                                  // console.error("Error fetching daily profit:", err);
                                               }
 
 
@@ -569,13 +569,13 @@
                                           });
 
                                           const profitData = await dailyResponse.json();
-                                          console.log("About daily profit here:", profitData)
+                                          // console.log("About daily profit here:", profitData)
 
                                           if (dailyResponse.ok) {
                                               setDailyProfit(profitData.daily_profit);
                                           }
                                       } catch (err) {
-                                          console.error("Error fetching daily profit:", err);
+                                          // console.error("Error fetching daily profit:", err);
                                       }
 
 
@@ -583,7 +583,7 @@
                                           const userEmail = localStorage.getItem("userEmail");
 
                                           if (!userEmail) {
-                                              console.error("User email is missing in localStorage");
+                                              // console.error("User email is missing in localStorage");
                                               return;
                                           }
 
@@ -597,19 +597,19 @@
 
                                           if (!dailyResponse.ok) {
                                               const errorText = await dailyResponse.text();
-                                              console.error("Server responded with error:", errorText);
+                                              // console.error("Server responded with error:", errorText);
                                               return;
                                           }
 
                                           const profitData = await dailyResponse.json();
-                                          console.log("Pending withdraw profit details:", profitData);
+                                          // console.log("Pending withdraw profit details:", profitData);
 
                                           if(profitData.final_withdrawable) {
                                               setPendingWithdrawals(profitData.final_withdrawable);
                                           }
 
                                       } catch (err) {
-                                          console.error("Error fetching daily profit:", err);
+                                          // console.error("Error fetching daily profit:", err);
                                       }
 
 
@@ -639,9 +639,9 @@
                                                   },
                                                   body: JSON.stringify({email: savedEmail.toString()}), // Send email in the body
                                               });
-                                              console.log(email)
+                                              // console.log(email)
                                               const balanceData = await response.json();
-                                              console.log("User Info Response:", balanceData.packages);
+                                              // console.log("User Info Response:", balanceData.packages);
                                               setBalance(parseFloat(balanceData.balance).toFixed(2));
 
                                               setFetchedPackage(balanceData.packages);
@@ -649,7 +649,7 @@
                                           }
 
                                       } catch (err) {
-                                          console.error("Failed to fetch balance", err);
+                                          // console.error("Failed to fetch balance", err);
                                       } finally {
                                           setLoading(false);
                                       }
@@ -934,7 +934,7 @@
                                           // }
 
                                           try {
-                                              console.log(email)
+                                              // console.log(email)
                                               const response = await fetch(`${API_URL}/deposit`, {
                                                   method: "POST",
                                                   credentials: 'include',
@@ -962,7 +962,7 @@
                                                   setResponseMessage(`❌ ${errorMessage}`);
                                               }
                                           } catch (error) {
-                                              console.error("Request error:", error);
+                                              // console.error("Request error:", error);
                                               setResponseMessage("❌ Network error. Please try again.");
                                           }
 
@@ -1100,7 +1100,7 @@
                                       onClick={async () => {
 
 
-                                          console.log('Withdraw from Balance button clicked');
+                                          // console.log('Withdraw from Balance button clicked');
                                           const amount = parseFloat(withdrawAmount);
                                           // setProfits(prev => prev - amount);
 
@@ -1134,14 +1134,14 @@
 
                                               let data = null;
                                               data = await response.json();
-                                              console.log("User email", packageType)
-                                              console.log("Server response:", data.unlock_date);
+                                              // console.log("User email", packageType)
+                                              // console.log("Server response:", data.unlock_date);
                                               if (response.ok) {
                                                   try {
-                                                      console.log("Server response:", data);
+                                                      // console.log("Server response:", data);
                                                       setResponseMessage("✅ Transaction request sent successfully!");
                                                   } catch (err) {
-                                                      console.error("Failed to parse JSON:", err);
+                                                      // console.error("Failed to parse JSON:", err);
                                                       setResponseMessage("❌ Error: Invalid response format.");
                                                       return;
                                                   }
@@ -1150,7 +1150,7 @@
                                                   setResponseMessage(`❌ ${errorMessage} until ${data.unlock_date}`);
                                               }
                                           } catch (error) {
-                                              console.error("Request error:", error);
+                                              // console.error("Request error:", error);
                                               setResponseMessage("❌ Network error. Please try again.");
                                           }
                                       }}
@@ -1179,7 +1179,7 @@
                                               }),
                                           });
 
-                                          console.log('Withdraw from Profits button clicked');
+                                          // console.log('Withdraw from Profits button clicked');
                                           // const amount = parseFloat(withdrawAmount);
 
                                           if (isNaN(amount) || amount <= 0) {
@@ -1197,13 +1197,13 @@
                                           }
 
                                           try {
-                                              console.log({
-                                                  email,
-                                                  walletType,
-                                                  status: 'pending',
-                                                  amount,
-                                                  description: withdrawDescription
-                                              });
+                                              // // console.log({
+                                              //     email,
+                                              //     walletType,
+                                              //     status: 'pending',
+                                              //     amount,
+                                              //     description: withdrawDescription
+                                              // });
                                               // useEffect(() => {
                                               // const checkDepositStatus = async () => {
                                               //     if (!email || !hash) return;
@@ -1235,7 +1235,7 @@
                                                       if (res.ok) {
                                                           try {
                                                               data = await res.json();
-                                                              console.log("Server response:", data);
+                                                              // console.log("Server response:", data);
 
                                                               setResponseMessage("✅ Transaction request sent successfully!");
                                                               if(profits > 0) {
@@ -1248,7 +1248,7 @@
                                                                   setIsCooldown(false);
                                                               }, 30000); // 30 seconds = 30,000 milliseconds
                                                           } catch (err) {
-                                                              console.error("Failed to parse JSON:", err);
+                                                              // console.error("Failed to parse JSON:", err);
                                                               setResponseMessage("❌ Error: Invalid response format.");
                                                               return;
                                                           }
@@ -1257,13 +1257,13 @@
                                                           setResponseMessage(`❌ ${errorMessage}`);
                                                       }
                                                   } catch (error) {
-                                                      console.error("Request error:", error);
+                                                      // console.error("Request error:", error);
                                                       setResponseMessage("❌ Network error. Please try again.");
                                                   }
                                               }
                                               //outside try and catch
                                           } catch (error) {
-                                              console.log("Withdraw error here:", error)
+                                              // console.log("Withdraw error here:", error)
                                           }
                                       }}
                                   >
@@ -1306,13 +1306,13 @@
                                               }
 
                                               try {
-                                                  console.log({
-                                                      email,
-                                                      walletType,
-                                                      status: 'pending',
-                                                      amount,
-                                                      description: withdrawDescription
-                                                  });
+                                                  // // console.log({
+                                                  //     email,
+                                                  //     walletType,
+                                                  //     status: 'pending',
+                                                  //     amount,
+                                                  //     description: withdrawDescription
+                                                  // });
                                                   // useEffect(() => {
                                                   // const checkDepositStatus = async () => {
                                                   //     if (!email || !hash) return;
@@ -1344,7 +1344,7 @@
                                                           if (res.ok) {
                                                               try {
                                                                   data = await res.json();
-                                                                  console.log("Server response:", data);
+                                                                  // console.log("Server response:", data);
 
                                                                   setResponseMessage("✅ Transaction request sent successfully!");
                                                                   setBonusAmount(prev => prev - amount);
@@ -1356,7 +1356,7 @@
                                                                       setIsCooldown(false);
                                                                   }, 30000); // 30 seconds = 30,000 milliseconds
                                                               } catch (err) {
-                                                                  console.error("Failed to parse JSON:", err);
+                                                                  // console.error("Failed to parse JSON:", err);
                                                                   setResponseMessage("❌ Error: Invalid response format.");
                                                                   return;
                                                               }
@@ -1365,13 +1365,13 @@
                                                               setResponseMessage(`❌ ${errorMessage}`);
                                                           }
                                                       } catch (error) {
-                                                          console.error("Request error:", error);
+                                                          // console.error("Request error:", error);
                                                           setResponseMessage("❌ Network error. Please try again.");
                                                       }
                                                   }
                                                   //outside try and catch
                                               } catch (error) {
-                                                  console.log("Withdraw error here:", error)
+                                                  // console.log("Withdraw error here:", error)
                                               }
                                           }
                                           }

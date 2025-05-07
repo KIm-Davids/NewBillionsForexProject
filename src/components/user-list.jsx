@@ -11,9 +11,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 
 // Get user data
 
-
-
-
 export const UserList = ({ searchQuery }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -21,6 +18,9 @@ export const UserList = ({ searchQuery }) => {
   const [users, setUsers] = useState([]);
   const [transaction, setTransaction] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [newBalance, setNewBalance] = useState('');
+  const [newProfit, setNewProfit] = useState('');
+  const [oldProfits, setOldProfits] = useState('');
 
   const filteredUsers = users.filter(
     (users) => users.username.toLowerCase().includes(searchQuery.toLowerCase())
@@ -29,18 +29,43 @@ export const UserList = ({ searchQuery }) => {
   );
 
   const API_URL = 'https://billions-backend-1.onrender.com';
+  // const API_URL = 'http://localhost:8080';
 
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch(`${API_URL}/fetch/users`, {
+          method: 'GET',
+          // credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!res.ok) throw new Error('Failed to fetch users');
+
+        const data = await res.json();
+        setUsers(data.users); // 👈 Correctly access the users array
+        console.log(data.users);
+        console.log(data.users.profits);
+      } catch (err) {
+        console.error('Error fetching users:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   // useEffect(() => {
-  //   const fetchUsers = async () => {
+  //   const fetchUsersProfit = async () => {
   //     try {
-  //       const res = await fetch(`https://billions-backend-1.onrender.com/get/users`, {
-  //         credentials: 'include',
-  //       }); // 👈 Replace with your actual endpoint
-  //       if (!res.ok) throw new Error('Failed to fetch');
+  //       const res = await fetch(`${API_URL}/fetch/user-profits`);
+  //       if (!res.ok) throw new Error('Failed to fetch users');
   //       const data = await res.json();
-  //       setUsers(data);
-  //       console.log(data);
+  //       setUsers(data.users);
   //     } catch (err) {
   //       console.error('Error fetching users:', err);
   //     } finally {
@@ -48,30 +73,8 @@ export const UserList = ({ searchQuery }) => {
   //     }
   //   };
   //
-  //   fetchUsers();
+  //   fetchUsersProfit();
   // }, []);
-
-
-  // useEffect(() => {
-  //   const fetchTransaction = async () => {
-  //     try {
-  //       const res = await fetch(`https://billions-backend-1.onrender.com/get/transaction`, {
-  //         credentials: 'include',
-  //       }); // 👈 Replace with your actual endpoint
-  //       if (!res.ok) throw new Error('Failed to fetch');
-  //       const data = await res.json();
-  //       console.log(data.transactions);
-  //       setTransaction(data.transactions);
-  //     } catch (err) {
-  //       console.error('Error fetching transaction:', err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //
-  //   fetchTransaction();
-  // }, []);
-
 
 
 
@@ -102,11 +105,11 @@ export const UserList = ({ searchQuery }) => {
           <TableRow>
             <TableHead>UserName</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Deposit</TableHead>
-            <TableHead>Withdraw due date</TableHead>
-            <TableHead>package type</TableHead>
-            <TableHead>Package Status</TableHead>
-            <TableHead>Transaction Type</TableHead>
+            {/*<TableHead>Deposit Amount</TableHead>*/}
+            <TableHead>Balance</TableHead>
+            <TableHead>Profit Amount</TableHead>
+            <TableHead>Referral Id</TableHead>
+            <TableHead>Referred By</TableHead>
             <TableHead>Registration Date</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -119,18 +122,24 @@ export const UserList = ({ searchQuery }) => {
                 <TableRow key={users.id} className={suspendedUsers.includes(users.id) ? 'opacity-50' : ''}>
                   <TableCell className="font-medium">{users.username}</TableCell>
                   <TableCell>{users.email}</TableCell>
-                  <TableCell>{userTransaction?.amount ?? '—'}</TableCell>
-                  <TableCell>{userTransaction.withdrawDueDate ?? '—'}</TableCell>
-                  <TableCell>{userTransaction?.packageType ?? '—'}</TableCell>
+                  <TableCell>{users?.balance ?? '—'}</TableCell>
                   <TableCell>
-                    <Badge variant={userTransaction?.status === 'Pending' ? 'success' : 'secondary'}>
-                      {userTransaction?.status === 'Pending' ? <Check className="mr-1 h-3 w-3" /> : <Ban className="mr-1 h-3 w-3" />}
-                      {userTransaction?.status ?? '—'}
-                    </Badge>
+                    {users.profits?.length > 0
+                        ? <span>{[...users.profits].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0].newProfit}</span>
+                        : '—'}
                   </TableCell>
-                  <TableCell>{userTransaction?.transactionType ?? '—'}</TableCell>
+                  {/*<TableCell>{userTransaction.withdrawDueDate ?? '—'}</TableCell>*/}
+                  <TableCell>{users?.referrerId ?? '—'}</TableCell>
                   <TableCell>
-                    {users.CreatedAt ? new Date(users.CreatedAt).toLocaleDateString() : '—'}
+                    {/*<TableCell></TableCell>*/}
+                    {users?.referred_by ?? '—'}
+                    {/*<Badge variant={userTransaction?.status === 'Pending' ? 'success' : 'secondary'}>*/}
+                    {/*  {userTransaction?.status === 'Pending' ? <Check className="mr-1 h-3 w-3" /> : <Ban className="mr-1 h-3 w-3" />}*/}
+                    {/*  {userTransaction?.status ?? '—'}*/}
+                    {/*</Badge>*/}
+                  </TableCell>
+                  <TableCell>
+                    {users.createdAt ? new Date(users.createdAt).toLocaleDateString() : '—'}
                   </TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
@@ -169,7 +178,7 @@ export const UserList = ({ searchQuery }) => {
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
                   <span className="text-sm font-medium">Name:</span>
-                  <span className="col-span-3">{selectedUser.name}</span>
+                  <span className="col-span-3">{selectedUser.username}</span>
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <span className="text-sm font-medium">Email:</span>
@@ -178,39 +187,59 @@ export const UserList = ({ searchQuery }) => {
                 {/*//Total deposit amount here*/}
 
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <span className="text-sm font-medium">Total Amount Deposited:</span>
-                  <span className="col-span-3">{selectedUser.amount}</span>
+                  <span className="text-sm font-medium">Total Balance:</span>
+                  <span className="col-span-3">{selectedUser.balance}</span>
                 </div>
 
                 {/*//Total withdraw amount here*/}
+                {/*<div className="grid grid-cols-4 items-center gap-4">*/}
+                {/*  <span className="text-sm font-medium">Total Amount Withdraw:</span>*/}
+                {/*  <span className="col-span-3">{selectedUser.amount}</span>*/}
+                {/*</div>*/}
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <span className="text-sm font-medium">Total Amount Withdraw:</span>
-                  <span className="col-span-3">{selectedUser.amount}</span>
+                  <label className="text-sm font-medium" htmlFor="balance">Balance:</label>
+                  <input
+                      id="balance"
+                      className="col-span-3 border border-blue-500 text-white rounded-md p-2"
+                      type="number"
+                      value={newBalance}
+                      onChange={(e) => setNewBalance(e.target.value)}
+                  />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <span className="text-sm font-medium">Withdraw due Date:</span>
-                  <span className="col-span-3">{selectedUser.withdrawDueDate}</span>
+                  <label className="text-sm font-medium" htmlFor="profit">Profit:</label>
+                  <input
+                      id="profit"
+                      className="col-span-3 border border-blue-500 text-white rounded-md p-2"
+                      type="number"
+                      value={newProfit}
+                      onChange={(e) => setNewProfit(e.target.value)}
+                  />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <span className="text-sm font-medium">Withdraw due Date:</span>
-                  <span className="col-span-3">
-                  <Badge variant={selectedUser.status === 'Online' ? 'success' : 'secondary'}>
-                    {selectedUser.status}
-                  </Badge>
-                </span>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <span className="text-sm font-medium">Last Active:</span>
-                  <span className="col-span-3">{selectedUser.lastActive}</span>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <span className="text-sm font-medium">Registered:</span>
-                  <span className="col-span-3">{selectedUser.registeredDate}</span>
-                </div>
+                {/*<div className="grid grid-cols-4 items-center gap-4">*/}
+                {/*  <span className="text-sm font-medium">Withdraw due Date:</span>*/}
+                {/*  <span className="col-span-3">{selectedUser.withdrawDueDate}</span>*/}
+                {/*</div>*/}
+                {/*<div className="grid grid-cols-4 items-center gap-4">*/}
+                {/*  <span className="text-sm font-medium">Withdraw due Date:</span>*/}
+                {/*  <span className="col-span-3">*/}
+                {/*  <Badge variant={selectedUser.status === 'Online' ? 'success' : 'secondary'}>*/}
+                {/*    {selectedUser.status}*/}
+                {/*  </Badge>*/}
+                {/*</span>*/}
+                {/*</div>*/}
+                {/*<div className="grid grid-cols-4 items-center gap-4">*/}
+                {/*  <span className="text-sm font-medium">Last Active:</span>*/}
+                {/*  <span className="col-span-3">{selectedUser.lastActive}</span>*/}
+                {/*</div>*/}
+                {/*<div className="grid grid-cols-4 items-center gap-4">*/}
+                {/*  <span className="text-sm font-medium">Registered:</span>*/}
+                {/*  <span className="col-span-3">{selectedUser.createdAt}</span>*/}
+                {/*</div>*/}
                 <div className="grid grid-cols-4 items-center gap-4">
                   <span className="text-sm font-medium">Status:</span>
                   <span className="col-span-3">
-                  {suspendedUsers.includes(selectedUser.id) ? (
+                  {suspendedUsers.includes(selectedUser.email) ? (
                       <Badge variant="destructive">Suspended</Badge>
                   ) : (
                       <Badge variant="success">Active</Badge>
@@ -218,7 +247,34 @@ export const UserList = ({ searchQuery }) => {
                 </span>
                 </div>
               </div>
+
           )}
+          <Button
+              className="mt-4 bg-blue-600 text-white hover:bg-blue-700"
+              onClick={async () => {
+                try {
+                  const res = await fetch(`${API_URL}/add-to-profits`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      email: selectedUser.email,
+                      balance: parseFloat(newBalance),
+                      newProfit: parseFloat(newProfit),
+                    }),
+                  });
+                  if (!res.ok) throw new Error('Failed to update user');
+                  alert('User updated successfully!');
+                  setIsDialogOpen(false);
+                } catch (err) {
+                  console.error('Update error:', err);
+                  alert('Failed to update user data');
+                }
+              }}
+          >
+            Update
+          </Button>
         </DialogContent>
       </Dialog>
     </>

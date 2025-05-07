@@ -9,8 +9,8 @@ export const RecentActivitiesReferral = () => {
     const [pendingWithdrawals, setPendingWithdrawals] = useState([]);
 
 
-    // const API_URL = 'http://localhost:8080';
-    const API_URL = 'https://billions-backend-1.onrender.com';
+    const API_URL = 'http://localhost:8080';
+    // const API_URL = 'https://billions-backend-1.onrender.com';
 
     useEffect(() => {
         fetchPendingWithdrawals(); // Fetch withdrawals when component mounts
