@@ -1091,14 +1091,13 @@
                                   </div>
                               )}
 
-                              <CardFooter>
+                              <CardFooter className="flex flex-col gap-x-4">
                                   <Button
-                                      className="w-full border-yellow-500 border hover:bg-white/10"
+                                      className="w-full border-yellow-500 border hover:bg-white/10 flex-row"
                                       disabled={
                                           !email || !withdrawAmount || !withdrawWallet || parseFloat(withdrawAmount) < 50 || isCooldown
                                       }
                                       onClick={async () => {
-
 
                                           // console.log('Withdraw from Balance button clicked');
                                           const amount = parseFloat(withdrawAmount);
@@ -1306,16 +1305,6 @@
                                               }
 
                                               try {
-                                                  // // console.log({
-                                                  //     email,
-                                                  //     walletType,
-                                                  //     status: 'pending',
-                                                  //     amount,
-                                                  //     description: withdrawDescription
-                                                  // });
-                                                  // useEffect(() => {
-                                                  // const checkDepositStatus = async () => {
-                                                  //     if (!email || !hash) return;
 
                                                   if(amount >= 50) {
                                                       try {
